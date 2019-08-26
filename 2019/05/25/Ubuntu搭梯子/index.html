@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Ubuntu搭梯子 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="VPN,">
+  
+
+  <meta name="description" content="使用pip安装安装shadowsocks123sudo apt-get updatesudo apt-get install python3-pippip install shadowsocks 设置shadowsocks 执行vim ~/.shadowsocks.json 然后在shadowsocks.json里面添加配置信息，如：  123456789&amp;#123;    &quot;server&quot;:&quot;m">
+<meta name="keywords" content="VPN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu搭梯子">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/05/25/Ubuntu搭梯子/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="使用pip安装安装shadowsocks123sudo apt-get updatesudo apt-get install python3-pippip install shadowsocks 设置shadowsocks 执行vim ~/.shadowsocks.json 然后在shadowsocks.json里面添加配置信息，如：  123456789&amp;#123;    &quot;server&quot;:&quot;m">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-25T14:30:48.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu搭梯子">
+<meta name="twitter:description" content="使用pip安装安装shadowsocks123sudo apt-get updatesudo apt-get install python3-pippip install shadowsocks 设置shadowsocks 执行vim ~/.shadowsocks.json 然后在shadowsocks.json里面添加配置信息，如：  123456789&amp;#123;    &quot;server&quot;:&quot;m">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用pip安装安装shadowsocks"><span class="toc-text">使用pip安装安装shadowsocks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置shadowsocks"><span class="toc-text">设置shadowsocks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动sslocal"><span class="toc-text">启动sslocal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器代理"><span class="toc-text">浏览器代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试启动"><span class="toc-text">测试启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Ubuntu搭梯子" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Ubuntu搭梯子</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.05.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="使用pip安装安装shadowsocks"><a href="#使用pip安装安装shadowsocks" class="headerlink" title="使用pip安装安装shadowsocks"></a>使用pip安装安装shadowsocks</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install python3-pip</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<h3 id="设置shadowsocks"><a href="#设置shadowsocks" class="headerlink" title="设置shadowsocks"></a>设置shadowsocks</h3><ul>
+<li>执行<code>vim ~/.shadowsocks.json</code></li>
+<li>然后在shadowsocks.json里面添加配置信息，如：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"server"</span>:<span class="string">"my_server_ip"</span>,</span><br><span class="line">    <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="attr">"local_port"</span>: <span class="number">1080</span>,</span><br><span class="line">    <span class="attr">"server_port"</span>: my_server_port,</span><br><span class="line">    <span class="attr">"password"</span>: <span class="string">"my_password"</span>,</span><br><span class="line">    <span class="attr">"timeout"</span>: <span class="number">300</span>,</span><br><span class="line">    <span class="attr">"method"</span>: <span class="string">"aes-256-cfb"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="启动sslocal"><a href="#启动sslocal" class="headerlink" title="启动sslocal"></a>启动sslocal</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sslocal -c ~/.shadowsocks.json</span><br></pre></td></tr></table></figure>
+<h3 id="浏览器代理"><a href="#浏览器代理" class="headerlink" title="浏览器代理"></a>浏览器代理</h3><ul>
+<li>安装插件<code>SwitchyOmega</code><ul>
+<li><a href="https://github.com/FelisCatus/SwitchyOmega/releases/" target="_blank" rel="noopener">点击进入</a>，点击下载<code>SwitchyOmega_Chromium.crx</code>文件</li>
+<li>将文件后缀名改为<code>.zip</code></li>
+<li>新建文件夹<code>SwitchyOmega_Chromium</code>，解压到这个文件夹</li>
+<li>Chrome 打开<code>chrome://extensions/</code>，选择开发者模式，把插件托进去安装</li>
+</ul>
+</li>
+<li>配置 Proxy<ul>
+<li><code>Server</code>填写<code>shadowsocks.json</code>配置中的<code>local_address</code></li>
+<li><code>Port</code>填写<code>shadowsocks.json</code>配置中的<code>local_port</code></li>
+<li>左边<code>Apply changes</code>保存</li>
+</ul>
+</li>
+<li>配置<code>Auto Switch</code><ul>
+<li><code>Rule list rules</code>的<code>Profile</code>填<code>proxy</code></li>
+<li><code>Default的Profile</code>填<code>[Direct]</code></li>
+<li><code>Rule List Format</code>选择<code>AutoProxy</code></li>
+<li><code>Rule List URL</code>填写<code>gfwlist</code>的规则:<ul>
+<li><code>https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</code></li>
+</ul>
+</li>
+<li>下载规则文件<code>Download Profile Now</code></li>
+<li>左边<code>Apply changes</code>保存</li>
+</ul>
+</li>
+<li>启用 SwitchyOmega<ul>
+<li>启用 SwitchyOmega 插件，选择 Auto Switch 模式就可以了。</li>
+</ul>
+</li>
+</ul>
+<h3 id="测试启动"><a href="#测试启动" class="headerlink" title="测试启动"></a>测试启动</h3><ul>
+<li>后端启动：<code>sslocal -c /home/xx/Software/ShadowsocksConfig/shadowsocks.json -d start</code></li>
+<li>后端停止：<code>sslocal -c /home/xx/Software/ShadowsocksConfig/shadowsocks.json -d stop</code></li>
+</ul>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://blog.huihut.com/2017/08/25/LinuxInstallConfigShadowsocksClient/" target="_blank" rel="noopener">Linux安装配置Shadowsocks客户端及开机自动启动</a></li>
+<li><a href="http://tanqingbo.com/2017/07/19/Ubuntu%E4%BD%BF%E7%94%A8shadowsocks%E7%BF%BB%E5%A2%99/" target="_blank" rel="noopener">科学上网 | Ubuntu使用shadowsocks翻墙</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/04/11/momenta_internship/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/06/22/读源码——howdoi/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

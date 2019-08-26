@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>配置Ubuntu以及Web部署 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Shell,">
+  
+
+  <meta name="description" content="配置Ubuntu以及Web部署 注解 针对类似的文档有时效性，此文的编辑时间是2018/9/4    凌晨，预计半年内有效 这里的环境是Ubuntu16.04版本，使用的是腾讯云的学生机   说明： 我这里没有写使用docker部署的方法，如果你的服务器上计划只部署一个网站可以使用我的方法；如果你的服务器上计划部署多个网站，建议使用docker，不但迁移方便，配置方便，且网站之间相互独立，保证网站">
+<meta name="keywords" content="Shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置Ubuntu以及Web部署">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/09/04/配置Ubuntu以及Web部署/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="配置Ubuntu以及Web部署 注解 针对类似的文档有时效性，此文的编辑时间是2018/9/4    凌晨，预计半年内有效 这里的环境是Ubuntu16.04版本，使用的是腾讯云的学生机   说明： 我这里没有写使用docker部署的方法，如果你的服务器上计划只部署一个网站可以使用我的方法；如果你的服务器上计划部署多个网站，建议使用docker，不但迁移方便，配置方便，且网站之间相互独立，保证网站">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-14T07:04:37.509Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="配置Ubuntu以及Web部署">
+<meta name="twitter:description" content="配置Ubuntu以及Web部署 注解 针对类似的文档有时效性，此文的编辑时间是2018/9/4    凌晨，预计半年内有效 这里的环境是Ubuntu16.04版本，使用的是腾讯云的学生机   说明： 我这里没有写使用docker部署的方法，如果你的服务器上计划只部署一个网站可以使用我的方法；如果你的服务器上计划部署多个网站，建议使用docker，不但迁移方便，配置方便，且网站之间相互独立，保证网站">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#配置Ubuntu以及Web部署"><span class="toc-text">配置Ubuntu以及Web部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#错误：Host-key-verification-failed"><span class="toc-text">错误：Host key verification failed.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置root密码"><span class="toc-text">设置root密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加普通用户"><span class="toc-text">添加普通用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误：add-apt-repository-command-not-found"><span class="toc-text">错误：add-apt-repository command not found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python3-6的安装"><span class="toc-text">python3.6的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误：ModuleNotFoundError-No-module-named-39-gdbm-39"><span class="toc-text">错误：ModuleNotFoundError: No module named &#39;gdbm&#39;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误：You-will-have-to-enable-the-component-called-39-universe-39"><span class="toc-text">错误：You will have to enable the component called &#39;universe&#39;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#警告："><span class="toc-text">警告：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误："><span class="toc-text">错误：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新安装pip3"><span class="toc-text">重新安装pip3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python3安装库"><span class="toc-text">python3安装库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql的安装"><span class="toc-text">mysql的安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python的Web部署"><span class="toc-text">python的Web部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#错误：上边的设置无误，但就是访问不了的话"><span class="toc-text">错误：上边的设置无误，但就是访问不了的话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker部署"><span class="toc-text">Docker部署</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-配置Ubuntu以及Web部署" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">配置Ubuntu以及Web部署</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="配置Ubuntu以及Web部署"><a href="#配置Ubuntu以及Web部署" class="headerlink" title="配置Ubuntu以及Web部署"></a>配置Ubuntu以及Web部署</h1><ul>
+<li>注解<ul>
+<li>针对类似的文档有时效性，此文的编辑时间是<code>2018/9/4    凌晨</code>，预计半年内有效</li>
+<li>这里的环境是<code>Ubuntu16.04</code>版本，使用的是腾讯云的学生机</li>
+</ul>
+</li>
+<li>说明：<ul>
+<li>我这里没有写使用docker部署的方法，如果你的服务器上计划只部署一个网站可以使用我的方法；如果你的服务器上计划部署多个网站，建议使用docker，不但迁移方便，配置方便，且网站之间相互独立，保证网站的稳定性</li>
+</ul>
+</li>
+</ul>
+<h3 id="错误：Host-key-verification-failed"><a href="#错误：Host-key-verification-failed" class="headerlink" title="错误：Host key verification failed."></a>错误：<code>Host key verification failed.</code></h3><ul>
+<li>解决方式：<ul>
+<li>在客户端输入指令：<code>vi ~/.ssh/known_hosts</code></li>
+<li>删除所要连接的服务器IP的相关内容或者直接删掉known_hosts文件</li>
+</ul>
+</li>
+<li>原因：<ul>
+<li>使用SSH通信时，第一次客户端连接服务器，服务器会给客户端发送一个密钥，这个密钥会一直存储再服务器和客户端中，后面每次连接都需要验证密码和密钥，只有两者条件都匹配的时候，客户端才能正确连接服务器</li>
+</ul>
+</li>
+</ul>
+<h3 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h3><ul>
+<li>方法：<ul>
+<li><code>sudo passwd</code></li>
+<li>把密码重复输入两次，看到设置成功即可</li>
+</ul>
+</li>
+<li>原因：<ul>
+<li>云服务器大多第一次使用或者重置操作系统后虽然在控制台已经设置了root密码，但还是要在命令行中重新设置</li>
+</ul>
+</li>
+</ul>
+<h3 id="添加普通用户"><a href="#添加普通用户" class="headerlink" title="添加普通用户"></a>添加普通用户</h3><ul>
+<li>方法：<ul>
+<li><code>su root</code>，进入root用户</li>
+<li><code>adduser user-name</code>，添加用户，其中user-name是要添加的用户名称</li>
+<li>输入user-name用户的密码两次，后面的信息可以不用填写</li>
+<li>输入<code>Y</code>确认即可</li>
+</ul>
+</li>
+</ul>
+<h3 id="错误：add-apt-repository-command-not-found"><a href="#错误：add-apt-repository-command-not-found" class="headerlink" title="错误：add-apt-repository command not found"></a>错误：<code>add-apt-repository command not found</code></h3><ul>
+<li>方法：<ul>
+<li><code>sudo apt-get install python-software-properties</code></li>
+<li><code>sudo apt install software-properties-common</code> </li>
+<li><code>sudo apt-get update</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="python3-6的安装"><a href="#python3-6的安装" class="headerlink" title="python3.6的安装"></a>python3.6的安装</h3><ul>
+<li>警告：<ul>
+<li>Ubuntu上面的python3.5不能删除，原因是例如yum以及其他一些组件依赖于python3.5的版本，系统内部自带的插件最好不要动</li>
+</ul>
+</li>
+<li>方法：<ul>
+<li><code>sudo add-apt-repository ppa:jonathonf/python-3.6</code>，添加第三方仓库，要输入root密码</li>
+<li><code>sudo apt-get update</code></li>
+<li><code>sudo apt-get install python3.6</code>，安装python3.6</li>
+<li>输入<code>python3.6 -V</code>，查看是否安装成功</li>
+<li>至此，Ubuntu系统中已经有了三个python版本（python2.7, python3.5, python3.6）</li>
+<li>提高python3.6的优先级（就是输入python3会直接进入的是python3.6的环境，而不是Ubuntu自带的python3.5的环境）<ul>
+<li><code>sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5  1</code></li>
+<li><code>sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6  2</code></li>
+<li><code>sudo update-alternatives --config python3</code></li>
+<li>输入<code>python -V</code>，查看是否优先级设置成功</li>
+<li>输入 <code>pip3</code>，查看pip3是否正常</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="错误：ModuleNotFoundError-No-module-named-39-gdbm-39"><a href="#错误：ModuleNotFoundError-No-module-named-39-gdbm-39" class="headerlink" title="错误：ModuleNotFoundError: No module named &#39;gdbm&#39;"></a>错误：<code>ModuleNotFoundError: No module named &#39;gdbm&#39;</code></h3><ul>
+<li>方法：<ul>
+<li><code>sudo apt-get install python3.6-gdbm</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="错误：You-will-have-to-enable-the-component-called-39-universe-39"><a href="#错误：You-will-have-to-enable-the-component-called-39-universe-39" class="headerlink" title="错误：You will have to enable the component called &#39;universe&#39;"></a>错误：<code>You will have to enable the component called &#39;universe&#39;</code></h3><ul>
+<li>方法：<ul>
+<li><code>apt install python3-pip</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="警告："><a href="#警告：" class="headerlink" title="警告："></a>警告：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">You are using pip version 8.1.1, however version 18.0 is available.</span><br><span class="line">You should consider upgrading via the &apos;pip install --upgrade pip&apos; command.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法：<ul>
+<li><code>pip3 install --upgrade pip</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="错误："><a href="#错误：" class="headerlink" title="错误："></a>错误：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;/usr/bin/pip3&quot;, line 9, in &lt;module&gt;</span><br><span class="line">    from pip import main</span><br><span class="line"></span><br><span class="line">ImportError: cannot import name &apos;main&apos;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>方法：<ul>
+<li><code>sudo vim /usr/bin/pip3</code>，进入文件</li>
+<li>insert键，进入vim的编辑模式<br>原来的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pip import main</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    sys.exit(main())</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>替换为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pip import __main__</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    sys.exit(__main__._main())</span><br></pre></td></tr></table></figure></p>
+<h3 id="重新安装pip3"><a href="#重新安装pip3" class="headerlink" title="重新安装pip3"></a>重新安装pip3</h3><p>方法：</p>
+<ul>
+<li><code>sudo python3 -m pip uninstall pip &amp;&amp; sudo apt install python3-pip --reinstall</code></li>
+</ul>
+<h3 id="python3安装库"><a href="#python3安装库" class="headerlink" title="python3安装库"></a>python3安装库</h3><ul>
+<li>方法：<ul>
+<li><code>pip3 install package-name</code>，使用此命令安装对应的包</li>
+<li><code>pip3 list</code>，查看python3.6下安装的包</li>
+<li><code>pip3 uninstall package-name</code>，使用此命令卸载对应的包</li>
+</ul>
+</li>
+</ul>
+<h3 id="mysql的安装"><a href="#mysql的安装" class="headerlink" title="mysql的安装"></a>mysql的安装</h3><ul>
+<li>方法：<ul>
+<li><code>sudo apt-get install mysql-server</code></li>
+<li>设置mysql的密码</li>
+<li><code>sudo apt-get install libmysqlclient-dev</code></li>
+</ul>
+</li>
+<li>验证安装是否成功：<ul>
+<li>输入<code>mysql -u root -p</code>，登陆数据库</li>
+<li>输入密码，登陆成功就说明安装无误</li>
+</ul>
+</li>
+</ul>
+<h3 id="python的Web部署"><a href="#python的Web部署" class="headerlink" title="python的Web部署"></a>python的Web部署</h3><ul>
+<li>注解：<ul>
+<li>这里使用的是uwsgi、nginx和Django的2.1.1</li>
+</ul>
+</li>
+<li><p>方法：</p>
+<ul>
+<li>安装django<ul>
+<li><code>pip3 install django</code>，等待安装即可</li>
+<li><code>pip3 list</code>，查看是否安装成功</li>
+</ul>
+</li>
+<li>安装uwsgi<ul>
+<li><code>pip3 install uwsgi</code></li>
+<li>如果出现：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">In file included from plugins/python/python_plugin.c:1:0:</span><br><span class="line">plugins/python/uwsgi_python.h:2:20: fatal error: Python.h: No such file or directory</span><br><span class="line">compilation terminated.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>方法：</p>
+<ul>
+<li>安装uwsgi<ul>
+<li>如果出现：<ul>
+<li>执行<code>sudo apt-get install libpython3.6-dev</code>，然后再安装uwsgi</li>
+</ul>
+</li>
+<li><code>uwsgi --version</code>，查看uwsgi是否安装成功</li>
+</ul>
+</li>
+<li>测试uwsgi<ul>
+<li><code>cd /home</code>，进入home的目录</li>
+<li><code>vim test.py</code>，新建文件</li>
+<li>输入：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def application(env, start_response):</span><br><span class="line">    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;,&apos;text/html&apos;)])</span><br><span class="line">    return [b&quot;Hello World&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>安装：</p>
+<ul>
+<li>测试uwsgi<ul>
+<li>按Esc键，输入<code>:wq</code>，回车</li>
+<li><code>uwsgi --http :8000 --wsgi-file test.py</code></li>
+<li>看到<code>spawned uWSGI worker 1 (and the only) (pid: 22343, cores: 1)</code>，打开浏览器访问你服务器的8000端口，页面有<code>hello world</code>表示uwsgi安装是正确的</li>
+</ul>
+</li>
+<li>安装nginx<ul>
+<li><code>sudo apt-get install nginx</code></li>
+</ul>
+</li>
+<li>验证nginx是否安装成功<ul>
+<li>打开浏览器，输入<code>your-server-IP:80</code>，就是用80端口访问你的服务器</li>
+<li>看到<code>Welcome to nginx!</code>说明nginx安装好了</li>
+</ul>
+</li>
+<li>配置nginx和uwsgi<ul>
+<li>在/etc/目录下新建uwsgi8000.ini，添加如下配置：（并把中文注释删掉）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">socket = 127.0.0.1:8000</span><br><span class="line">master = true         //主进程</span><br><span class="line">vhost = true          //多站模式</span><br><span class="line">no-site = true        //多站模式时不设置入口模块和文件</span><br><span class="line">workers = 2           //子进程数</span><br><span class="line">reload-mercy = 10     </span><br><span class="line">vacuum = true         //退出、重启时清理文件</span><br><span class="line">max-requests = 1000   </span><br><span class="line">limit-as = 512</span><br><span class="line">buffer-size = 30000</span><br><span class="line">pidfile = /var/run/uwsgi9090.pid    //pid文件，用于下面的脚本启动、停止该进程</span><br><span class="line">daemonize = /website/uwsgi9090.log</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>安装：</p>
+<ul>
+<li>配置nginx和uwsgi<ul>
+<li>进入nginx的安装目录/etc/nginx，打开nginx.conf文件，修改server配置：（并把中文注释删掉）<br>此配置在http大括号里面添加，注意缩进和配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line">        </span><br><span class="line">        location / &#123;            </span><br><span class="line">            include  uwsgi_params;</span><br><span class="line">            uwsgi_pass  127.0.0.1:8000;              //必须和uwsgi中的设置一致</span><br><span class="line">            uwsgi_param UWSGI_SCRIPT demosite.wsgi;  //入口文件，即wsgi.py相对于项目根目录的位置，“.”相当于一层目录</span><br><span class="line">            uwsgi_param UWSGI_CHDIR /home/demosit;       //项目根目录</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">            client_max_body_size 35m;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>安装：</p>
+<ul>
+<li>配置nginx和uwsgi<ul>
+<li><code>uwsgi --ini /etc/uwsgi8000.ini &amp; /etc/nginx</code></li>
+</ul>
+</li>
+<li>新建项目<ul>
+<li><code>cd /home</code></li>
+<li><code>django-admin.py startproject demosite</code></li>
+<li><code>cd demosite/demosite</code></li>
+<li><code>vim settings.py</code>，进入设置文件</li>
+<li>找到<code>ALLOWED_HOSTS</code>，在方括号中加入你服务器的IP和localhost（使用单引号括起来）</li>
+<li>Esc键，<code>:qw</code>，保存退出</li>
+<li><code>cd ..</code></li>
+<li><code>python3 manage.py runserver 0.0.0.0:8000</code></li>
+<li>打开浏览器，输入<code>your-seerver-IP+8000</code>，能看到django的报错就好，先不管错误，这说明到此uwsgi和nginx配置成功，django部署基本完成，接下来就是调试了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="错误：上边的设置无误，但就是访问不了的话"><a href="#错误：上边的设置无误，但就是访问不了的话" class="headerlink" title="错误：上边的设置无误，但就是访问不了的话"></a>错误：上边的设置无误，但就是访问不了的话</h3><ul>
+<li>方法：<ul>
+<li>如果是云服务器的话，查看安全组的设置是否打开了这些端口让浏览器去访问</li>
+</ul>
+</li>
+</ul>
+<h3 id="Docker部署"><a href="#Docker部署" class="headerlink" title="Docker部署"></a>Docker部署</h3><ul>
+<li>资源：<ul>
+<li><a href="https://docs.docker-cn.com/" target="_blank" rel="noopener">Docker Doc</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/26418829" target="_blank" rel="noopener">知乎的一篇教程：用Docker部署一个Web应用</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/01/图解计算机和程序/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/05/mnist-softmax、NN、CNN/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

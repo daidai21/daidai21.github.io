@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Git手册 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Git,">
+  
+
+  <meta name="description" content="图形化 gitk  内建的图形化 git git config color.ui true  彩色的 git 输出 git config format.pretty oneline  显示历史记录时，只显示一行注释信息 git add -i  交互地添加文件至缓存区  远程 git remote add origin &amp;lt;url&amp;gt;  添加远程地址 git remote remove">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git手册">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/07/15/Git手册/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="图形化 gitk  内建的图形化 git git config color.ui true  彩色的 git 输出 git config format.pretty oneline  显示历史记录时，只显示一行注释信息 git add -i  交互地添加文件至缓存区  远程 git remote add origin &amp;lt;url&amp;gt;  添加远程地址 git remote remove">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2018/07/15/Git手册/20180511000909236.png">
+<meta property="og:image" content="https://www.fuweihu.xyz/2018/07/15/Git手册/trees.png">
+<meta property="og:image" content="https://www.fuweihu.xyz/2018/07/15/Git手册/branches.png">
+<meta property="og:updated_time" content="2019-05-25T14:36:09.430Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git手册">
+<meta name="twitter:description" content="图形化 gitk  内建的图形化 git git config color.ui true  彩色的 git 输出 git config format.pretty oneline  显示历史记录时，只显示一行注释信息 git add -i  交互地添加文件至缓存区  远程 git remote add origin &amp;lt;url&amp;gt;  添加远程地址 git remote remove">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2018/07/15/Git手册/20180511000909236.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#图形化"><span class="toc-text">图形化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#远程"><span class="toc-text">远程</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#图解"><span class="toc-text">图解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#git结构"><span class="toc-text">git结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分支"><span class="toc-text">分支</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#error"><span class="toc-text">error</span></a>
+  </li></div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Git手册" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Git手册</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/2018/07/15/Git手册/20180511000909236.png" alt=""></p>
+<h4 id="图形化"><a href="#图形化" class="headerlink" title="图形化"></a>图形化</h4><ul>
+<li><code>gitk</code>  内建的图形化 git</li>
+<li><code>git config color.ui true</code>  彩色的 git 输出</li>
+<li><code>git config format.pretty oneline</code>  显示历史记录时，只显示一行注释信息</li>
+<li><code>git add -i</code>  交互地添加文件至缓存区</li>
+</ul>
+<h4 id="远程"><a href="#远程" class="headerlink" title="远程"></a>远程</h4><ul>
+<li><code>git remote add origin &lt;url&gt;</code>  添加远程地址</li>
+<li><code>git remote remove &lt;name&gt;</code>  删除关联的远程版本库</li>
+<li><code>git push -u origin master</code>  将master分支推送到origin远程仓库</li>
+<li><code>git push -u origin master -f</code>  强制将master分支推送到远程仓库origin  慎用<h1 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h1></li>
+</ul>
+<h4 id="git结构"><a href="#git结构" class="headerlink" title="git结构"></a>git结构</h4><p><img src="/2018/07/15/Git手册/trees.png" alt=""></p>
+<ul>
+<li>工作区：就是你在电脑里能看到的目录</li>
+<li>暂存区：英文叫stage, 或index。一般存放在 “.git目录下” 下的index文件（.git/index）中，所以我们把暂存区有时也叫作索引（index）</li>
+<li>版本库：工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库</li>
+</ul>
+<h4 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h4><p><img src="/2018/07/15/Git手册/branches.png" alt=""></p>
+<hr>
+<h1 id="error"><a href="#error" class="headerlink" title="error"></a>error</h1><ul>
+<li><code>error: src refspec master does not match any.</code><ul>
+<li>空目录不能提交；至少有一次commit</li>
+</ul>
+</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/15/git-使用指南/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/01/黑客与画家/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

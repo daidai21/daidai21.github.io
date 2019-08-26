@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>图解算法 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Algorithm,">
+  
+
+  <meta name="description" content="二分查找123456789101112131415161718def binary_search(list, item):    low = 0    high = len(list) - 1    while low &amp;lt;= high:        mid = int((low + high) / 2)  # 中间的        guess = list[mid]        if g">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解算法">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/07/09/图解算法/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="二分查找123456789101112131415161718def binary_search(list, item):    low = 0    high = len(list) - 1    while low &amp;lt;= high:        mid = int((low + high) / 2)  # 中间的        guess = list[mid]        if g">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-25T14:54:53.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解算法">
+<meta name="twitter:description" content="二分查找123456789101112131415161718def binary_search(list, item):    low = 0    high = len(list) - 1    while low &amp;lt;= high:        mid = int((low + high) / 2)  # 中间的        guess = list[mid]        if g">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二分查找"><span class="toc-text">二分查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#狄克斯特拉算法"><span class="toc-text">狄克斯特拉算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#贪婪算法"><span class="toc-text">贪婪算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态规划"><span class="toc-text">动态规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共子串"><span class="toc-text">最长公共子串</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共子序列之解决方案"><span class="toc-text">最长公共子序列之解决方案</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-图解算法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">图解算法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def binary_search(list, item):</span><br><span class="line">    low = 0</span><br><span class="line">    high = len(list) - 1</span><br><span class="line">    while low &lt;= high:</span><br><span class="line">        mid = int((low + high) / 2)  # 中间的</span><br><span class="line">        guess = list[mid]</span><br><span class="line">        if guess == item:</span><br><span class="line">            return mid</span><br><span class="line">        if guess &gt; item:</span><br><span class="line">            high = mid - 1</span><br><span class="line">        else:</span><br><span class="line">            low = mid + 1</span><br><span class="line">    return None</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">my_list = [1, 3, 5, 7, 9]</span><br><span class="line">print(binary_search(my_list, 3))</span><br><span class="line">print(binary_search(my_list, -1))</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>最短路径问题：使用广度优先搜索，使用图来建立问题模型</p>
+</li>
+<li><p>假设你经营着一个芒果农场,需要寻找芒果销售商,以便将芒果卖给他。在Facebook,你与芒果销售商有联系吗?为此,你可在朋友中查找。</p>
+</li>
+<li><p>查找最短路径，广度优先搜索可回答两类问题</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 第一类问题:从节点A出发,有前往节点B的路径吗?(在你的人际关系网中,有芒果销 售商吗?)</li>
+<li style="list-style: none"><input type="checkbox" checked> 第二类问题:从节点A出发,前往节点B的哪条路径最短?(哪个芒果销售商与你的关系 最近?)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">graph = &#123;&#125;</span><br><span class="line">graph[<span class="string">"you"</span>] = [<span class="string">"alice"</span>, <span class="string">"bob"</span>, <span class="string">"claire"</span>]</span><br><span class="line">graph[<span class="string">"bob"</span>] = [<span class="string">"anuj"</span>, <span class="string">"peggy"</span>]</span><br><span class="line">graph[<span class="string">"alice"</span>] = [<span class="string">"peggy"</span>]</span><br><span class="line">graph[<span class="string">"claire"</span>] = [<span class="string">"thom"</span>, <span class="string">"jonny"</span>]</span><br><span class="line">graph[<span class="string">"anuj"</span>] = []</span><br><span class="line">graph[<span class="string">"peggy"</span>] = []</span><br><span class="line">graph[<span class="string">"thom"</span>] = []</span><br><span class="line">graph[<span class="string">"jonny"</span>] = []</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collection <span class="keyword">import</span> deque</span><br><span class="line">search_queue = deque()  <span class="comment"># 创建一个队列</span></span><br><span class="line">search_queue += graph[<span class="string">'you'</span>]  <span class="comment"># 将你的邻居都加入到这个搜索队列中</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> search_queue:  <span class="comment"># 只要队列不为空</span></span><br><span class="line">    person = search_queue.popleft()  <span class="comment"># 就取出其中的第一个人</span></span><br><span class="line">    <span class="keyword">if</span> person_is_seller(person):  <span class="comment"># 检查这个人是否是芒果商</span></span><br><span class="line">        print(<span class="string">'&#123;&#125; is a mango seller!'</span>.format(<span class="string">'person'</span>)  <span class="comment"># 是芒果商</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        search_queue += graph[person]  <span class="comment"># 不是芒果销售商。将这个人的朋友都加入搜索队列</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">False</span>  <span class="comment"># 如果到达了这里，就说明队列中没人是芒果商</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person_is_seller</span><span class="params">(name)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> name[<span class="number">-1</span>] == <span class="string">'m'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>将一个人加入对列的时间是固定的O(1)，总时间就为O(人数)。所以广度优先搜索的运行时间为O(人数+边数)</p>
+</blockquote>
+<hr>
+<h3 id="狄克斯特拉算法"><a href="#狄克斯特拉算法" class="headerlink" title="狄克斯特拉算法"></a>狄克斯特拉算法</h3><ul>
+<li>问题：其中每个数字表示的都是时间,单位分钟。为找出从起点到终点耗时最短的路径,你将使用 狄克斯特拉算法。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[起点] --&gt;|6| B(A)</span><br><span class="line">    A[起点] --&gt;|2| C(B)</span><br><span class="line">    C --&gt;|3| B</span><br><span class="line">    B --&gt;|1| D(终点)</span><br><span class="line">    C --&gt;|5| D(终点)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">graph = &#123;&#125;</span><br><span class="line"></span><br><span class="line">graph[<span class="string">"you"</span>] = [<span class="string">"alice"</span>, <span class="string">"bob"</span>, <span class="string">"claire"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用散列表</span></span><br><span class="line">graph[<span class="string">"start"</span>] = &#123;&#125;</span><br><span class="line">graph[<span class="string">"start"</span>][<span class="string">"a"</span>] = <span class="number">6</span></span><br><span class="line">graph[<span class="string">"start"</span>][<span class="string">"b"</span>] = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">graph[<span class="string">"a"</span>] = &#123;&#125;</span><br><span class="line">graph[<span class="string">"a"</span>][<span class="string">"fin"</span>] = <span class="number">1</span></span><br><span class="line">graph[<span class="string">"b"</span>] = &#123;&#125;</span><br><span class="line">graph[<span class="string">"b"</span>][<span class="string">"a"</span>] = <span class="number">3</span></span><br><span class="line">graph[<span class="string">"b"</span>][<span class="string">"fin"</span>] = <span class="number">5</span></span><br><span class="line">graph[<span class="string">"fin"</span>] = &#123;&#125;  <span class="comment"># 终点没有任何邻居</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">infinity = float(<span class="string">"inf"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建开销表</span></span><br><span class="line">infinity = float(<span class="string">"inf"</span>)</span><br><span class="line">costs = &#123;&#125;</span><br><span class="line">costs[<span class="string">"a"</span>] = <span class="number">6</span></span><br><span class="line">costs[<span class="string">"b"</span>] = <span class="number">2</span></span><br><span class="line">costs[<span class="string">"fin"</span>] = infinity</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建这个散列表</span></span><br><span class="line">parents = &#123;&#125;</span><br><span class="line">parents[<span class="string">"a"</span>] = <span class="string">"start"</span></span><br><span class="line">parents[<span class="string">"b"</span>] = <span class="string">"start"</span></span><br><span class="line">parents[<span class="string">"fin"</span>] = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 存储处理过的节点</span></span><br><span class="line">processed = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 代码</span></span><br><span class="line">node = find_lowest_cost_node(costs)  <span class="comment"># 在未处理的节点中找出开销量最小的节点</span></span><br><span class="line"><span class="keyword">while</span> node <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  <span class="comment"># 这个while循环在所有节点都被处理过后结束</span></span><br><span class="line">    cost = costs[node]</span><br><span class="line">    neighbors = graph[node]</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> neighbors.key():  <span class="comment"># 遍历当前节点</span></span><br><span class="line">        new_cost = cost + neighbors[n]</span><br><span class="line">        <span class="keyword">if</span> costs[n] &gt; new_costs:  <span class="comment"># 如果经过当前节点前往该邻居更近</span></span><br><span class="line">            costs[n] = new_costs  <span class="comment"># 就更新该邻居的开销</span></span><br><span class="line">            parents[n] = node  <span class="comment"># 同时将该邻居的父节点设置为当前节点</span></span><br><span class="line">    processed.append(node)  <span class="comment"># 将当前节点标记为处理过</span></span><br><span class="line">    node = find_lowest_cost_node(costs)  <span class="comment"># 找出接下来要处理的节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_lowest_cost_node</span><span class="params">(costs)</span>:</span></span><br><span class="line">    lowest_cost = float(<span class="string">"inf"</span>)</span><br><span class="line">    lowest_cost_node = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> costs:  <span class="comment"># 遍历所有的节点</span></span><br><span class="line">        cost = costs[node]</span><br><span class="line">        <span class="keyword">if</span> cost &lt; lowest_cost <span class="keyword">and</span> node <span class="keyword">not</span> <span class="keyword">in</span> processed:  <span class="comment"># 如果当前节点的开销更低且未处理过</span></span><br><span class="line">            lowest_cost = cost  <span class="comment"># 就将其视为开销最低的节点</span></span><br><span class="line">            lowest_cost_node = node</span><br><span class="line">    <span class="keyword">return</span> lowest_cost_node</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一步：找出最便宜的节点</li>
+<li>第二步：计算经起点的下一节点前往其各个节点所需的时间</li>
+<li>第三步：重复</li>
+<li></li>
+<li>重复第一步:找出可在最短时间内前往的节点。你对节点B执行了第二步,除节点B外,可在最短时间内前往的节点是节点A。</li>
+<li><p>重复第二步:更新节点A的所有邻居的开销。</p>
+</li>
+<li><p>算法异同：</p>
+<ul>
+<li>使用广度优先搜索来查找两点之间的最短路径，这里的“最短路径”的意思是段数最少</li>
+<li>在狄克斯特拉算法中,你给每段都分配了一个数字或权重,因此狄克斯特拉算法找出的是总权重最小的路径。</li>
+</ul>
+</li>
+<li><p>使用：</p>
+<ul>
+<li>要计算非加权图中的最短路径,可使用广度优先搜索。要计算加权图中的最短路径,可使用狄克斯特拉算法。</li>
+<li>狄克斯特拉算法只适用于有向无环图</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="贪婪算法"><a href="#贪婪算法" class="headerlink" title="贪婪算法"></a>贪婪算法</h3><ul>
+<li>贪婪算法并不能得到最优解，因为每步都是局部最优解</li>
+</ul>
+<hr>
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><ul>
+<li>使用动态规划时，要么考虑拿走整件商品，要么考虑不拿，而没法判断该不该拿走商品的一部分。</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>假设你要去伦敦度假，假期两天，但你想去游览的地方很多。你没法前往每个地方游览，因此你列个单子。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名胜</th>
+<th>时间</th>
+<th>评分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>威斯敏斯特教堂</td>
+<td>0.5天</td>
+<td>7</td>
+</tr>
+<tr>
+<td>环球剧场</td>
+<td>0.5天</td>
+<td>6</td>
+</tr>
+<tr>
+<td>英国国家美术馆</td>
+<td>1天</td>
+<td>9</td>
+</tr>
+<tr>
+<td>大英博物馆</td>
+<td>2天</td>
+<td>9</td>
+</tr>
+<tr>
+<td>圣保罗大教堂</td>
+<td>0.5天</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>思路：<ul>
+<li>使用网格，先建立空网格</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>0.5</th>
+<th>1</th>
+<th>1.5</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>威斯敏斯特教堂</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>环球剧场</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>英国国家美术馆</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>大英博物馆</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>圣保罗大教堂</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><ul>
+<li>网格填充结果</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>0.5</th>
+<th>1</th>
+<th>1.5</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>威斯敏斯特教堂（w）</td>
+<td>7（w）</td>
+<td>7（w）</td>
+<td>7（w）</td>
+<td>7（w）</td>
+</tr>
+<tr>
+<td>环球剧场（g）</td>
+<td>7（w）</td>
+<td>13（wg）</td>
+<td>13（wg）</td>
+<td>13（wg）</td>
+</tr>
+<tr>
+<td>英国国家美术馆（n）</td>
+<td>7（w）</td>
+<td>13（wg）</td>
+<td>16（wn）</td>
+<td>22（wgn）</td>
+</tr>
+<tr>
+<td>大英博物馆（b）</td>
+<td>7（w）</td>
+<td>13（wg）</td>
+<td>16（wn）</td>
+<td>22（wgn）</td>
+</tr>
+<tr>
+<td>圣保罗大教堂（s）</td>
+<td>8（s）</td>
+<td>15（ws）</td>
+<td>21（wgs）</td>
+<td>24（wns）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>填充表格从左到右，然后下一行，重复。</p>
+</blockquote>
+<h3 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a>最长公共子串</h3><ul>
+<li><p>问题：HISH和FISH的最长公共子串是？</p>
+</li>
+<li><p>思路：</p>
+<ul>
+<li>画表格</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H</th>
+<th>I</th>
+<th>S</th>
+<th>H</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>I</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>S</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><ul>
+<li>填充表格</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H</th>
+<th>I</th>
+<th>S</th>
+<th>H</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>I</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>S</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>H</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>若果横纵字母相同则对应空格为1加上空格左上角邻居的值</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实现这个公式的伪代码</span></span><br><span class="line"><span class="keyword">if</span> word_a[i] == word_b[j]:  <span class="comment"># 两个字母相同</span></span><br><span class="line">    cell[i][j] = cell[i<span class="number">-1</span>][j<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:  <span class="comment"># 两个字母不同</span></span><br><span class="line">    cell[i][j] = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h3 id="最长公共子序列之解决方案"><a href="#最长公共子序列之解决方案" class="headerlink" title="最长公共子序列之解决方案"></a>最长公共子序列之解决方案</h3><ul>
+<li><p>最长公共子序列：两个单词都有的序列包含的字母数</p>
+</li>
+<li><p>问题：求fish和fosh的最长公共子序列</p>
+</li>
+<li><p>思路：</p>
+<ul>
+<li>画网格</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H</th>
+<th>O</th>
+<th>S</th>
+<th>H</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>I</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>S</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>H</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><ul>
+<li>填充表格</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H</th>
+<th>O</th>
+<th>S</th>
+<th>H</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>I</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>S</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>H</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>如果两个字母不同，就选择上方和左邻居中较大的那个<br>如果两个字母相同，就将当前单元格的值设为左上方单元格的值加1</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> word_a[i] == word_b[j]:  <span class="comment"># 两个字母相同</span></span><br><span class="line">    cell[i][j] = cell[i<span class="number">-1</span>][j<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line"><span class="keyword">else</span>:  <span class="comment"># 两个字母不同</span></span><br><span class="line">    cell[i][j] = max(cell[i<span class="number">-1</span>][j], cell[i][j<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/09/排序/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/15/git-使用指南/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

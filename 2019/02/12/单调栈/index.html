@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>单调栈 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Stack,">
+  
+
+  <meta name="description" content="单调栈：栈中从栈底到栈顶的数都是递增（减）的，为了维护这种结构在插入比当前栈顶大的数的时候都需要先将栈顶的数弹出，这样我们就能够知道弹出的这个数两边比它大的数了 下面使用Leetcode两道题举例： 84. Largest Rectangle in Histogram题意给定n个非负整数代表柱状图的条高，其中每个条的宽度为1，求柱状图中最大矩形的面积。上面是一个柱状图，其中每个条形的宽度为1，给定">
+<meta name="keywords" content="Stack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单调栈">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/02/12/单调栈/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="单调栈：栈中从栈底到栈顶的数都是递增（减）的，为了维护这种结构在插入比当前栈顶大的数的时候都需要先将栈顶的数弹出，这样我们就能够知道弹出的这个数两边比它大的数了 下面使用Leetcode两道题举例： 84. Largest Rectangle in Histogram题意给定n个非负整数代表柱状图的条高，其中每个条的宽度为1，求柱状图中最大矩形的面积。上面是一个柱状图，其中每个条形的宽度为1，给定">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/02/12/单调栈/84-1.png">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/02/12/单调栈/84-2.png">
+<meta property="og:updated_time" content="2019-05-25T14:54:33.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单调栈">
+<meta name="twitter:description" content="单调栈：栈中从栈底到栈顶的数都是递增（减）的，为了维护这种结构在插入比当前栈顶大的数的时候都需要先将栈顶的数弹出，这样我们就能够知道弹出的这个数两边比它大的数了 下面使用Leetcode两道题举例： 84. Largest Rectangle in Histogram题意给定n个非负整数代表柱状图的条高，其中每个条的宽度为1，求柱状图中最大矩形的面积。上面是一个柱状图，其中每个条形的宽度为1，给定">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2019/02/12/单调栈/84-1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#84-Largest-Rectangle-in-Histogram"><span class="toc-text">84. Largest Rectangle in Histogram</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#题意"><span class="toc-text">题意</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#思路"><span class="toc-text">思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#85-Maximal-Rectangle"><span class="toc-text">85. Maximal Rectangle</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#题意-1"><span class="toc-text">题意</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#思路-1"><span class="toc-text">思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码-1"><span class="toc-text">代码</span></a></li></ol></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-单调栈" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">单调栈</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.02.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong>单调栈</strong>：栈中从栈底到栈顶的数都是递增（减）的，为了维护这种结构在插入比当前栈顶大的数的时候都需要先将栈顶的数弹出，这样我们就能够知道弹出的这个数两边比它大的数了</p>
+<p>下面使用Leetcode两道题举例：</p>
+<h3 id="84-Largest-Rectangle-in-Histogram"><a href="#84-Largest-Rectangle-in-Histogram" class="headerlink" title="84. Largest Rectangle in Histogram"></a><a href="https://leetcode.com/problems/largest-rectangle-in-histogram/description/" target="_blank" rel="noopener">84. Largest Rectangle in Histogram</a></h3><h5 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h5><p>给定n个非负整数代表柱状图的条高，其中每个条的宽度为1，求柱状图中最大矩形的面积。<br><img src="/2019/02/12/单调栈/84-1.png" alt=""><br>上面是一个柱状图，其中每个条形的宽度为1，给定高度=[2,1,5,6,2,3]。<br><img src="/2019/02/12/单调栈/84-2.png" alt=""><br>最大的矩形显示在阴影区域，其面积为10个单位。<br>实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: [2,1,5,6,2,3]</span><br><span class="line">Output: 10</span><br></pre></td></tr></table></figure></p>
+<h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><ul>
+<li>如果height是升序的，例如：[1，2，3]，那么就是比较（1 <em> 3）vs（2 </em> 2）vs（3 <em> 1），也就是max（height[i] </em> (len(height) - 1)）</li>
+<li>我们要找到最大的长方形面积，可以按照这种方式来找：对于数组中每个元素代表的高度，找到以当前这个高度为高的最大的长方形面积，那么遍历所有的高度即可。我们直接暴力求解的话，就是O(n^2)的复杂度。</li>
+<li>有了上述思路后，我们在遍历数组的时候维护一个栈,这个栈中的元素从底向上按照高度值递增。如果遇到当前bar的高度比栈顶元素低，那么就出栈直到栈顶元素低于当前bar的高度。关键就在这里，当我们将第i个元素弹出栈的时候，我们就可以计算以heights[i]为高的最大长方形的面积。在遍历完数组之后，栈内元素仍然需要继续弹出，最后所有元素都会依次出栈,意味着计算完了所有可能的最大面积,就可以得到结果了。</li>
+<li>再来分析一下这个算法的可行性：每一个元素都要入栈一次，出栈一次。入栈的时候的是遍历访问到它的时候，那出栈的时候意味着什么呢。在这里元素出栈意味着，我们已经计算了以它的高度为高的最大长方形面积。结合栈内元素的单调性，栈顶元素所对应的bar一定比出栈元素对应的bar小，所以以出栈元素对应的bar为高的长方形无法往左边延展。结合代码，我们已经判断过当前处理的第i个元素所对应的bar也比出栈元素对应的bar小，所以长方形无法往右边延展。这个元素和左右边界之间如果还有空隙，那么这些空隙里所存在的bar，一定是因为维护栈的单调性而被弹出了。也就是说，如果这些bar存在，那么一定比这个出栈元素所对应的bar高。既然这些bar的高度更高，那么就可以被纳入这个最大长方形面积的计算中，也就不影响当前出栈元素的最大长方形面积的计算。以上我们就证明了，当我们将第i个元素弹出栈的时候，我们计算了以heights[i]为高的最大长方形的面积。</li>
+<li>模拟一下过程：<ul>
+<li>先加入一个0，方便最后可以全部弹栈出来。栈变成：[2，1，5，6，3，-1]</li>
+<li>2进栈，1比栈顶小，对2进行出栈，max_space = 2</li>
+<li>2被替换为1进栈，1继续进栈，这时栈为[1，1]</li>
+<li>5，6都是非降的，继续进栈，栈为[1，1，5，6]</li>
+<li>遇到3，是一个降序点；开始出栈，6出栈，对应space=61；5出栈对应space=52；下一个1比3小，不需要出栈。然后将5、6的弹栈后的空位压栈为3，这是栈为[1，1，3，3，3]</li>
+<li>下一步遇到0，开始依次出栈，得到area=31，32，33，14，1*5。</li>
+<li>遍历结束。整个过程中max_space=10</li>
+</ul>
+</li>
+</ul>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Runtime: 60 ms, faster than 97.59% of Python3 online submissions for Largest Rectangle in Histogram.</span></span><br><span class="line"><span class="comment"># Memory Usage: 9.3 MB, less than 41.22% of Python3 online submissions for Largest Rectangle in Histogram.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">largestRectangleArea</span><span class="params">(self, height)</span>:</span></span><br><span class="line">        height.append(<span class="number">0</span>)</span><br><span class="line">        stack = [<span class="number">-1</span>]  <span class="comment"># 添加-1是为了判断是不是进行到了最后一个</span></span><br><span class="line">        max_space = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(height)):</span><br><span class="line">            <span class="keyword">while</span> height[i] &lt; height[stack[<span class="number">-1</span>]]:  <span class="comment"># 如果当前柱比栈顶柱要低，出栈，更新结果</span></span><br><span class="line">                h = height[stack.pop()]</span><br><span class="line">                w = i - stack[<span class="number">-1</span>] - <span class="number">1</span></span><br><span class="line">                max_space = max(max_space, h * w)</span><br><span class="line">            stack.append(i)</span><br><span class="line">        <span class="keyword">return</span> max_space</span><br></pre></td></tr></table></figure>
+<ul>
+<li>说明：<ul>
+<li>height升序则入栈，否则出栈计算并更新结果</li>
+<li>stack存储的是height的下标</li>
+<li>栈变化如下：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[-1]</span><br><span class="line">[-1, 0]</span><br><span class="line">[-1, 1]</span><br><span class="line">[-1, 1, 2]</span><br><span class="line">[-1, 1, 2, 3]</span><br><span class="line">[-1, 1, 4]</span><br><span class="line">[-1, 1, 4, 5]</span><br></pre></td></tr></table></figure>
+<h3 id="85-Maximal-Rectangle"><a href="#85-Maximal-Rectangle" class="headerlink" title="85. Maximal Rectangle"></a><a href="https://leetcode.com/problems/maximal-rectangle/description/" target="_blank" rel="noopener">85. Maximal Rectangle</a></h3><h5 id="题意-1"><a href="#题意-1" class="headerlink" title="题意"></a>题意</h5><p>给定一个填充了0和1的二维二进制矩阵，找到只包含1的最大矩形并返回其面积。<br>实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[</span><br><span class="line">  [&quot;1&quot;,&quot;0&quot;,&quot;1&quot;,&quot;0&quot;,&quot;0&quot;],</span><br><span class="line">  [&quot;1&quot;,&quot;0&quot;,&quot;1&quot;,&quot;1&quot;,&quot;1&quot;],</span><br><span class="line">  [&quot;1&quot;,&quot;1&quot;,&quot;1&quot;,&quot;1&quot;,&quot;1&quot;],</span><br><span class="line">  [&quot;1&quot;,&quot;0&quot;,&quot;0&quot;,&quot;1&quot;,&quot;0&quot;]</span><br><span class="line">]</span><br><span class="line">Output: 6</span><br></pre></td></tr></table></figure></p>
+<h5 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h5><ul>
+<li>对于某一行，将它转换成以当前行为底的直方图，而且下一个行可以根据上一行的结果直接求得高度，所以遍历完成以后，就能得到最大的矩形。</li>
+<li>进行一下模拟:<ul>
+<li>第一行，对应的高度为 1 0 1 0 0</li>
+<li>第二行，对应的高度为 2 0 2 1 1</li>
+<li>第三行，对应的高度为 3 1 3 2 2</li>
+<li>第四行，对应的高度为 4 0 0 3 0</li>
+</ul>
+</li>
+<li>其实就是，对于每一行，如果它为1，就加上上一行的高度，否则高度就为0，求得高度以后，用上一个问题的解法直接求得面积并且更新结果就可以了。</li>
+</ul>
+<h5 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Runtime: 80 ms, faster than 96.81% of Python3 online submissions for Maximal Rectangle.</span></span><br><span class="line"><span class="comment"># Memory Usage: 7.6 MB, less than 52.71% of Python3 online submissions for Maximal Rectangle.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maximalRectangle</span><span class="params">(self, matrix)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> matrix: <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        height = [<span class="number">0</span>] * (len(matrix[<span class="number">0</span>]) + <span class="number">1</span>)</span><br><span class="line">        ans = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> matrix:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(matrix[<span class="number">0</span>])):</span><br><span class="line">                height[i] = height[i] + <span class="number">1</span> <span class="keyword">if</span> row[i] == <span class="string">'1'</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            stack = [<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(matrix[<span class="number">0</span>]) + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">while</span> height[i] &lt; height[stack[<span class="number">-1</span>]]:</span><br><span class="line">                    h = height[stack.pop()]</span><br><span class="line">                    w = i - <span class="number">1</span> - stack[<span class="number">-1</span>]</span><br><span class="line">                    ans = max(ans, h * w)</span><br><span class="line">                stack.append(i)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/02/06/Sort-Interview/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/03/23/Python-Logging/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

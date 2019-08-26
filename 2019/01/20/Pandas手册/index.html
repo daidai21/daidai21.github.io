@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Pandas手册 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Pandas,">
+  
+
+  <meta name="description" content="这个不是全部API，而是大部分常用的，详细的API介绍还是移步官网 数据结构 系列(Series) | 1维 | 大小不变 数据帧(DataFrame) | 2维 | 大小可变的表结构与潜在的异质类型的列 面板(Panel) | 3维 | 大小可变数组  系列 s = pd.Series(data=ndarray/list/constants, index, dtype, copy=false/t">
+<meta name="keywords" content="Pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas手册">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/01/20/Pandas手册/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="这个不是全部API，而是大部分常用的，详细的API介绍还是移步官网 数据结构 系列(Series) | 1维 | 大小不变 数据帧(DataFrame) | 2维 | 大小可变的表结构与潜在的异质类型的列 面板(Panel) | 3维 | 大小可变数组  系列 s = pd.Series(data=ndarray/list/constants, index, dtype, copy=false/t">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-25T14:32:19.850Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pandas手册">
+<meta name="twitter:description" content="这个不是全部API，而是大部分常用的，详细的API介绍还是移步官网 数据结构 系列(Series) | 1维 | 大小不变 数据帧(DataFrame) | 2维 | 大小可变的表结构与潜在的异质类型的列 面板(Panel) | 3维 | 大小可变数组  系列 s = pd.Series(data=ndarray/list/constants, index, dtype, copy=false/t">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据结构"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系列"><span class="toc-text">系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据帧"><span class="toc-text">数据帧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面板"><span class="toc-text">面板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本功能"><span class="toc-text">基本功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数引用"><span class="toc-text">函数引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重建索引"><span class="toc-text">重建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#迭代"><span class="toc-text">迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序"><span class="toc-text">排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串和文本数据"><span class="toc-text">字符串和文本数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选项和自定义"><span class="toc-text">选项和自定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引和选择数据"><span class="toc-text">索引和选择数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统计函数"><span class="toc-text">统计函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#窗口函数"><span class="toc-text">窗口函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缺失数据"><span class="toc-text">缺失数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分组"><span class="toc-text">分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合并-拼接"><span class="toc-text">合并/拼接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#级联"><span class="toc-text">级联</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期功能"><span class="toc-text">日期功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间差"><span class="toc-text">时间差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分类数据"><span class="toc-text">分类数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可视化"><span class="toc-text">可视化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO工具"><span class="toc-text">IO工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稀疏数据"><span class="toc-text">稀疏数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Pandas手册" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Pandas手册</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong>这个不是全部API，而是大部分常用的，详细的API介绍还是移步<a href="http://pandas.pydata.org/pandas-docs/stable/" target="_blank" rel="noopener">官网</a></strong></p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><ul>
+<li>系列(Series) | 1维 | 大小不变</li>
+<li>数据帧(DataFrame) | 2维 | 大小可变的表结构与潜在的异质类型的列</li>
+<li>面板(Panel) | 3维 | 大小可变数组</li>
+</ul>
+<h3 id="系列"><a href="#系列" class="headerlink" title="系列"></a>系列</h3><ul>
+<li><code>s = pd.Series(data=ndarray/list/constants, index, dtype, copy=false/true)</code>  创建</li>
+</ul>
+<h3 id="数据帧"><a href="#数据帧" class="headerlink" title="数据帧"></a>数据帧</h3><ul>
+<li><code>pandas.DataFrame(data=ndarray/series/map/lists/dict/constant/DataFrame, index, columns, dtype, copy=false/true)</code>  创建</li>
+<li><code>df[&#39;col&#39;]</code>  列选择</li>
+<li><code>df[&#39;col&#39;] = df[&#39;col_1&#39;] + df[&#39;col_2&#39;]</code>  列添加</li>
+<li><code>del df[&#39;col&#39;]</code> 或者 <code>df.pop(&#39;col&#39;)</code>  列删除</li>
+<li><code>df.loc(&#39;index&#39;)</code>  行选择 按标签</li>
+<li><code>df.iloc[col_index_num]</code>  行选择 按整数位置</li>
+<li><code>df[start:end]</code>  行切片</li>
+<li><code>df.append(df_tmp)</code>  附加行</li>
+<li><code>df.drop(row_index_num)</code>  删除行</li>
+</ul>
+<h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><ul>
+<li><code>pandas.Panel(data=ndarray/series/map/lists/dict/constant/DataFrame, items=0, major_axis=1, minor_axis=2, dtype, copy=false/true)</code>  创建（items：每个项目对应于内部包含的数据帧(DataFrame)；major_axis：它是每个数据帧(DataFrame)的索引(行)；minor_axis：它是每个数据帧(DataFrame)的列。）</li>
+<li><code>p[&#39;df_num&#39;]</code>  选择数据 使用Item</li>
+<li><code>p.major_axis(row_num)</code>  选择数据 行</li>
+<li><code>p.minor_axis(col_num)</code>  选择数据 列</li>
+</ul>
+<h3 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h3><ul>
+<li>系列<ul>
+<li><code>s.axes</code>  返回系列的标签列表</li>
+<li><code>s.dtype</code>  返回对象的数据类型</li>
+<li><code>s.empty</code>  返回布尔值，True表示对象是否为空</li>
+<li><code>s.ndim</code>  返回对象的维数</li>
+<li><code>s.size</code>  返回系列的长度</li>
+<li><code>s.values</code>  以数组形式返回系列中的实际数据值</li>
+<li><code>s.head(n)</code>  返回前n行</li>
+<li><code>s.tail(n)</code>  返回最后n行</li>
+</ul>
+</li>
+<li>数据帧<ul>
+<li><code>df.T</code>  转置行和列</li>
+<li><code>df.axes</code>  返回行轴标签和列轴标签列表</li>
+<li><code>df.dtypes</code>  返回每列的数据类型</li>
+<li><code>df.empty</code>  返回布尔值，True表示对象是否为空</li>
+<li><code>df.ndim</code>  返回对象的维数</li>
+<li><code>df.shape</code>  返回表示维度的元组</li>
+<li><code>df.size</code>  返回元素数</li>
+<li><code>df.values</code>  将实际数据作为NDarray返回</li>
+<li><code>df.head(n)</code>  返回前n行</li>
+<li><code>df.tail(n)</code>  返回最后n行</li>
+</ul>
+</li>
+<li>描述性统计<ul>
+<li><code>df.sum(axis_n)</code>  返回所请求轴的值的总和</li>
+<li><code>df.mean()</code>  返回平均值</li>
+<li><code>df.std()</code>  返回数字列的Bressel标准偏差</li>
+<li><code>df.count()</code>  返回非空观测数量</li>
+<li><code>df.median()</code>  返回所有值的中位数</li>
+<li><code>df.mode()</code>  返回值的模值</li>
+<li><code>df.min()</code>  返回所有值中的最小值</li>
+<li><code>df.max()</code>  所有值中的最大值</li>
+<li><code>df.abs()</code>  返回绝对值</li>
+<li><code>df.prod()</code>  返回数组元素的乘积</li>
+<li><code>df.cumsum()</code>  返回累计总和</li>
+<li><code>df.cumprod()</code>  返回累计乘积</li>
+<li><code>df.describe(include=&#39;object/number/all&#39;)</code>  返回有关列的统计信息的摘要（object：汇总字符串列；number：汇总数字列；all：将所有列汇总在一起。）</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数引用"><a href="#函数引用" class="headerlink" title="函数引用"></a>函数引用</h3><ul>
+<li><code>df.pipe()</code>  表格函数应用：可以通过将函数和适当数量的参数作为管道参数来执行自定义操作</li>
+<li><code>df.apply()</code>  行或列合理函数应用</li>
+<li><code>df.applymap()</code>  元素合理函数应用</li>
+</ul>
+<h3 id="重建索引"><a href="#重建索引" class="headerlink" title="重建索引"></a>重建索引</h3><ul>
+<li><code>df.reindex(df_tmp, method=&#39;ffill/backfill/nearest&#39;, limit=n)</code>  重建索引</li>
+<li><code>df.rename(inplace=False/True)</code>  重命名：方法允许基于一些映射(字典或者系列)或任意函数来重新标记一个轴</li>
+</ul>
+<h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><ul>
+<li><code>df.iteritems()</code>  迭代(key，value)对</li>
+<li><code>df.iterrows()</code>  将行迭代为(索引，系列)对</li>
+<li><code>df.itertuples()</code>  以namedtuples的形式迭代行</li>
+</ul>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><ul>
+<li><code>df.sort_index(axis=0/1, ascending=True/False)</code>  按标签排序</li>
+<li><code>df.sort_values(by, kind=&#39;mergeesort/heapsort/quicksort&#39;)</code>  按值排序（by列名称；kind排序算法）</li>
+</ul>
+<h3 id="字符串和文本数据"><a href="#字符串和文本数据" class="headerlink" title="字符串和文本数据"></a>字符串和文本数据</h3><ul>
+<li><code>lower()</code>  将Series/Index中的字符串转换为小写</li>
+<li><code>upper()</code>  将Series/Index中的字符串转换为大写</li>
+<li><code>len()</code>  计算字符串长度</li>
+<li><code>strip()</code>  帮助从两侧的系列/索引中的每个字符串中删除空格(包括换行符)</li>
+<li><code>split(&#39; &#39;)</code>  用给定的模式拆分每个字符串</li>
+<li><code>cat(sep=&#39; &#39;)</code>  使用给定的分隔符连接系列/索引元素</li>
+<li><code>get_dummies()</code>  返回具有单热编码值的数据帧(DataFrame)</li>
+<li><code>contains(pattern)</code>  如果元素中包含子字符串，则返回每个元素的布尔值True，否则为False</li>
+<li><code>replace(a,b)</code>  将值a替换为值b</li>
+<li><code>repeat(value)</code>  重复每个元素指定的次数</li>
+<li><code>count(pattern)</code>  返回模式中每个元素的出现总数</li>
+<li><code>startswith(pattern)</code>  如果系列/索引中的元素以模式开始，则返回true</li>
+<li><code>endswith(pattern)</code>  如果系列/索引中的元素以模式结束，则返回true</li>
+<li><code>find(pattern)</code>  返回模式第一次出现的位置</li>
+<li><code>findall(pattern)</code>  返回模式的所有出现的列表</li>
+<li><code>swapcase</code>  变换字母大小写</li>
+<li><code>islower()</code>  检查系列/索引中每个字符串中的所有字符是否小写，返回布尔值</li>
+<li><code>isupper()</code>  检查系列/索引中每个字符串中的所有字符是否大写，返回布尔值</li>
+<li><code>isnumeric()</code>  检查系列/索引中每个字符串中的所有字符是否为数字，返回布尔值</li>
+</ul>
+<h3 id="选项和自定义"><a href="#选项和自定义" class="headerlink" title="选项和自定义"></a>选项和自定义</h3><ul>
+<li><code>pd.get_option(param=&#39;display.max_rows/display.max_columns&#39;)</code>  需要一个参数，并返回下面输出中给出的值</li>
+<li><code>pd.set_option(param=&#39;display.max_rows/display.max_columns&#39;, value)</code>  需要两个参数，并将该值设置为指定的参数值</li>
+<li><code>pd.reset_option(param=&#39;display.max_rows/display.max_columns&#39;)</code>  接受一个参数，并将该值设置为默认值</li>
+<li><code>pd.describe_option(param=&#39;display.max_rows/display.max_columns&#39;)</code>  打印参数的描述</li>
+<li><code>pd.option_context()</code>  上下文管理器用于临时设置语句中的选项</li>
+<li>常用参数：<ul>
+<li><code>display.max_rows</code>  要显示的最大行数</li>
+<li><code>display.max_columns</code>  要显示的最大列数</li>
+<li><code>display.expand_frame_repr</code>  显示数据帧以拉伸页面</li>
+<li><code>display.max_colwidth</code>  显示最大列宽</li>
+<li><code>display.precision</code>  显示十进制数的精度</li>
+</ul>
+</li>
+</ul>
+<h3 id="索引和选择数据"><a href="#索引和选择数据" class="headerlink" title="索引和选择数据"></a>索引和选择数据</h3><ul>
+<li><code>df.loc[&#39;row_start&#39;:&#39;row_end&#39;, &#39;col_start&#39;:&#39;col_end&#39;]</code>  完成基于标签的索引</li>
+<li><code>df.iloc[row_start:row_end, col_start:col_end]</code>  获得纯整数索引</li>
+<li><code>df.ix[row_start:row_end, col_start:col_end]</code>  运算符进行选择和子集化对象的混合方法</li>
+<li>使用符号<ul>
+<li><code>s.loc[indexer]</code>  Series</li>
+<li><code>df.loc[row_index,col_index]</code>  DataFrame</li>
+<li><code>p.loc[item_index,major_index, minor_index]</code>  Panel</li>
+</ul>
+</li>
+<li><code>df.index</code>  属性访问（可以使用属性运算符.来选择列）</li>
+</ul>
+<h3 id="统计函数"><a href="#统计函数" class="headerlink" title="统计函数"></a>统计函数</h3><ul>
+<li><code>df.pct_change()</code>  将每个元素与其前一个元素进行比较，并计算变化百分比</li>
+<li><code>df.cov(df_tmp)</code>  协方差</li>
+<li><code>df.corr()</code>  相关性（相关性显示了任何两个数值(系列)之间的线性关系）</li>
+<li><code>s.rank()</code>  数据排名</li>
+</ul>
+<h3 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h3><ul>
+<li><code>df.rolling(window=n)</code>  n窗口大小的统计值（后加句点式统计函数）</li>
+<li><code>df.expanding(min_periods=n)</code>  n窗口大小的统计值（累计计算）</li>
+<li><code>df.ewm(com, span, halflife)</code>  n窗口大小的统计值</li>
+</ul>
+<h3 id="缺失数据"><a href="#缺失数据" class="headerlink" title="缺失数据"></a>缺失数据</h3><ul>
+<li><code>df.isnull()</code>  检查缺失值，为空返回True</li>
+<li><code>df.notnull()</code>  检查缺失值，不为空返回True</li>
+<li>在求和数据时，NA将被视为0</li>
+<li><code>df.fillna(n)</code>  用标量值n替换NaN</li>
+<li><code>df.fillna(method=&#39;fill/backfill&#39;)</code>  填写NA前进和后退（fill填充方法向前；backfill填充方法向后）</li>
+</ul>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><ul>
+<li><code>obj.groupby(‘key’)</code> 或 <code>obj.groupby([‘key1’,’key2’])</code> 或 <code>obj.groupby(key,axis=1)</code>  将数据拆分成组</li>
+<li><code>df.get_group(&#39;&#39;)</code>  选择一个分组</li>
+<li><code>df_group.transform(lambda)</code>  转换（分组或列上的转换返回索引大小与被分组的索引相同的对象）</li>
+<li><code>df.groupby(&#39;&#39;).filter(lambda_func)</code>  过滤（过滤根据定义的标准过滤数据并返回数据的子集）</li>
+</ul>
+<h3 id="合并-拼接"><a href="#合并-拼接" class="headerlink" title="合并/拼接"></a>合并/拼接</h3><ul>
+<li><code>pd.merge(left, right, how=&#39;inner/outer/left/right&#39;, on=None, left_on=None, right_on=None,
+left_index=False, right_index=False, sort=True)</code>  （left一个DataFrame对象；right另一个DataFrame对象；on列(名称)连接，必须在左和右DataFrame对象中存在(找到)；left_on左侧DataFrame中的列用作键，可以是列名或长度等于DataFrame长度的数组；right_on 来自右的DataFrame的列作为键，可以是列名或长度等于DataFrame长度的数组；left_index如果为True，则使用左侧DataFrame中的索引(行标签)作为其连接键；how是left, right, outer以及inner之中的一个，默认为内inner；sort照字典顺序通过连接键对结果DataFrame进行排序）</li>
+</ul>
+<h3 id="级联"><a href="#级联" class="headerlink" title="级联"></a>级联</h3><ul>
+<li><code>pd.concat(objs, axis=0, join=&#39;outer/inner&#39;, join_axes=None, ignore_index=False)</code>  连接对象（objs是Series，DataFrame或Panel对象的序列或映射；axis是连接的轴；join如何处理其他轴上的索引；join_axes是Index对象的列表；ignore_index是否使用连接轴上的索引值）</li>
+<li><code>df.append(df_tmp)</code>  使用附加连接</li>
+<li><code>pd.datetime.now()</code>  获取当前的日期和时间</li>
+<li><code>pd.date_range(&quot;start&quot;, &quot;end&quot;, freq=&quot;&quot;).time</code>  创建一个时间范围</li>
+<li><code>pd.to_datetime()</code>  转换为时间戳</li>
+</ul>
+<h3 id="日期功能"><a href="#日期功能" class="headerlink" title="日期功能"></a>日期功能</h3><ul>
+<li><code>pd.date_range(&#39;data&#39;, periods=n, freq=&#39;&#39;)</code>  创建一个日期范围（freq更改日期频率）</li>
+<li>偏移别名 略</li>
+</ul>
+<h3 id="时间差"><a href="#时间差" class="headerlink" title="时间差"></a>时间差</h3><ul>
+<li><code>pd.Timedelta(&#39;&#39;)</code>  是时间上的差异，以不同的单位来表示</li>
+</ul>
+<h3 id="分类数据"><a href="#分类数据" class="headerlink" title="分类数据"></a>分类数据</h3><ul>
+<li><code>pandas.Categorical(values, categories, ordered)</code>  分类构造函数</li>
+<li><code>s.categories</code>  获取对象的类别</li>
+<li><code>obj.ordered</code>  获取对象的顺序</li>
+<li><code>s.cat.categories</code>  重命名类别</li>
+<li><code>Categorical.add.categories()</code>  附加新类别</li>
+<li><code>Categorical.remove_categories()</code>  删除类别</li>
+<li>当ordered==True和类别是相同时，所有比较(\==，!=，&gt;，&gt;=，&lt;，和&lt;=)分类数据到另一个分类系列  分类数据的比较</li>
+</ul>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><ul>
+<li><code>df.plot()</code>  绘图</li>
+<li><code>df.plot.bar(stacked=False/True)</code>  竖直条形图</li>
+<li><code>df.plot.barh(stacked=True)</code>  水平条形图</li>
+<li><code>df.plot.hist(bins=n)</code>  直方图</li>
+<li><code>df.plot.box()</code>  箱型图</li>
+<li><code>df.plot.area()</code>  区域块图</li>
+<li><code>df.plot.scatter(x=&#39;a&#39;, y=&#39;b&#39;)</code>  散点图形</li>
+<li><code>df.plot.pie(subplots=True)</code>  饼状图</li>
+</ul>
+<h3 id="IO工具"><a href="#IO工具" class="headerlink" title="IO工具"></a>IO工具</h3><ul>
+<li><code>pd.read_csv(index_col=[&#39;col_index&#39;], dtype={&#39;col_name&#39;: dtype}, names=[&#39;name&#39;], skiprows=n)</code>  从csv文件中读取数据并创建一个DataFrame对象（dtype转换器；使用names参数指定标题的名称；skiprows跳过指定的行数）</li>
+</ul>
+<h3 id="稀疏数据"><a href="#稀疏数据" class="headerlink" title="稀疏数据"></a>稀疏数据</h3><ul>
+<li><code>s.to_sparse()</code>  稀疏Dtypes（稀疏数据应该具有与其密集表示相同的dtype；支持float64，int64和booldtypes）</li>
+</ul>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/api.html" target="_blank" rel="noopener">Pandas 官方文档</a></li>
+<li><a href="https://morvanzhou.github.io/tutorials/data-manipulation/np-pd/1-1-why/" target="_blank" rel="noopener">莫凡Python | pandas</a></li>
+<li><a href="https://www.yiibai.com/pandas/python_pandas_environment_setup.html" target="_blank" rel="noopener">易百教程 | Pandas教程</a></li>
+<li><a href="https://www.pypandas.cn/" target="_blank" rel="noopener">Pandas 中文文档</a></li>
+<li><a href="https://apachecn.github.io/pandas-doc-zh/" target="_blank" rel="noopener">pandas:强大的Python数据分析工具包</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/19/配置ML环境/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/21/ML-Match/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

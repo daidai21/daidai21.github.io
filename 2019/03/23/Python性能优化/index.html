@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Python 性能优化 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Python,">
+  
+
+  <meta name="description" content="Python 性能优化简介主要优化方法：  代码质量 代码性能分析 cProfile  测试CPU运行 timeit  测试函数 memoryprofiler  监控 Python 代码的内存使用 lineprofiler  逐行性能分析   解释器 Cpython Psyco  JIT解释器 PyPi Cython Jython ccfi   C / C++ 扩展 ctypes SWIG   其">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 性能优化">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/03/23/Python性能优化/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="Python 性能优化简介主要优化方法：  代码质量 代码性能分析 cProfile  测试CPU运行 timeit  测试函数 memoryprofiler  监控 Python 代码的内存使用 lineprofiler  逐行性能分析   解释器 Cpython Psyco  JIT解释器 PyPi Cython Jython ccfi   C / C++ 扩展 ctypes SWIG   其">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-23T14:12:17.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 性能优化">
+<meta name="twitter:description" content="Python 性能优化简介主要优化方法：  代码质量 代码性能分析 cProfile  测试CPU运行 timeit  测试函数 memoryprofiler  监控 Python 代码的内存使用 lineprofiler  逐行性能分析   解释器 Cpython Psyco  JIT解释器 PyPi Cython Jython ccfi   C / C++ 扩展 ctypes SWIG   其">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-性能优化"><span class="toc-text">Python 性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python和C-互相调用"><span class="toc-text">Python和C++互相调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ctypes-示例"><span class="toc-text">Ctypes 示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#link"><span class="toc-text">link</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Python性能优化" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Python 性能优化</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.03.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Python-性能优化"><a href="#Python-性能优化" class="headerlink" title="Python 性能优化"></a>Python 性能优化</h1><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>主要优化方法：</p>
+<ul>
+<li>代码质量</li>
+<li>代码性能分析<ul>
+<li><code>cProfile</code>  测试CPU运行</li>
+<li><code>timeit</code>  测试函数</li>
+<li><code>memoryprofiler</code>  监控 Python 代码的内存使用</li>
+<li><code>lineprofiler</code>  逐行性能分析</li>
+</ul>
+</li>
+<li>解释器<ul>
+<li><code>Cpython</code></li>
+<li><code>Psyco</code>  JIT解释器</li>
+<li><code>PyPi</code></li>
+<li><code>Cython</code></li>
+<li><code>Jython</code></li>
+<li><code>ccfi</code></li>
+</ul>
+</li>
+<li>C / C++ 扩展<ul>
+<li><code>ctypes</code></li>
+<li><code>SWIG</code></li>
+</ul>
+</li>
+<li>其他<ul>
+<li><code>Numba</code>  GPU加速</li>
+</ul>
+</li>
+</ul>
+<h3 id="Python和C-互相调用"><a href="#Python和C-互相调用" class="headerlink" title="Python和C++互相调用"></a>Python和C++互相调用</h3><ul>
+<li>C++ 和 Python 忙等待文件夹内容</li>
+<li>Python运行 C++停；C++停的时候唤醒Python</li>
+</ul>
+<h3 id="Ctypes-示例"><a href="#Ctypes-示例" class="headerlink" title="Ctypes 示例"></a>Ctypes 示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add_int</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">add_float</span><span class="params">(<span class="keyword">float</span>, <span class="keyword">float</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add_int</span><span class="params">(<span class="keyword">int</span> num1, <span class="keyword">int</span> num2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1 + num2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">add_float</span><span class="params">(<span class="keyword">float</span> num1, <span class="keyword">float</span> num2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1 + num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来将C文件编译为.so文件(windows下为DLL)。下面操作会生成adder.so文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for Mac</span></span><br><span class="line">$ gcc -shared -Wl,-install_name,adder.so -o adder.so -fPIC add.c</span><br></pre></td></tr></table></figure>
+<p>现在在你的Python代码中来调用它</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># load the shared object file</span></span><br><span class="line">adder = CDLL(<span class="string">'./adder.so'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># find sum of integers</span></span><br><span class="line">res_int = adder.add_int(<span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">print(<span class="string">"Sum of 4 and 5 = "</span> + str(res_int))</span><br><span class="line"></span><br><span class="line"><span class="comment"># find sum of floats</span></span><br><span class="line">a = c_float(<span class="number">5.5</span>)</span><br><span class="line">b = c_float(<span class="number">4.1</span>)</span><br><span class="line"></span><br><span class="line">add_float = adder.add_float</span><br><span class="line">add_float.restype = c_float</span><br><span class="line">print(<span class="string">"Sum of 5.5 and 4.1 = "</span>, str(add_float(a, b)))</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(base) ➜  <span class="built_in">test</span>-ctypes python3 test.py </span><br><span class="line">Sum of 4 and 5 = 9</span><br><span class="line">Sum of 5.5 and 4.1 =  9.600000381469727</span><br></pre></td></tr></table></figure>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ul>
+<li><a href="https://docs.python.org/3/library/ctypes.html" target="_blank" rel="noopener">ctypes — A foreign function library for Python</a></li>
+<li>The chapter 15 of “Python CookBook” book.</li>
+<li><a href="http://wiki.jikexueyuan.com/project/interpy-zh/c_extensions/ctypes.html" target="_blank" rel="noopener">极客学院</a></li>
+<li><a href="https://python3-cookbook.readthedocs.io/zh_CN/latest/chapters/p15_c_extensions.html" target="_blank" rel="noopener">第十五章：C语言扩展 | python3-cookbook</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/03/23/Python-Logging/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/04/11/momenta_internship/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

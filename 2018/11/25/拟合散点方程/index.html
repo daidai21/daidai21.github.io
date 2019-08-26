@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>拟合散点方程 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Math,">
+  
+
+  <meta name="description" content="多点拟合 leastsq的doc https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html   scipy的GitHub看拟合问题 https://github.com/scipy/scipy/issues?utf8=%E2%9C%93&amp;amp;q=scipy.optimize.leastsq">
+<meta name="keywords" content="Math">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拟合散点方程">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/11/25/拟合散点方程/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="多点拟合 leastsq的doc https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html   scipy的GitHub看拟合问题 https://github.com/scipy/scipy/issues?utf8=%E2%9C%93&amp;amp;q=scipy.optimize.leastsq">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-25T14:33:34.982Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拟合散点方程">
+<meta name="twitter:description" content="多点拟合 leastsq的doc https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html   scipy的GitHub看拟合问题 https://github.com/scipy/scipy/issues?utf8=%E2%9C%93&amp;amp;q=scipy.optimize.leastsq">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#多点拟合"><span class="toc-text">多点拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#以上为大家常用python数据分析库拟合曲线方程的方法。但是这里可以看到计算得到的方程并不是最优解而是牛顿迭代不断逼近的解。（SO：调库要谨慎！）"><span class="toc-text">以上为大家常用python数据分析库拟合曲线方程的方法。但是这里可以看到计算得到的方程并不是最优解而是牛顿迭代不断逼近的解。（SO：调库要谨慎！）</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#直线拟合"><span class="toc-text">直线拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#针对椭圆的最小二乘法拟合"><span class="toc-text">针对椭圆的最小二乘法拟合</span></a></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-拟合散点方程" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">拟合散点方程</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Math/">Math</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="多点拟合"><a href="#多点拟合" class="headerlink" title="多点拟合"></a>多点拟合</h3><ul>
+<li>leastsq的doc<ul>
+<li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html" target="_blank" rel="noopener">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.leastsq.html</a></li>
+</ul>
+</li>
+<li>scipy的GitHub看拟合问题<ul>
+<li><a href="https://github.com/scipy/scipy/issues?utf8=%E2%9C%93&amp;q=scipy.optimize.leastsq" target="_blank" rel="noopener">https://github.com/scipy/scipy/issues?utf8=%E2%9C%93&amp;q=scipy.optimize.leastsq</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leastsq</span><span class="params">(func, x0, args=<span class="params">()</span>, Dfun=None, full_output=<span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            col_deriv=<span class="number">0</span>, ftol=<span class="number">1.49012e-8</span>, xtol=<span class="number">1.49012e-8</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            gtol=<span class="number">0.0</span>, maxfev=<span class="number">0</span>, epsfcn=None, factor=<span class="number">100</span>, diag=None)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Minimize the sum of squares of a set of equations.</span></span><br><span class="line"><span class="string">    ::</span></span><br><span class="line"><span class="string">        x = arg min(sum(func(y)**2,axis=0))</span></span><br><span class="line"><span class="string">                 y</span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    ----------</span></span><br><span class="line"><span class="string">    func : callable</span></span><br><span class="line"><span class="string">        should take at least one (possibly length N vector) argument and</span></span><br><span class="line"><span class="string">        returns M floating point numbers. It must not return NaNs or</span></span><br><span class="line"><span class="string">        fitting might fail.</span></span><br><span class="line"><span class="string">    x0 : ndarray</span></span><br><span class="line"><span class="string">        The starting estimate for the minimization.</span></span><br><span class="line"><span class="string">    args : tuple, optional</span></span><br><span class="line"><span class="string">        Any extra arguments to func are placed in this tuple.</span></span><br><span class="line"><span class="string">    Dfun : callable, optional</span></span><br><span class="line"><span class="string">        A function or method to compute the Jacobian of func with derivatives</span></span><br><span class="line"><span class="string">        across the rows. If this is None, the Jacobian will be estimated.</span></span><br><span class="line"><span class="string">    full_output : bool, optional</span></span><br><span class="line"><span class="string">        non-zero to return all optional outputs.</span></span><br><span class="line"><span class="string">    col_deriv : bool, optional</span></span><br><span class="line"><span class="string">        non-zero to specify that the Jacobian function computes derivatives</span></span><br><span class="line"><span class="string">        down the columns (faster, because there is no transpose operation).</span></span><br><span class="line"><span class="string">    ftol : float, optional</span></span><br><span class="line"><span class="string">        Relative error desired in the sum of squares.</span></span><br><span class="line"><span class="string">    xtol : float, optional</span></span><br><span class="line"><span class="string">        Relative error desired in the approximate solution.</span></span><br><span class="line"><span class="string">    gtol : float, optional</span></span><br><span class="line"><span class="string">        Orthogonality desired between the function vector and the columns of</span></span><br><span class="line"><span class="string">        the Jacobian.</span></span><br><span class="line"><span class="string">    maxfev : int, optional</span></span><br><span class="line"><span class="string">        The maximum number of calls to the function. If `Dfun` is provided</span></span><br><span class="line"><span class="string">        then the default `maxfev` is 100*(N+1) where N is the number of elements</span></span><br><span class="line"><span class="string">        in x0, otherwise the default `maxfev` is 200*(N+1).</span></span><br><span class="line"><span class="string">    epsfcn : float, optional</span></span><br><span class="line"><span class="string">        A variable used in determining a suitable step length for the forward-</span></span><br><span class="line"><span class="string">        difference approximation of the Jacobian (for Dfun=None).</span></span><br><span class="line"><span class="string">        Normally the actual step length will be sqrt(epsfcn)*x</span></span><br><span class="line"><span class="string">        If epsfcn is less than the machine precision, it is assumed that the</span></span><br><span class="line"><span class="string">        relative errors are of the order of the machine precision.</span></span><br><span class="line"><span class="string">    factor : float, optional</span></span><br><span class="line"><span class="string">        A parameter determining the initial step bound</span></span><br><span class="line"><span class="string">        (``factor * || diag * x||``). Should be in interval ``(0.1, 100)``.</span></span><br><span class="line"><span class="string">    diag : sequence, optional</span></span><br><span class="line"><span class="string">        N positive entries that serve as a scale factors for the variables.</span></span><br><span class="line"><span class="string">    Returns</span></span><br><span class="line"><span class="string">    -------</span></span><br><span class="line"><span class="string">    x : ndarray</span></span><br><span class="line"><span class="string">        The solution (or the result of the last iteration for an unsuccessful</span></span><br><span class="line"><span class="string">        call).</span></span><br><span class="line"><span class="string">    cov_x : ndarray</span></span><br><span class="line"><span class="string">        Uses the fjac and ipvt optional outputs to construct an</span></span><br><span class="line"><span class="string">        estimate of the jacobian around the solution. None if a</span></span><br><span class="line"><span class="string">        singular matrix encountered (indicates very flat curvature in</span></span><br><span class="line"><span class="string">        some direction).  This matrix must be multiplied by the</span></span><br><span class="line"><span class="string">        residual variance to get the covariance of the</span></span><br><span class="line"><span class="string">        parameter estimates -- see curve_fit.</span></span><br><span class="line"><span class="string">    infodict : dict</span></span><br><span class="line"><span class="string">        a dictionary of optional outputs with the key s:</span></span><br><span class="line"><span class="string">        ``nfev``</span></span><br><span class="line"><span class="string">            The number of function calls</span></span><br><span class="line"><span class="string">        ``fvec``</span></span><br><span class="line"><span class="string">            The function evaluated at the output</span></span><br><span class="line"><span class="string">        ``fjac``</span></span><br><span class="line"><span class="string">            A permutation of the R matrix of a QR</span></span><br><span class="line"><span class="string">            factorization of the final approximate</span></span><br><span class="line"><span class="string">            Jacobian matrix, stored column wise.</span></span><br><span class="line"><span class="string">            Together with ipvt, the covariance of the</span></span><br><span class="line"><span class="string">            estimate can be approximated.</span></span><br><span class="line"><span class="string">        ``ipvt``</span></span><br><span class="line"><span class="string">            An integer array of length N which defines</span></span><br><span class="line"><span class="string">            a permutation matrix, p, such that</span></span><br><span class="line"><span class="string">            fjac*p = q*r, where r is upper triangular</span></span><br><span class="line"><span class="string">            with diagonal elements of nonincreasing</span></span><br><span class="line"><span class="string">            magnitude. Column j of p is column ipvt(j)</span></span><br><span class="line"><span class="string">            of the identity matrix.</span></span><br><span class="line"><span class="string">        ``qtf``</span></span><br><span class="line"><span class="string">            The vector (transpose(q) * fvec).</span></span><br><span class="line"><span class="string">    mesg : str</span></span><br><span class="line"><span class="string">        A string message giving information about the cause of failure.</span></span><br><span class="line"><span class="string">    ier : int</span></span><br><span class="line"><span class="string">        An integer flag.  If it is equal to 1, 2, 3 or 4, the solution was</span></span><br><span class="line"><span class="string">        found.  Otherwise, the solution was not found. In either case, the</span></span><br><span class="line"><span class="string">        optional output variable 'mesg' gives more information.</span></span><br><span class="line"><span class="string">    Notes</span></span><br><span class="line"><span class="string">    -----</span></span><br><span class="line"><span class="string">    "leastsq" is a wrapper around MINPACK's lmdif and lmder algorithms.</span></span><br><span class="line"><span class="string">    cov_x is a Jacobian approximation to the Hessian of the least squares</span></span><br><span class="line"><span class="string">    objective function.</span></span><br><span class="line"><span class="string">    This approximation assumes that the objective function is based on the</span></span><br><span class="line"><span class="string">    difference between some observed target data (ydata) and a (non-linear)</span></span><br><span class="line"><span class="string">    function of the parameters `f(xdata, params)` ::</span></span><br><span class="line"><span class="string">           func(params) = ydata - f(xdata, params)</span></span><br><span class="line"><span class="string">    so that the objective function is ::</span></span><br><span class="line"><span class="string">           min   sum((ydata - f(xdata, params))**2, axis=0)</span></span><br><span class="line"><span class="string">         params</span></span><br><span class="line"><span class="string">    The solution, `x`, is always a 1D array, regardless of the shape of `x0`,</span></span><br><span class="line"><span class="string">    or whether `x0` is a scalar.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    x0 = asarray(x0).flatten()</span><br><span class="line">    n = len(x0)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(args, tuple):</span><br><span class="line">        args = (args,)</span><br><span class="line">    shape, dtype = _check_func(<span class="string">'leastsq'</span>, <span class="string">'func'</span>, func, x0, args, n)</span><br><span class="line">    m = shape[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> n &gt; m:</span><br><span class="line">        <span class="keyword">raise</span> TypeError(<span class="string">'Improper input: N=%s must not exceed M=%s'</span> % (n, m))</span><br><span class="line">    <span class="keyword">if</span> epsfcn <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        epsfcn = finfo(dtype).eps</span><br><span class="line">    <span class="keyword">if</span> Dfun <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">if</span> maxfev == <span class="number">0</span>:</span><br><span class="line">            maxfev = <span class="number">200</span>*(n + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">with</span> _MINPACK_LOCK:</span><br><span class="line">            retval = _minpack._lmdif(func, x0, args, full_output, ftol, xtol,</span><br><span class="line">                                     gtol, maxfev, epsfcn, factor, diag)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> col_deriv:</span><br><span class="line">            _check_func(<span class="string">'leastsq'</span>, <span class="string">'Dfun'</span>, Dfun, x0, args, n, (n, m))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            _check_func(<span class="string">'leastsq'</span>, <span class="string">'Dfun'</span>, Dfun, x0, args, n, (m, n))</span><br><span class="line">        <span class="keyword">if</span> maxfev == <span class="number">0</span>:</span><br><span class="line">            maxfev = <span class="number">100</span> * (n + <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">with</span> _MINPACK_LOCK:</span><br><span class="line">            retval = _minpack._lmder(func, Dfun, x0, args, full_output,</span><br><span class="line">                                     col_deriv, ftol, xtol, gtol, maxfev,</span><br><span class="line">                                     factor, diag)</span><br><span class="line"></span><br><span class="line">    errors = &#123;<span class="number">0</span>: [<span class="string">"Improper input parameters."</span>, TypeError],</span><br><span class="line">              <span class="number">1</span>: [<span class="string">"Both actual and predicted relative reductions "</span></span><br><span class="line">                  <span class="string">"in the sum of squares\n  are at most %f"</span> % ftol, <span class="keyword">None</span>],</span><br><span class="line">              <span class="number">2</span>: [<span class="string">"The relative error between two consecutive "</span></span><br><span class="line">                  <span class="string">"iterates is at most %f"</span> % xtol, <span class="keyword">None</span>],</span><br><span class="line">              <span class="number">3</span>: [<span class="string">"Both actual and predicted relative reductions in "</span></span><br><span class="line">                  <span class="string">"the sum of squares\n  are at most %f and the "</span></span><br><span class="line">                  <span class="string">"relative error between two consecutive "</span></span><br><span class="line">                  <span class="string">"iterates is at \n  most %f"</span> % (ftol, xtol), <span class="keyword">None</span>],</span><br><span class="line">              <span class="number">4</span>: [<span class="string">"The cosine of the angle between func(x) and any "</span></span><br><span class="line">                  <span class="string">"column of the\n  Jacobian is at most %f in "</span></span><br><span class="line">                  <span class="string">"absolute value"</span> % gtol, <span class="keyword">None</span>],</span><br><span class="line">              <span class="number">5</span>: [<span class="string">"Number of calls to function has reached "</span></span><br><span class="line">                  <span class="string">"maxfev = %d."</span> % maxfev, ValueError],</span><br><span class="line">              <span class="number">6</span>: [<span class="string">"ftol=%f is too small, no further reduction "</span></span><br><span class="line">                  <span class="string">"in the sum of squares\n  is possible."</span><span class="string">""</span> % ftol,</span><br><span class="line">                  ValueError],</span><br><span class="line">              <span class="number">7</span>: [<span class="string">"xtol=%f is too small, no further improvement in "</span></span><br><span class="line">                  <span class="string">"the approximate\n  solution is possible."</span> % xtol,</span><br><span class="line">                  ValueError],</span><br><span class="line">              <span class="number">8</span>: [<span class="string">"gtol=%f is too small, func(x) is orthogonal to the "</span></span><br><span class="line">                  <span class="string">"columns of\n  the Jacobian to machine "</span></span><br><span class="line">                  <span class="string">"precision."</span> % gtol, ValueError],</span><br><span class="line">              <span class="string">'unknown'</span>: [<span class="string">"Unknown error."</span>, TypeError]&#125;</span><br><span class="line"></span><br><span class="line">    info = retval[<span class="number">-1</span>]    <span class="comment"># The FORTRAN return value</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> info <span class="keyword">not</span> <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>] <span class="keyword">and</span> <span class="keyword">not</span> full_output:</span><br><span class="line">        <span class="keyword">if</span> info <span class="keyword">in</span> [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]:</span><br><span class="line">            warnings.warn(errors[info][<span class="number">0</span>], RuntimeWarning)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">raise</span> errors[info][<span class="number">1</span>](errors[info][<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">except</span> KeyError:</span><br><span class="line">                <span class="keyword">raise</span> errors[<span class="string">'unknown'</span>][<span class="number">1</span>](errors[<span class="string">'unknown'</span>][<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    mesg = errors[info][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> full_output:</span><br><span class="line">        cov_x = <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">if</span> info <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]:</span><br><span class="line">            <span class="keyword">from</span> numpy.dual <span class="keyword">import</span> inv</span><br><span class="line">            perm = take(eye(n), retval[<span class="number">1</span>][<span class="string">'ipvt'</span>] - <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">            r = triu(transpose(retval[<span class="number">1</span>][<span class="string">'fjac'</span>])[:n, :])</span><br><span class="line">            R = dot(r, perm)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                cov_x = inv(dot(transpose(R), R))</span><br><span class="line">            <span class="keyword">except</span> (LinAlgError, ValueError):</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">return</span> (retval[<span class="number">0</span>], cov_x) + retval[<span class="number">1</span>:<span class="number">-1</span>] + (mesg, info)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (retval[<span class="number">0</span>], info)</span><br></pre></td></tr></table></figure>
+<h5 id="以上为大家常用python数据分析库拟合曲线方程的方法。但是这里可以看到计算得到的方程并不是最优解而是牛顿迭代不断逼近的解。（SO：调库要谨慎！）"><a href="#以上为大家常用python数据分析库拟合曲线方程的方法。但是这里可以看到计算得到的方程并不是最优解而是牛顿迭代不断逼近的解。（SO：调库要谨慎！）" class="headerlink" title="以上为大家常用python数据分析库拟合曲线方程的方法。但是这里可以看到计算得到的方程并不是最优解而是牛顿迭代不断逼近的解。（SO：调库要谨慎！）"></a>以上为大家常用python数据分析库拟合曲线方程的方法。但是这里可以看到计算得到的方程并不是最优解而是牛顿迭代不断逼近的解。（SO：调库要谨慎！）</h5><h3 id="直线拟合"><a href="#直线拟合" class="headerlink" title="直线拟合"></a>直线拟合</h3><ul>
+<li>首先scipy.optimize.leastsq可以直接调用就行。然后我看网上很多雷同的博客用的这个库直接调用的，自己测试后对于此库个人保留怀疑态度。所以下面是自己写的一个对于直线方程的拟合函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里用的方程是y=k*x+b</span></span><br><span class="line"><span class="comment"># 输入的是列表list，分别是x和y的值</span></span><br><span class="line"><span class="comment"># 输出的是k和b的值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">least_square</span><span class="params">(x, y)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(x) != len(y):</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    aver_x = sum(x) / len(x)</span><br><span class="line">    aver_y = sum(y) / len(y)</span><br><span class="line">    <span class="comment"># 分母和分子初始化</span></span><br><span class="line">    denominator = <span class="number">0</span></span><br><span class="line">    molecule = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(x)):</span><br><span class="line">        denominator += (x[i] - aver_x) * (y[i] - aver_y)</span><br><span class="line">        molecule += pow((x[i] - aver_x), <span class="number">2</span>)</span><br><span class="line">    k = denominator / molecule</span><br><span class="line">    b = aver_y - k * aver_x</span><br><span class="line">    <span class="keyword">return</span> k, b</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>推导过程</p>
+<ul>
+<li>直线方程为$y = kx + b$</li>
+<li>先求k为$k = \frac{\sum^n_{i=1}(x_i-\bar{x})(y_i-\bar{y})}{\sum^n_{i=1}(x_i-\bar{x})^2}$</li>
+<li>再求b为$b = \bar{y} - k\bar{x}$</li>
+</ul>
+</li>
+<li><p><a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95" target="_blank" rel="noopener">推导过程参考wiki</a></p>
+</li>
+</ul>
+<h3 id="针对椭圆的最小二乘法拟合"><a href="#针对椭圆的最小二乘法拟合" class="headerlink" title="针对椭圆的最小二乘法拟合"></a>针对椭圆的最小二乘法拟合</h3><ul>
+<li>平面上任意位置的一个椭圆，其中心坐标为（x0，y0），半长轴a，半短轴b，长轴偏角为θ，方程为$x^2 + Axy + By^2 + Cx + Dy + E = 0$</li>
+<li>转换为标准椭圆方程$\frac{(x-x_0)^2}{a^2} + \frac{(y-y_0)^2}{b^2} = 1$时，参数计算为：<ul>
+<li>$x_0 = \frac{2BC-AD}{A^2-4B}$</li>
+<li>$y_0 = \frac{2D-AD}{A^2-4B}$</li>
+<li>$a = \sqrt{\frac{2(ACD-BC^2-D^2+4BE-A^2E)}{(A^2-4B)(B+\sqrt{A^2+(1-B)^2}+1)}}$</li>
+<li>$b = \sqrt{\frac{2(ACD-BC^2-D^2+4BE-A^2E)}{(A^2-4B)(B-\sqrt{A^2+(1-B)^2}+1)}}$</li>
+<li>$\theta = \arctan(\sqrt{\frac{a^2-b^2B}{a^2B-b^2}})$</li>
+</ul>
+</li>
+<li>在原始测得的N（N≥5）组数据（xi，yi），（i=1,2,3,…,N）中，根据椭圆方程通式和最小二乘法原理，求目标函数$F(A, B, C, D, E) = \sum^N_{i=1}(x_i^2 + Ax_iy_i + By_i^2 + Cx_i + Dy_i + E)^2$的最小值来确定参数A、B、C、D和E的值</li>
+<li>令F（A，B，C，D，E）对各个参数的偏导数均为零，得到以下方程组：</li>
+</ul>
+<p>$$<br>\begin{bmatrix}<br>\sum^N_{i=1}x_i^2y_i^2 &amp; \sum^N_{i=1}x_i^2y_i^3 &amp; \sum^N_{i=1}x_i^2y_i &amp; \sum^N_{i=1}x_iy_i^2 &amp; \sum^N_{i=1}x_iy_i \<br>\sum^N_{i=1}x_iy_i^3 &amp; \sum^N_{i=1}y_i^4 &amp; \sum^N_{i=1}x_iy_i^2 &amp; \sum^N_{i=1}y_i^3 &amp; \sum^N_{i=1}y_i^2 \<br>\sum^N_{i=1}x_i^2y_i &amp; \sum^N_{i=1}x_iy_i^2 &amp; \sum^N_{i=1}x_i^2 &amp; \sum^N_{i=1}x_iy_i &amp; \sum^N_{i=1}x_i \<br>\sum^N_{i=1}x_iy_i^2 &amp; \sum^N_{i=1}y_i^2 &amp; \sum^N_{i=1}x_iy_i &amp; \sum^N_{i=1}y_i^2 &amp; \sum^N_{i=1}y_i \<br>\sum^N_{i=1}x_iy_i &amp; \sum^N_{i=1}y_i^2 &amp; \sum^N_{i=1}x_i &amp; \sum^N_{i=1}y_i &amp; N \<br>\end{bmatrix}<br>\begin{bmatrix}<br>A \<br>B \<br>C \<br>D \<br>E \<br>\end{bmatrix} =<br>\begin{bmatrix}<br>\sum^N_{i=1}x_i^3y_i \<br>\sum^N_{i=1}x_i^2y_i^2 \<br>\sum^N_{i=1}x_i^3 \<br>\sum^N_{i=1}x_i^2y_i \<br>\sum^N_{i=1}x_i^2 \<br>\end{bmatrix}<br>$$</p>
+<ul>
+<li>求解此线性方程组可解出A、B、C、D和E，代入第二个方程即可解得拟合的椭圆的参数</li>
+<li>代码如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solve_tuoyuan</span><span class="params">(x,y)</span>:</span></span><br><span class="line">    <span class="comment"># a*x**2 + b*x*y + c*y**2 + d*x + e*y + f</span></span><br><span class="line">    x0,y0 = x.mean(),y.mean()</span><br><span class="line">    D1=np.array([(x-x0)**<span class="number">2</span>,(x-x0)*(y-y0),(y-y0)**<span class="number">2</span>]).T</span><br><span class="line">    D2=np.array([x-x0,y-y0,np.ones(y.shape)]).T</span><br><span class="line">    S1=np.dot(D1.T,D1)</span><br><span class="line">    S2=np.dot(D1.T,D2)</span><br><span class="line">    S3=np.dot(D2.T,D2)    </span><br><span class="line">    T=<span class="number">-1</span>*np.dot(np.linalg.inv(S3),S2.T)</span><br><span class="line">    M=S1+np.dot(S2,T)</span><br><span class="line">    M=np.array([M[<span class="number">2</span>]/<span class="number">2</span>,-M[<span class="number">1</span>],M[<span class="number">0</span>]/<span class="number">2</span>])</span><br><span class="line">    lam,eigen=np.linalg.eig(M)</span><br><span class="line">    cond=<span class="number">4</span>*eigen[<span class="number">0</span>]*eigen[<span class="number">2</span>]-eigen[<span class="number">1</span>]**<span class="number">2</span></span><br><span class="line">    A1=eigen[:,cond&gt;<span class="number">0</span>] </span><br><span class="line">    A=np.vstack([A1,np.dot(T,A1)]).flatten()</span><br><span class="line">    A3=A[<span class="number">3</span>]<span class="number">-2</span>*A[<span class="number">0</span>]*x0-A[<span class="number">1</span>]*y0</span><br><span class="line">    A4=A[<span class="number">4</span>]<span class="number">-2</span>*A[<span class="number">2</span>]*y0-A[<span class="number">1</span>]*x0</span><br><span class="line">    A5=A[<span class="number">5</span>]+A[<span class="number">0</span>]*x0**<span class="number">2</span>+A[<span class="number">2</span>]*y0**<span class="number">2</span>+A[<span class="number">1</span>]*x0*y0-A[<span class="number">3</span>]*x0-A[<span class="number">4</span>]*y0</span><br><span class="line">    A[<span class="number">3</span>]=A3; A[<span class="number">4</span>]=A4; A[<span class="number">5</span>]=A5</span><br><span class="line">    <span class="keyword">return</span> A</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal_style</span><span class="params">(paras)</span>:</span></span><br><span class="line">    paras=paras/paras[<span class="number">5</span>]</span><br><span class="line">    A,B,C,D,E=paras[:<span class="number">5</span>]</span><br><span class="line">    <span class="comment"># 椭圆中心</span></span><br><span class="line">    x0=(B*E<span class="number">-2</span>*C*D)/(<span class="number">4</span>*A*C-B**<span class="number">2</span>)</span><br><span class="line">    y0=(B*D<span class="number">-2</span>*A*E)/(<span class="number">4</span>*A*C-B**<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 长短轴</span></span><br><span class="line">    a= <span class="number">2</span>*np.sqrt((<span class="number">2</span>*A*(x0**<span class="number">2</span>)+<span class="number">2</span>*C*(y0**<span class="number">2</span>)+<span class="number">2</span>*B*x0*y0<span class="number">-2</span>)/(A+C+np.sqrt(((A-C)**<span class="number">2</span>+B**<span class="number">2</span>))))</span><br><span class="line">    b= <span class="number">2</span>*np.sqrt((<span class="number">2</span>*A*(x0**<span class="number">2</span>)+<span class="number">2</span>*C*(y0**<span class="number">2</span>)+<span class="number">2</span>*B*x0*y0<span class="number">-2</span>)/(A+C-np.sqrt(((A-C)**<span class="number">2</span>+B**<span class="number">2</span>))))</span><br><span class="line">    <span class="comment"># 长轴倾角</span></span><br><span class="line">    q=<span class="number">0.5</span> * np.arctan(B/(A-C))</span><br><span class="line">    <span class="comment"># normal_style</span></span><br><span class="line">    <span class="keyword">return</span> x0,y0,a,b,q</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tuoyuan</span><span class="params">(y,x,p)</span>:</span></span><br><span class="line">    <span class="comment"># 用来计算</span></span><br><span class="line">    <span class="keyword">return</span> p[<span class="number">0</span>]*x**<span class="number">2</span>+p[<span class="number">1</span>]*x*y+p[<span class="number">2</span>]*y**<span class="number">2</span>+p[<span class="number">3</span>]*x + p[<span class="number">4</span>]*y + p[<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参考源<ul>
+<li><a href="https://blog.csdn.net/sinat_21107433/article/details/80877758" target="_blank" rel="noopener">最小二乘法拟合椭圆——MATLAB和Qt-C++实现</a></li>
+<li><a href="https://github.com/plenari/omfPython/blob/master/fit_ellipse.py" target="_blank" rel="noopener">github omfPython/fit_ellipse.py</a></li>
+<li><a href="http://www.cnblogs.com/dotLive/archive/2007/04/06/524633.html" target="_blank" rel="noopener">最小二乘法拟合圆公式推导及vc实现[r]</a></li>
+</ul>
+</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/10/27/汽车状态分类器/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/12/08/coder基础知识体系/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

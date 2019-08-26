@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>排序 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Sort,">
+  
+
+  <meta name="description" content="算法性能分析 分类  内排序：带排序的记录全部保存在内存中 外排序：针对外存（磁盘等）数据的排序   基本操作：  比较关键码的操作，通过这种操作确定数据的顺序关系 移动数据记录的操作，用于调整记录的位置顺序   基于关键码的比较的排序问题，时间复杂度是O(n log n)，也就是说任何算法都不能优于O(n log n)  稳定的排序算法：对于待排序的序列里任何一对排序码相同的记录Ri和Rj，在排">
+<meta name="keywords" content="Sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/07/09/排序/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="算法性能分析 分类  内排序：带排序的记录全部保存在内存中 外排序：针对外存（磁盘等）数据的排序   基本操作：  比较关键码的操作，通过这种操作确定数据的顺序关系 移动数据记录的操作，用于调整记录的位置顺序   基于关键码的比较的排序问题，时间复杂度是O(n log n)，也就是说任何算法都不能优于O(n log n)  稳定的排序算法：对于待排序的序列里任何一对排序码相同的记录Ri和Rj，在排">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2018/07/09/排序/快排.gif">
+<meta property="og:updated_time" content="2019-05-25T14:55:04.167Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序">
+<meta name="twitter:description" content="算法性能分析 分类  内排序：带排序的记录全部保存在内存中 外排序：针对外存（磁盘等）数据的排序   基本操作：  比较关键码的操作，通过这种操作确定数据的顺序关系 移动数据记录的操作，用于调整记录的位置顺序   基于关键码的比较的排序问题，时间复杂度是O(n log n)，也就是说任何算法都不能优于O(n log n)  稳定的排序算法：对于待排序的序列里任何一对排序码相同的记录Ri和Rj，在排">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2018/07/09/排序/快排.gif">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#算法性能分析"><span class="toc-text">算法性能分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插入排序"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择排序"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交换排序（又名起泡排序）"><span class="toc-text">交换排序（又名起泡排序）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归并排序"><span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#蒂姆排序"><span class="toc-text">蒂姆排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#几种排序的比较"><span class="toc-text">几种排序的比较</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-排序" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">排序</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="算法性能分析"><a href="#算法性能分析" class="headerlink" title="算法性能分析"></a>算法性能分析</h2><ul>
+<li><p>分类</p>
+<ul>
+<li>内排序：带排序的记录全部保存在内存中</li>
+<li>外排序：针对外存（磁盘等）数据的排序</li>
+</ul>
+</li>
+<li><p>基本操作：</p>
+<ul>
+<li>比较关键码的操作，通过这种操作确定数据的顺序关系</li>
+<li>移动数据记录的操作，用于调整记录的位置顺序</li>
+</ul>
+</li>
+<li><p>基于关键码的比较的排序问题，时间复杂度是O(n log n)，也就是说任何算法都不能优于O(n log n)</p>
+</li>
+<li><p>稳定的排序算法：对于待排序的序列里任何一对排序码相同的记录Ri和Rj，在排序后后的序列中Ri和Rj的前后顺序不变。也就是说，稳定的排序算法能够维持序列中所有排序码相同记录的相对位置。</p>
+</li>
+</ul>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><blockquote>
+<p>思想：<br>1.对一段连续表进行排序时，可以把序列看为两段，左边为排好序的，右边为待排序的。<br>2.每次仅考虑右边序列的第一个元素在左边序列的插入位置。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def insert_sort(lst):</span><br><span class="line">    for i in range(1, len(lst)):  # 开始时片段[0:1]已排好序</span><br><span class="line">        x = lst[i]</span><br><span class="line">        j = i</span><br><span class="line">        while j &gt; 0 and lst[j-1] &gt; x:</span><br><span class="line">            lst[j] = lst[j-1]  # 反序逐个后移元素，确定插入位置</span><br><span class="line">            j -= 1</span><br><span class="line">        lst[j] = x</span><br></pre></td></tr></table></figure>
+<ul>
+<li>空间复杂度：O(1)，计算中只用了两个辅助变量</li>
+<li>时间复杂度：这个算法具有适应性。<ul>
+<li>最坏情况：O(n^2)，关键码的比较次数由内层循环while决定，为n-1次，while循环总执行n<em>(n-1)/2次，记录移动次数包括内层循环外边的两次和循环中的一些次，为2</em>(n-1)次，最终总共2<em>(n-1)+n</em>(n-1)/2次。</li>
+<li>最好情况：O(n)</li>
+<li>平均情况：O(n^2)，一个元素可能插入一排序序列里的任何位置，假设插入个位置的概率相等，内层循环每次的迭代次数就是j/2，求和后就是n*(n-1)/4次。</li>
+</ul>
+</li>
+</ul>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><blockquote>
+<p>思想：<br>1.维护需要考虑的所有记录中最小的i个记录的已排序序列；<br>2.每次从剩余未排序的记录中选取关键码最小的记录，将其放在已排序序列记录的后面，作为序列的第i+1个记录；<br>3.执行到尚未排序序列里只有一个元素时，最后一个元素必然是整个序列中最大的，只需将其放在已排序的记录后排序完成。（这里以升序为例）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def select_sort(lst):</span><br><span class="line">    for i in range(len(lst)-1):  # 只需循环len(lst)-1次</span><br><span class="line">        k = i</span><br><span class="line">        for j in range(i, len(lst)):  # k是已知最小元素的位置</span><br><span class="line">            if lst[j] &lt; lst[k]:</span><br><span class="line">                k = j</span><br><span class="line">        if i != k:  # lst[k]是确定的最小元素，检查是否需要交换</span><br><span class="line">            lst[i], lst[k] = lst[k], lst[i]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>空间复杂度：O(1)，计算中只用了几个辅助变量</li>
+<li>时间复杂度：两个for循环按固定方式重复执行固定次，比较的次数总是1+2+3+…=n<em>(n-1)/2。移动次数为2</em>(n-1)次。此算法没有适应性。<ul>
+<li>最坏情况：O(n^2)</li>
+<li>最好情况：O(n^2)</li>
+<li>平均情况：O(n^2)</li>
+</ul>
+</li>
+</ul>
+<h2 id="交换排序（又名起泡排序）"><a href="#交换排序（又名起泡排序）" class="headerlink" title="交换排序（又名起泡排序）"></a>交换排序（又名起泡排序）</h2><blockquote>
+<p>思想：<br>1.一个序列中的记录没排好序，那么其中一定有逆序存在。<br>2.通过不断减少序列中的逆序，最终得到排序序列。<br>基本操作就是发现相邻的逆序对时就交换他们，通过反复比较和交换，最终完成整个序列的排序。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def bubble_sort(lst):</span><br><span class="line">    for i in range(len(lst)):</span><br><span class="line">        for j in range(1, len(lst)-i):</span><br><span class="line">            if lst[j-1] &gt; lst[j]:</span><br><span class="line">                lst[j-1], lst[j] = lst[j], lst[j-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 改进后（当序列中没有逆序对时，立刻结束循环）</span><br><span class="line"> def bubble_sort(lst):</span><br><span class="line">    for i in range(len(lst)):</span><br><span class="line">        found = False</span><br><span class="line">        for j in range(1, len(lst)-i):</span><br><span class="line">            if lst[j-1] &gt; lst[j]:</span><br><span class="line">                lst[j-1], lst[j] = lst[j], lst[j-1]</span><br><span class="line">                found = True</span><br><span class="line">        if not found:</span><br><span class="line">            break</span><br></pre></td></tr></table></figure>
+<ul>
+<li>空间复杂度：O(1)，计算中只用了几个辅助变量</li>
+<li>时间复杂度：此算法没有适应性。改进后的算法具有适应性。<ul>
+<li>最坏情况：O(n^2)</li>
+<li>最好情况：O(n^2)</li>
+<li>平均情况：改进后的为  O(n)</li>
+</ul>
+</li>
+</ul>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><blockquote>
+<p>思想（基本过程）：<br>1.选择一种标准，把被排序列中的记录按某种标准分为大小两组，较小一组的记录应该排在前面<br>2.采用同样的方式，递归的分别划分得到这两组记录，并继续递归地划分下去<br>3.划分得到越来越小的组，直到每个记录组中最多包含一个记录时，整个序列的排序就完成了。<br>（一次）划分的实现：<br>取出第一个记录作为标准，设其为R，已知的小记录积累在左边，大记录积累在右边，中间是尚未检查的记录。取出记录R使表左边出现了一个空位。这时从右端开始检查，就可以利用这个空位，把发现的第一个小记录（小于R的记录）移到左边。这一迁移操作也导致右边留下一个空位，可供存放在左边发现的一个大记录。<br>算法：<br>1.利用两个下标变量i和j，其初值分别是序列中第一个和最后一个记录的位置。然后取出第一个和记录R，设其排序码为K，作为划分标准。<br>2.交替执行下面两套操作：<br>2.1.从右向左逐一检查j一边的记录，检查中j值不断减一，直至找到第一个关键字小于K的记录，将其存入i所指的空位。注意，移动记录后位置j变成空位，i值加一后只想下一需要检查的记录。<br>2.2.从左向右逐一检查i一边的记录，检查i值不断加一，直至找到第一个关键字大于K的记录并将其存入j所指的空位。转做上面操作。<br>3.重复交替上述两套操作，直到i不再小于j为止。由于第一种操作中j值不断减小，第二种操作中i值不断增大，划分一定能完成。<br>一次划分完成后对两边子序列按照同样方式递归处理。快速排序算法的执行形成了一种二叉树形式的递归调用。</p>
+</blockquote>
+<p><img src="/2018/07/09/排序/快排.gif" alt="你想输入的替代文字"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def quick_sort(lst):</span><br><span class="line">    qsort_rec(lst, 0, len(lst)-1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def qsort_rec(lst, l, r):</span><br><span class="line">    if l &gt;= r:  # 分段无记录或只有一个记录</span><br><span class="line">        return</span><br><span class="line">    i = l</span><br><span class="line">    j = r</span><br><span class="line">    pivot = lst[i]  # lst[i] 是初始空位</span><br><span class="line">    while i &lt; j:  # 找pivot的最终位置</span><br><span class="line">        while i &lt; j and lst[j] &gt;= pivot:</span><br><span class="line">            j -= 1  # 用j向左扫描找小于pivot的记录</span><br><span class="line">        if i &lt; j:</span><br><span class="line">            lst[i] = lst[j]</span><br><span class="line">            i += 1  # 小记录移到左边</span><br><span class="line">        while i &lt; j and lst[i] &lt;= pivot:</span><br><span class="line">            i += 1  # 用i向右扫描找大于pivot的记录</span><br><span class="line">        if i &lt; j:</span><br><span class="line">            lst[j] = lst[i]</span><br><span class="line">            j -= 1  # 大记录移到右边</span><br><span class="line">    lst[i] = pivot  # 将pivot存入其最终位置</span><br><span class="line">    qsort_rec(lst, l, i-1)  # 递归处理左半区间</span><br><span class="line">    qsort_rec(lst, i+1, r)  # 递归处理右半区间</span><br></pre></td></tr></table></figure>
+<ul>
+<li>空间复杂度：最坏情况O(n)，与递归深度有关</li>
+<li>时间复杂度：<ul>
+<li>最坏情况：O(n^2)</li>
+<li>平均情况：O(n log n)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>另外一种简单实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def quick_sort(lst):</span><br><span class="line">    def qsort(lst, begin, end):</span><br><span class="line">        if begin &gt;= end:</span><br><span class="line">            return</span><br><span class="line">        pivot = lst[begin]</span><br><span class="line">        i = begin</span><br><span class="line">        for j in range(begin+1, end+1):</span><br><span class="line">            if lst[j] &lt; pivot:  # 发现一个小元素</span><br><span class="line">                i += 1</span><br><span class="line">                lst[i], lst[j] = lst[j], lst[i]  # 小元素换位</span><br><span class="line">        lst[begin], lst[i] = lst[i], lst[begin]  # 枢纽元换位</span><br><span class="line">        qsort(lst, begin, i-1)</span><br><span class="line">        qsort(lst, i+1, end)</span><br><span class="line"></span><br><span class="line">    qsort(lst, 0, len(lst)-1)</span><br></pre></td></tr></table></figure>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><blockquote>
+<p>归并是一种典型的序列操作，其工作是把两个或更多有序序列合并为一个有序序列。<br>思想：<br>1.初始时，把待排序序列中的n个记录看成n个有序子序列（因为一个记录的序列总是排好序的），每个子序列的长度均为1<br>2.把当时序列组里的有序子序列两两归并，完成一遍后序列组里的排序序列个数减半，每个子序列的长度加倍<br>3.对加长的有序子序列重复上面的操作，最终得到一个长度为n的有序序列<br>这种方法为二路归并法，也可使用多路归并法。<br>操作：<br>1.最下层：实现表中相邻的一对有序序列的归并操作，将归并的结果存入另一个顺序表里的相同位置<br>2.中间层：基于操作1（一对序列的归并操作），实现对整个表里顺序各对有序序列的归并，完成一遍归并，各对序列的归并结果顺序存入另一个表里的相同位置分段<br>3.最高层：在两个顺序表之间往复执行操作2，完成一遍归并后交换两个表的地位，然后再重复操作2的工作，直至整个表里只有一个有序序列时排序完成</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">def merge(lfrom, lto, low, mid, high):</span><br><span class="line">    i, j, k = low, mid, low</span><br><span class="line">    while i &lt; mid and j &lt; high:  # 反复复制两分段首记录中较小的</span><br><span class="line">        if lfrom[i] &lt;= lfrom[j]:</span><br><span class="line">            lto[k] = lfrom[i]</span><br><span class="line">            i += 1</span><br><span class="line">        else:</span><br><span class="line">            lto[k] = lfrom[j]</span><br><span class="line">            j += 1</span><br><span class="line">        k += 1</span><br><span class="line">    while i &lt; mid:  # 复制第一段剩余记录</span><br><span class="line">        lto[k] = lfrom[i]</span><br><span class="line">        i += 1</span><br><span class="line">        k += 1</span><br><span class="line">    while j &lt; high:  # 复制第二段剩余记录</span><br><span class="line">        lto[k] = lfrom[j]</span><br><span class="line">        j += 1</span><br><span class="line">        k += 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def merge_pass(lfrom, lto, llen, slen):</span><br><span class="line">    i = 0</span><br><span class="line">    while i + 2 * slen &lt; llen:  # 归并长slen的两段</span><br><span class="line">        merge(lfrom, lto, i, i + slen, i + 2 * slen)</span><br><span class="line">        i += 2</span><br><span class="line">    if i + slen &lt; llen:  # 剩下的两段，后段长度小于slen</span><br><span class="line">        merge(lfrom, lto, i, i + slen, llen)</span><br><span class="line">    else:  # 只剩下一段，复制到表lto</span><br><span class="line">        for j in range(i, llen):</span><br><span class="line">            lto[j] = lfrom[j]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def merge_sort(lst):</span><br><span class="line">    slen, llen = 1, len(lst)</span><br><span class="line">    templst = [None] * llen</span><br><span class="line">    while slen &lt; llen:</span><br><span class="line">        merge_pass(lst, templst, llen, slen)</span><br><span class="line">        slen *= 2</span><br><span class="line">        merge_pass(templst, lst, llen, slen)  # 结果存回原位</span><br><span class="line">        slen *= 2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>空间复杂度：O(n)</li>
+<li>时间复杂度：O(n log n)，有序子序列的长度将为2^k，完成整个排序需要做的归并遍数不会多于log 2 ^n + 1，总的比较次数和移动次数都为O(n log n)</li>
+</ul>
+<h2 id="蒂姆排序"><a href="#蒂姆排序" class="headerlink" title="蒂姆排序"></a>蒂姆排序</h2><blockquote>
+<p>Python中的内置函数sort<br>蒂姆排序是一种基于归并技术的稳定排序算法，结合了归并排序和插入排序技术，该算法具有适应性。<br>时间复杂度：最坏情况是O(n log n)，<br>空间复杂度：最坏情况是O(n)，最坏情况下需要n/2各工作空间</p>
+</blockquote>
+<h2 id="几种排序的比较"><a href="#几种排序的比较" class="headerlink" title="几种排序的比较"></a>几种排序的比较</h2><table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th style="text-align:center">最坏情况时间复杂度</th>
+<th style="text-align:right">平均情况时间复杂度</th>
+<th>最好情况时间复杂度</th>
+<th>空间复杂度</th>
+<th>稳定性</th>
+<th>适应性  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简单插入排序</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>是</td>
+<td>是 </td>
+</tr>
+<tr>
+<td>二分插入排序</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+<td>是</td>
+<td>是 </td>
+</tr>
+<tr>
+<td>表插入排序</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>是</td>
+<td>是 </td>
+</tr>
+<tr>
+<td>直接选择排序</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+<td>O(n^2)</td>
+<td>O(1)</td>
+<td>否</td>
+<td>否 </td>
+</tr>
+<tr>
+<td>堆选择排序</td>
+<td style="text-align:center">O(n log n)</td>
+<td style="text-align:right">O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+<td>否</td>
+<td>否 </td>
+</tr>
+<tr>
+<td>起泡排序</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(log n)</td>
+<td>否</td>
+<td>否 </td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td style="text-align:center">O(n log n)</td>
+<td style="text-align:right">O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(n)</td>
+<td>是</td>
+<td>否 </td>
+</tr>
+<tr>
+<td>蒂姆排序(sort函数)</td>
+<td style="text-align:center">O(n log n)</td>
+<td style="text-align:right">O(n log n)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>是</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2014/12/22/hello-world/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/09/图解算法/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>mnist(softmax、NN、CNN) | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Mnist,">
+  
+
+  <meta name="description" content="预处理 tensorflow库内包含mnist，直接加载mnist数据并转为一维数组形式。直接加载的是.gz格式。  123import tensorflow as tfimport tensorflow.examples.tutorials.mnist.input_data as input_data  # 加载mnist数据mnist = input_data.read_data_sets(&amp;">
+<meta name="keywords" content="Mnist">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mnist(softmax、NN、CNN)">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/09/05/mnist-softmax、NN、CNN/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="预处理 tensorflow库内包含mnist，直接加载mnist数据并转为一维数组形式。直接加载的是.gz格式。  123import tensorflow as tfimport tensorflow.examples.tutorials.mnist.input_data as input_data  # 加载mnist数据mnist = input_data.read_data_sets(&amp;">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-25T14:41:16.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mnist(softmax、NN、CNN)">
+<meta name="twitter:description" content="预处理 tensorflow库内包含mnist，直接加载mnist数据并转为一维数组形式。直接加载的是.gz格式。  123import tensorflow as tfimport tensorflow.examples.tutorials.mnist.input_data as input_data  # 加载mnist数据mnist = input_data.read_data_sets(&amp;">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#预处理"><span class="toc-text">预处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑回归"><span class="toc-text">逻辑回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络"><span class="toc-text">神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卷积神经网络"><span class="toc-text">卷积神经网络</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-mnist-softmax、NN、CNN" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">mnist(softmax、NN、CNN)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/ComputerVision/">ComputerVision</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h2><ul>
+<li>tensorflow库内包含mnist，直接加载mnist数据并转为一维数组形式。直接加载的是.gz格式。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">import tensorflow.examples.tutorials.mnist.input_data as input_data  # 加载mnist数据</span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)  # one_hot为是否将标签转为一维数组形式</span><br></pre></td></tr></table></figure>
+<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><ul>
+<li>加载数据</li>
+<li>图片转为一维数组</li>
+<li>建立模型：softmax回归模型</li>
+<li>w为可变n*784二维矩阵，b为10数组</li>
+<li>w、b变量初始化为0</li>
+<li>y=w*x+b</li>
+<li>损失函数：交叉熵</li>
+<li>训练模型</li>
+<li>模型评估</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 读取数据图片，预处理</span><br><span class="line">import tensorflow as tf</span><br><span class="line">import tensorflow.examples.tutorials.mnist.input_data as input_data  # 加载mnist数据</span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)  # one_hot为是否将标签转为一维数组形式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 构建softmax回归模型</span><br><span class="line">sess = tf.InteractiveSession()  # 交互作用类（不需用在计算前构建整个图）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 占位符（x和y_）</span><br><span class="line">x = tf.placeholder(&quot;float&quot;, shape=[None, 784])  # 浮点数，二维数组（第一维大小不定，第二维是784）</span><br><span class="line">y_ = tf.placeholder(&quot;float&quot;, shape=[None, 10])  # 用于代表对应某一MNIST图片的类别</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 变量（w权重和b偏置）</span><br><span class="line">w = tf.Variable(tf.zeros([784, 10]))  # 784*10的可变参数值二维矩阵</span><br><span class="line">b = tf.Variable(tf.zeros([10]))  # 10维的向量</span><br><span class="line">sess.run(tf.initialize_all_variables())  # 初始化所有变量为0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 类别预测与损失函数</span><br><span class="line">y = tf.nn.softmax(tf.matmul(x, w) + b)  # 计算每个分类的softmax概率值</span><br><span class="line">cross_entropy = -tf.reduce_sum(y_ * tf.log(y))  # 损失函数（目标类别和预测类别之间的交叉熵）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 训练模型</span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy)  # 最速下降法，步长为0.01</span><br><span class="line">for i in range(1000):</span><br><span class="line">    batch = mnist.train.next_batch(50)  # 每步加载50个样本</span><br><span class="line">    train_step.run(feed_dict=&#123;x: batch[0], y_: batch[1]&#125;)  # feed_dict被每次训练的数据替代</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 模型评估</span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))  # 检测预测值与实际值是否匹配</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, &quot;float&quot;))  # 将布尔数组转化为正确率</span><br><span class="line">print(accuracy.eval(feed_dict=&#123;x: mnist.test.images, y_: mnist.test.labels&#125;))  # 输出最终正确率</span><br></pre></td></tr></table></figure>
+<h2 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h2><ul>
+<li>加载数据集</li>
+<li>定义函数：<ul>
+<li>初始化函数</li>
+<li>神经元模型：mlp、逻辑回归、s函数</li>
+</ul>
+</li>
+<li>照片转一维数组、确定测试、训练的照片、标签</li>
+<li>占位符：定义张量</li>
+<li>调用神经元模型函数</li>
+<li>计算代价函数、构造优化器、求行最值</li>
+<li>初始化变量、迭代100次</li>
+<li>打印正确率</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 神经网络</span><br><span class="line">import tensorflow as tf</span><br><span class="line">import numpy as np</span><br><span class="line">from tensorflow.examples.tutorials.mnist import input_data  # 加载数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def init_weight(shape):  # 初始化</span><br><span class="line">    return tf.Variable(tf.random_normal(shape, stddev=0.01))  # (stddev是标准差，random_normal是正态分布的随机输出值)张量的可变随机值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def model(X, w_h, w_o):  # 神经元模型</span><br><span class="line">    h = tf.nn.sigmoid(tf.matmul(X, w_h))  # 这是一个基本的mlp，两个堆栈逻辑回归  # X和w_h矩阵相乘，s函数</span><br><span class="line">    return tf.matmul(h, w_o)  # 在最后不使用softmax，因为代价函数  # 返回h和w_o的两矩阵之积</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)  # 把数据转换为一位数组的格式</span><br><span class="line">trX = mnist.train.images  # 训练的图片</span><br><span class="line">trY = mnist.train.labels  # 训练的标签</span><br><span class="line">teX = mnist.test.images  # 测试的图片</span><br><span class="line">teY = mnist.test.labels  # 测试的标签</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 占位符</span><br><span class="line">X = tf.placeholder(&quot;float&quot;, [None, 784])  # 第一维长度不定，第二维长度为784的二维矩阵 浮点数 784=28*28</span><br><span class="line">Y = tf.placeholder(&quot;float&quot;, [None, 10])  # 输出的10种情况</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">w_h = init_weight([784, 625])  # 创建特征变量  # 调用上边自定义的函数，对矩阵进行初始化</span><br><span class="line">w_o = init_weight([625, 10])  # 初始化</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">py_x = model(X, w_h, w_o)  # 调用上边的自定义函数，</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=py_x, labels=Y))  # 计算代价</span><br><span class="line">train_op = tf.train.GradientDescentOptimizer(0.05).minimize(cost)  # 构造优化器  # 0.05的学习率使代价函数最小</span><br><span class="line">predict_op = tf.argmax(py_x, 1)  # 求行中最大值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 在会话中启动图表</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    # 初始化所有变量</span><br><span class="line">    tf.global_variables_initializer().run()  # 添加用于初始化变量的节点，</span><br><span class="line"></span><br><span class="line">    for i in range(100):  # 迭代100次</span><br><span class="line">        for start, end in zip(range(0, len(trX)), range(128, len(trX)+1, 128)):  # zip函数是将两个列表打包为元组的列表，元素个数与最短列表一致</span><br><span class="line">            sess.run(train_op, feed_dict=&#123;X: trX[start: end], Y: trY[start:end]&#125;)  # 跑</span><br><span class="line">        print(i, np.mean(np.argmax(teY, axis=1) ==</span><br><span class="line">                         sess.run(predict_op, feed_dict=&#123;X: teX&#125;)))  # mean函数是求平均值，打印预测和实际相同时的概率</span><br><span class="line"></span><br><span class="line">    # for i in range(100):</span><br><span class="line">    #     for start, end in zip(range(0, 1000), range(128, 1000+1, 128)):</span><br><span class="line">    #         sess.run(train_op, feed_dict=&#123;X: trX[start: end], Y: trY[start:end]&#125;)</span><br><span class="line">    #     print(i, np.mean(np.argmax(teY, axis=1) ==</span><br><span class="line">    #                      sess.run(predict_op, feed_dict=&#123;X: teX&#125;)))</span><br></pre></td></tr></table></figure>
+<h2 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h2><ul>
+<li>CNN<ul>
+<li>输入层</li>
+<li>卷积层</li>
+<li>激活函数</li>
+<li>池化层</li>
+<li>全连接层</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>卷积就是为了降维</p>
+</blockquote>
+<blockquote>
+<p>池化就是数据压缩，特征压缩（提取主要特征）</p>
+</blockquote>
+<ul>
+<li>加载数据</li>
+<li>定义初始化函数、定义模型函数（relu、max_pool、dropout）</li>
+<li>图片转一维数组</li>
+<li>张量、初始化</li>
+<li>调用模型函数</li>
+<li>训练的下降率</li>
+<li>argmax</li>
+<li>迭代10次</li>
+<li>测试集是打乱的（np.random.shuffle）</li>
+<li>打印准确率</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br></pre></td><td class="code"><pre><span class="line">-*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># # 读取数据图片，预处理</span><br><span class="line"># import tensorflow as tf</span><br><span class="line"># import tensorflow.examples.tutorials.mnist.input_data as input_data  # 加载mnist数据</span><br><span class="line"># mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)  # one_hot为是否将标签转为一维数组形式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 构建一个多层卷积神经网络</span><br><span class="line">import tensorflow as tf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 权重初始化</span><br><span class="line">def weight_variable(shape):  # 权重</span><br><span class="line">    initial = tf.truncated_normal(shape, stddev=0.01)</span><br><span class="line">    return tf.Variable(initial)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bias_variable(shape):  # 偏置</span><br><span class="line">    initial = tf.constant(0.1, shape=shape)</span><br><span class="line">    return tf.Variable(initial)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 卷积和池化</span><br><span class="line">def conv2d(x, W):</span><br><span class="line">    return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding=&apos;SAME&apos;)  # 1步长的卷积，0边距的模板（用0填充边界）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def max_pool_2x2(x):  # 池化使用2*2的模板</span><br><span class="line">    return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],</span><br><span class="line">                          strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 第一层卷积</span><br><span class="line">W_conv1 = weight_variable([5, 5, 1, 32])  # 卷积在每个5*5的patch中算出32个特征</span><br><span class="line">b_conv1 = bias_variable([32])  # 每个输出的通道都有一个的对应的偏置量</span><br><span class="line"></span><br><span class="line">x_image = tf.reshape(x, [-1, 28, 28, 1])  # x变为一个4d向量，第2、3维是图片的宽、高，第4维是图片的颜色通道数</span><br><span class="line"></span><br><span class="line">h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)  # 把x_image和权值向量进行卷积，加上偏置项，然后使用RELU函数</span><br><span class="line">h_pool1 = max_pool_2x2(h_conv1)  # 最后进行max_pooling（四个像素点中选取最大的）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 第二层卷积</span><br><span class="line">W_conv2 = weight_variable([5, 5, 32, 64])  # 每个5*5的patch中算出64个特征</span><br><span class="line">b_conv2 = bias_variable([64])</span><br><span class="line"></span><br><span class="line">h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)</span><br><span class="line">h_pool2 = max_pool_2x2(h_conv2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 密集层网络</span><br><span class="line">W_fc1 = weight_variable([7*7*64, 1024])  # 图片尺寸减少到了7*7，加入一个有1024个神经元的全连接层</span><br><span class="line">b_fc1 = bias_variable([1024])</span><br><span class="line"></span><br><span class="line">h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])  # 把池化层输出的张量reshape为一些向量</span><br><span class="line">h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)  # 乘上权重矩阵，加上偏置，然后使用RELU</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Droput(减少过拟合)</span><br><span class="line">keep_prob = tf.placeholder(&quot;float&quot;)  # 训练中启用dropout，测试中关闭的dropout</span><br><span class="line">h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 输出层（添加一个softmax层）</span><br><span class="line">W_fc2 = weight_variable([1024, 10])</span><br><span class="line">b_fc2 = bias_variable([10])</span><br><span class="line"></span><br><span class="line">y_conv = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)  # softmax函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 训练和模型评估（ADAM优化器做梯度下降，每100次迭代输出一次日志）</span><br><span class="line">cross_entropy = -tf.reduce_sum(y_ * tf.log(y_conv))</span><br><span class="line">train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)</span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y_conv, 1), tf.argmax(y_, 1))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, &quot;float&quot;))</span><br><span class="line">sess.run(tf.initialize_all_variables())</span><br><span class="line">for i in range(20000):</span><br><span class="line">    batch = mnist.train.next_batch(50)</span><br><span class="line">    if i % 100 == 0:</span><br><span class="line">        train_accuracy = accuracy.eval(feed_dict=&#123;</span><br><span class="line">            x: batch[0], y_: batch[1], keep_prob: 1.0</span><br><span class="line">        &#125;)</span><br><span class="line">        print(&apos;step %d, training accuracy %g&apos; % i, train_accuracy)</span><br><span class="line">    train_step.run(feed_dict=&#123;x: batch[0], y_: batch[1], keep_prob: 0.5&#125;)</span><br><span class="line"></span><br><span class="line">print(&apos;test accuracy %g&apos; % accuracy.eval(feed_dict=&#123;</span><br><span class="line">    x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0</span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># # -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import tensorflow as tf</span><br><span class="line">import numpy as np</span><br><span class="line">from tensorflow.examples.tutorials.mnist import input_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">batch_size = 128</span><br><span class="line">test_size = 256</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def init_weights(shape):</span><br><span class="line">    return tf.Variable(tf.random_normal(shape, stddev=0.01))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def model(X, w, w2, w3, w4, w_o, p_keep_conv, p_keep_hidden):</span><br><span class="line">    l1a = tf.nn.relu(tf.nn.conv2d(X, w,</span><br><span class="line">                                  strides=[1, 1, 1, 1], padding=&apos;SAME&apos;))</span><br><span class="line">    l1 = tf.nn.max_pool(l1a, ksize=[1, 2, 2, 1],</span><br><span class="line">                        strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line">    l1 = tf.nn.dropout(l1, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    l2a = tf.nn.relu(tf.nn.conv2d(l1, w2,</span><br><span class="line">                                  strides=[1, 1, 1, 1], padding=&apos;SAME&apos;))</span><br><span class="line">    l2 = tf.nn.max_pool(l2a, ksize=[1, 2, 2, 1],</span><br><span class="line">                        strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line">    l2 = tf.nn.dropout(l2, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    l3a = tf.nn.relu(tf.nn.conv2d(l2, w3,</span><br><span class="line">                                  strides=[1, 1, 1, 1], padding=&apos;SAME&apos;))</span><br><span class="line">    l3 = tf.nn.max_pool(l3a, ksize=[1, 2, 2, 1],</span><br><span class="line">                        strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line">    l3 = tf.reshape(l3, [-1, w4.get_shape().as_list()[0]])</span><br><span class="line">    l3 = tf.nn.dropout(l3, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    l4 = tf.nn.relu(tf.matmul(l3, w4))</span><br><span class="line">    l4 = tf.nn.dropout(l4, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    pyx = tf.matmul(l4, w_o)</span><br><span class="line">    return pyx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)</span><br><span class="line">trX, trY, teX, teY = mnist.train.images, mnist.train.labels, mnist.test.images, mnist.test.labels</span><br><span class="line">trX = trX.reshape(-1, 28, 28, 1)</span><br><span class="line">teX = teX.reshape(-1, 28, 28, 1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = tf.placeholder(&quot;float&quot;, [None, 28, 28, 1])</span><br><span class="line">Y = tf.placeholder(&quot;float&quot;, [None, 10])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">w = init_weights([3, 3, 1, 32])</span><br><span class="line">w2 = init_weights([3, 3, 32, 64])</span><br><span class="line">w3 = init_weights([3, 3, 64, 128])</span><br><span class="line">w4 = init_weights([128 * 4 * 4, 625])</span><br><span class="line">w_o = init_weights([625, 10])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p_keep_conv = tf.placeholder(&quot;float&quot;)</span><br><span class="line">p_keep_hidden = tf.placeholder(&quot;float&quot;)</span><br><span class="line">py_x = model(X, w, w2, w3, w4, w_o, p_keep_conv, p_keep_hidden)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=py_x, labels=Y))</span><br><span class="line">train_op = tf.train.RMSPropOptimizer(0.001, 0.9).minimize(cost)</span><br><span class="line">predict_op = tf.argmax(py_x, 1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    #</span><br><span class="line">    tf.global_variables_initializer().run()</span><br><span class="line"></span><br><span class="line">    for i in range(10):</span><br><span class="line">        train_batch = zip(range(0, len(trX), batch_size),</span><br><span class="line">                          range(batch_size, len(trX) + 1, batch_size))</span><br><span class="line">        for start, end in train_batch:</span><br><span class="line">            sess.run(train_op, feed_dict=&#123;X: trX[start: end], Y: trY[start: end],</span><br><span class="line">                                          p_keep_conv: 0.8, p_keep_hidden: 0.5&#125;)</span><br><span class="line"></span><br><span class="line">            test_indices = np.arange(len(teX))</span><br><span class="line">            np.random.shuffle(test_indices)</span><br><span class="line">            test_indices = test_indices[0:test_size]</span><br><span class="line"></span><br><span class="line">            print(i, np.mean(np.argmax(teY[test_indices], axis=1) ==</span><br><span class="line">                             sess.run(predict_op, feed_dict=&#123;X: teY[test_indices],</span><br><span class="line">                                                             Y: teY[test_indices],</span><br><span class="line">                                                             p_keep_conv: 1.0,</span><br><span class="line">                                                             p_keep_hidden: 1.0&#125;)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import tensorflow as tf</span><br><span class="line">import numpy as np</span><br><span class="line">from tensorflow.examples.tutorials.mnist import input_data  # 加载数据</span><br><span class="line"></span><br><span class="line">batch_size = 128</span><br><span class="line">test_size = 256</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def init_weights(shape):  # 初始化</span><br><span class="line">    return tf.Variable(tf.random_normal(shape, stddev=0.01))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def model(X, w, w2, w3, w4, w_o, p_keep_conv, p_keep_hidden):  # 定义的模型函数</span><br><span class="line">    l1a = tf.nn.relu(tf.nn.conv2d(X, w,</span><br><span class="line">                                  strides=[1, 1, 1, 1], padding=&apos;SAME&apos;))  # l1a shape=(?, 28, 28, 32)</span><br><span class="line">    l1 = tf.nn.max_pool(l1a, ksize=[1, 2, 2, 1],              # l1 shape=(?, 14, 14, 32)</span><br><span class="line">                        strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line">    l1 = tf.nn.dropout(l1, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    l2a = tf.nn.relu(tf.nn.conv2d(l1, w2,</span><br><span class="line">                                  strides=[1, 1, 1, 1], padding=&apos;SAME&apos;))  # l2a shape=(?, 14, 14, 64)</span><br><span class="line">    l2 = tf.nn.max_pool(l2a, ksize=[1, 2, 2, 1],              # l2 shape=(?, 7, 7, 64)</span><br><span class="line">                        strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line">    l2 = tf.nn.dropout(l2, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    l3a = tf.nn.relu(tf.nn.conv2d(l2, w3,</span><br><span class="line">                                  strides=[1, 1, 1, 1], padding=&apos;SAME&apos;))  # l3a shape=(?, 7, 7, 128)</span><br><span class="line">    l3 = tf.nn.max_pool(l3a, ksize=[1, 2, 2, 1],              # l3 shape=(?, 4, 4, 128)</span><br><span class="line">                        strides=[1, 2, 2, 1], padding=&apos;SAME&apos;)</span><br><span class="line">    l3 = tf.reshape(l3, [-1, w4.get_shape().as_list()[0]])    # reshape to (?, 2048)</span><br><span class="line">    l3 = tf.nn.dropout(l3, p_keep_conv)</span><br><span class="line"></span><br><span class="line">    l4 = tf.nn.relu(tf.matmul(l3, w4))</span><br><span class="line">    l4 = tf.nn.dropout(l4, p_keep_hidden)</span><br><span class="line"></span><br><span class="line">    pyx = tf.matmul(l4, w_o)</span><br><span class="line">    return pyx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mnist = input_data.read_data_sets(&quot;MNIST_data/&quot;, one_hot=True)  # 将照片转一维数组</span><br><span class="line">trX, trY, teX, teY = mnist.train.images, mnist.train.labels, mnist.test.images, mnist.test.labels  # 定义训练、测试的图片、属性</span><br><span class="line">trX = trX.reshape(-1, 28, 28, 1)  # 28x28x1 input img</span><br><span class="line">teX = teX.reshape(-1, 28, 28, 1)  # 28x28x1 input img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = tf.placeholder(&quot;float&quot;, [None, 28, 28, 1])  # 张量 浮点数 4维矩阵</span><br><span class="line">Y = tf.placeholder(&quot;float&quot;, [None, 10])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">w = init_weights([3, 3, 1, 32])       # 3x3x1 conv, 32 outputs</span><br><span class="line">w2 = init_weights([3, 3, 32, 64])     # 3x3x32 conv, 64 outputs</span><br><span class="line">w3 = init_weights([3, 3, 64, 128])    # 3x3x32 conv, 128 outputs</span><br><span class="line">w4 = init_weights([128 * 4 * 4, 625])  # FC 128 * 4 * 4 inputs, 625 outputs</span><br><span class="line">w_o = init_weights([625, 10])         # FC 625 inputs, 10 outputs (labels)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p_keep_conv = tf.placeholder(&quot;float&quot;)  # 卷积核多项式乘法</span><br><span class="line">p_keep_hidden = tf.placeholder(&quot;float&quot;)  # 隐藏的</span><br><span class="line">py_x = model(X, w, w2, w3, w4, w_o, p_keep_conv, p_keep_hidden)  # 调用模型函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=py_x, labels=Y))  # 准确率</span><br><span class="line">train_op = tf.train.RMSPropOptimizer(0.001, 0.9).minimize(cost)  # 训练的下降率</span><br><span class="line">predict_op = tf.argmax(py_x, 1)  # 求行中最大</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    # 初始化所有可变值</span><br><span class="line">    tf.global_variables_initializer().run()  # 跑</span><br><span class="line"></span><br><span class="line">    for i in range(10):  # 迭代10次</span><br><span class="line">        training_batch = zip(range(0, len(trX), batch_size),</span><br><span class="line">                             range(batch_size, len(trX)+1, batch_size))  # 训练批次</span><br><span class="line">        for start, end in training_batch:  # 训练</span><br><span class="line">            sess.run(train_op, feed_dict=&#123;X: trX[start:end], Y: trY[start:end],</span><br><span class="line">                                          p_keep_conv: 0.8, p_keep_hidden: 0.5&#125;)</span><br><span class="line"></span><br><span class="line">        test_indices = np.arange(len(teX))  # 得到一个测试批</span><br><span class="line">        np.random.shuffle(test_indices)  # 打乱测试集</span><br><span class="line">        test_indices = test_indices[0:test_size]</span><br><span class="line"></span><br><span class="line">        print(i, np.mean(np.argmax(teY[test_indices], axis=1) ==</span><br><span class="line">                         sess.run(predict_op, feed_dict=&#123;X: teX[test_indices],</span><br><span class="line">                                                         Y: teY[test_indices],</span><br><span class="line">                                                         p_keep_conv: 1.0,</span><br><span class="line">                                                         p_keep_hidden: 1.0&#125;)))  # 打印预准率</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/04/配置Ubuntu以及Web部署/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/11/设计模式-python/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

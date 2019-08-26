@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>coder基础知识体系 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Think,">
+  
+
+  <meta name="description" content="为什么要阅读长篇小说，因为中短篇小说就像用针扎你，而长篇小说就像把你装进一个沙袋里吊起来，从四面八方用狼牙棒打你，酣畅淋漓。  知识体系 计算机基础理论 计算机模型：内存/IO/时钟/CPU…… 算法 专项技术领域： 数据挖掘 数据管理 智能推荐 搜索 ……     语言与工具 语言与相关体系 开发工具，分析工具，代码管理工具 HTML/CSS/JS/Ajax 常用框架与第三方类库   调试与测">
+<meta name="keywords" content="Think">
+<meta property="og:type" content="article">
+<meta property="og:title" content="coder基础知识体系">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/12/08/coder基础知识体系/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="为什么要阅读长篇小说，因为中短篇小说就像用针扎你，而长篇小说就像把你装进一个沙袋里吊起来，从四面八方用狼牙棒打你，酣畅淋漓。  知识体系 计算机基础理论 计算机模型：内存/IO/时钟/CPU…… 算法 专项技术领域： 数据挖掘 数据管理 智能推荐 搜索 ……     语言与工具 语言与相关体系 开发工具，分析工具，代码管理工具 HTML/CSS/JS/Ajax 常用框架与第三方类库   调试与测">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-25T14:52:19.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="coder基础知识体系">
+<meta name="twitter:description" content="为什么要阅读长篇小说，因为中短篇小说就像用针扎你，而长篇小说就像把你装进一个沙袋里吊起来，从四面八方用狼牙棒打你，酣畅淋漓。  知识体系 计算机基础理论 计算机模型：内存/IO/时钟/CPU…… 算法 专项技术领域： 数据挖掘 数据管理 智能推荐 搜索 ……     语言与工具 语言与相关体系 开发工具，分析工具，代码管理工具 HTML/CSS/JS/Ajax 常用框架与第三方类库   调试与测">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#知识体系"><span class="toc-text">知识体系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#"><span class="toc-text">~</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-coder基础知识体系" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">coder基础知识体系</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.12.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Think/">Think</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <ul>
+<li><strong>为什么要阅读长篇小说，因为中短篇小说就像用针扎你，而长篇小说就像把你装进一个沙袋里吊起来，从四面八方用狼牙棒打你，酣畅淋漓。</strong></li>
+</ul>
+<h3 id="知识体系"><a href="#知识体系" class="headerlink" title="知识体系"></a>知识体系</h3><ul>
+<li>计算机基础理论<ul>
+<li>计算机模型：内存/IO/时钟/CPU……</li>
+<li>算法</li>
+<li>专项技术领域：<ul>
+<li>数据挖掘</li>
+<li>数据管理</li>
+<li>智能推荐</li>
+<li>搜索</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>语言与工具<ul>
+<li>语言与相关体系</li>
+<li>开发工具，分析工具，代码管理工具</li>
+<li>HTML/CSS/JS/Ajax</li>
+<li>常用框架与第三方类库</li>
+</ul>
+</li>
+<li>调试与测试<ul>
+<li>调试方法和哲学</li>
+<li>定位问题</li>
+<li>BUG管理工具</li>
+<li>单元测试</li>
+<li>集成测试</li>
+<li>性能测试</li>
+<li>安全测试</li>
+<li>兼容性测试与方法</li>
+<li>JS/Ajax测试与方法</li>
+<li>服务层测试</li>
+<li>Web层测试</li>
+</ul>
+</li>
+<li>网络与系统<ul>
+<li>TCP/IP协议与模型，HTTP/SMTP等协议</li>
+<li>Linux系统，网络分析工具，系统分析工具</li>
+<li>容量，流量与负载均衡</li>
+<li>应用部署、规范、规划</li>
+<li>安全</li>
+<li>监控与故障分析</li>
+<li>磁盘与存储</li>
+<li>Shell</li>
+<li>DNS与域名</li>
+<li>缓存，反向代理</li>
+<li>图片服务器（海量小文件）</li>
+</ul>
+</li>
+<li>需求挖掘与分析<ul>
+<li>需求文档格式</li>
+<li>需求访谈</li>
+<li>需求分析方法，需求分析工具</li>
+<li>领域知识与经验</li>
+</ul>
+</li>
+<li>系统分析与设计<ul>
+<li>UML语言与模型</li>
+<li>分析模式</li>
+<li>设计模式，领域驱动</li>
+<li>系统分析文档格式</li>
+<li>系统设计文档格式</li>
+<li>功能性需求与非功能性需求</li>
+</ul>
+</li>
+<li>数据与系统<ul>
+<li>数据库</li>
+<li>可伸缩策略，扩展策略，备份，容灾，性能，安全，高可用……</li>
+<li>数据设计与范式，SQL/NoSQL，Cache，分布式文件</li>
+</ul>
+</li>
+<li>架构设计<ul>
+<li>架构模式，典型互联网公司架构演进历史</li>
+<li>架构原则，常用策略</li>
+<li>架构设计方法</li>
+<li>非功能性理解<ul>
+<li>扩展性</li>
+<li>伸缩性</li>
+<li>稳定性</li>
+<li>一致性</li>
+<li>性能</li>
+<li>吞吐量</li>
+</ul>
+</li>
+<li>容量预测与规划</li>
+<li>架构体系与相关技术</li>
+</ul>
+</li>
+<li>过程与管理<ul>
+<li>分析过程</li>
+<li>研发过程</li>
+<li>评审过程</li>
+<li>测试过程</li>
+<li>发布过程</li>
+<li>回滚过程</li>
+<li>文档管理</li>
+<li>知识管理</li>
+<li>项目管理</li>
+</ul>
+</li>
+</ul>
+<h4 id=""><a href="#" class="headerlink" title="~"></a>~</h4><p>你学过的每一样东西，你遭受的每一次苦难，都会在你一生中的某个时候派上用场。<br>——佩内洛普·菲兹杰拉德 《离岸》</p>
+<p>Everything that you’ve learnt and all the hardships you’ve suffered will all come in handy at some point in your life.</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/11/25/拟合散点方程/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/05/cpp_STL/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

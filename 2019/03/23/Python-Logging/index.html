@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Python-Logging | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Logging,">
+  
+
+  <meta name="description" content="Python With Logging logging有两种使用方法： 基础使用 高级用法    基础使用logging使用场景 Python内置的logging模块，为我们提供了现成的高效好用的日志解决方案。但是，不是所有的场景都需要使用logging模块，下面是Python官方推荐的使用方法：     要执行的任务 执行这个任务最好的工具     普通情况下，在控制台显示输出 print()">
+<meta name="keywords" content="Logging">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-Logging">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/03/23/Python-Logging/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="Python With Logging logging有两种使用方法： 基础使用 高级用法    基础使用logging使用场景 Python内置的logging模块，为我们提供了现成的高效好用的日志解决方案。但是，不是所有的场景都需要使用logging模块，下面是Python官方推荐的使用方法：     要执行的任务 执行这个任务最好的工具     普通情况下，在控制台显示输出 print()">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/03/23/Python-Logging/logging-flow.png">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/03/23/Python-Logging/logging-flow-.png">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/03/23/Python-Logging/formatters.png">
+<meta property="og:updated_time" content="2019-03-23T14:09:54.891Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python-Logging">
+<meta name="twitter:description" content="Python With Logging logging有两种使用方法： 基础使用 高级用法    基础使用logging使用场景 Python内置的logging模块，为我们提供了现成的高效好用的日志解决方案。但是，不是所有的场景都需要使用logging模块，下面是Python官方推荐的使用方法：     要执行的任务 执行这个任务最好的工具     普通情况下，在控制台显示输出 print()">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2019/03/23/Python-Logging/logging-flow.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-With-Logging"><span class="toc-text">Python With Logging</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础使用"><span class="toc-text">基础使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#logging使用场景"><span class="toc-text">logging使用场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#范例"><span class="toc-text">范例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高级用法"><span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#日志流"><span class="toc-text">日志流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Loggers记录器"><span class="toc-text">Loggers记录器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Handlers处理器"><span class="toc-text">Handlers处理器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Formatters"><span class="toc-text">Formatters</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Filter过滤器"><span class="toc-text">Filter过滤器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#配置日志模块"><span class="toc-text">配置日志模块</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#link"><span class="toc-text">link</span></a></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Python-Logging" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Python-Logging</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.03.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Python-With-Logging"><a href="#Python-With-Logging" class="headerlink" title="Python With Logging"></a>Python With Logging</h1><ul>
+<li>logging有两种使用方法：<ul>
+<li>基础使用</li>
+<li>高级用法</li>
+</ul>
+</li>
+</ul>
+<h3 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h3><h5 id="logging使用场景"><a href="#logging使用场景" class="headerlink" title="logging使用场景"></a>logging使用场景</h5><ul>
+<li>Python内置的logging模块，为我们提供了现成的高效好用的日志解决方案。但是，不是所有的场景都需要使用logging模块，下面是Python官方推荐的使用方法：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">要执行的任务</th>
+<th style="text-align:center">执行这个任务最好的工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">普通情况下，在控制台显示输出</td>
+<td style="text-align:center"><code>print()</code></td>
+</tr>
+<tr>
+<td style="text-align:center">报告正常程序操作过程中发生的事件</td>
+<td style="text-align:center"><code>logging.info()</code> (or <code>logging.debug()</code>)</td>
+</tr>
+<tr>
+<td style="text-align:center">发出有关特定事件的警告</td>
+<td style="text-align:center"><code>warnings.warn()</code> or <code>logging.warning()</code> 有区别</td>
+</tr>
+<tr>
+<td style="text-align:center">报告错误</td>
+<td style="text-align:center">弹出异常</td>
+</tr>
+<tr>
+<td style="text-align:center">在不引发异常的情况下报告错误</td>
+<td style="text-align:center"><code>logging.error()</code>, <code>logging.exception()</code> or <code>logging.critical()</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>日志级别，按事件严重程度由低到高排列：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">级别</th>
+<th style="text-align:center">使用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>DEBUG</code></td>
+<td style="text-align:center">详细信息，常用于调试</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>INFO</code></td>
+<td style="text-align:center">程序正常运行过程中产生的一些信息</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>WARNING</code></td>
+<td style="text-align:center">警告用户，虽然程序还在正常工作，但有可能发生错误</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>ERROR</code></td>
+<td style="text-align:center">由于更严重的问题，程序已不能执行一些功能了</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>CRITICAL</code></td>
+<td style="text-align:center">严重错误，程序已不能继续运行</td>
+</tr>
+</tbody>
+</table>
+<h5 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h5><p>要把日志输出到文件内，就不能使用上面的方法了，但是logging模块同样给我们提供了一个相对便捷的手段，那就是logging.basicConfig()方法。重新进入解释器环境，执行下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(filename=<span class="string">'example.log'</span>,level=logging.DEBUG)</span><br><span class="line">logging.debug(<span class="string">'This message should go to the log file'</span>)</span><br><span class="line">logging.info(<span class="string">'So should this'</span>)</span><br><span class="line">logging.warning(<span class="string">'And this, too'</span>)</span><br></pre></td></tr></table></figure>
+<p>然后打开本地的example.log文件，可以看到下面的日志消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DEBUG:root:This message should go to the log file</span><br><span class="line">INFO:root:So should this</span><br><span class="line">WARNING:root:And this, too</span><br></pre></td></tr></table></figure>
+<p>可以通过下面的方法来获取用户输入的日志级别参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numeric_level = getattr(logging, loglevel.upper(), <span class="keyword">None</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> isinstance(numeric_level, int):</span><br><span class="line">    <span class="keyword">raise</span> ValueError(<span class="string">'Invalid log level: %s'</span> % loglevel)</span><br><span class="line">logging.basicConfig(level=numeric_level, ...)</span><br></pre></td></tr></table></figure>
+<p>附加时间信息：要在日志内容中附加时间信息，可以在format字符串中添加%(asctime)s。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line">logging.basicConfig(format=<span class="string">'%(asctime)s %(message)s'</span>)</span><br><span class="line">logging.warning(<span class="string">'is when this event was logged.'</span>)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2010-12-12 11:41:42,612 is when this event was logged.</span><br></pre></td></tr></table></figure>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
+<li>如果只是简单地使用logging，那么使用上面介绍的方法就可以了，如果要深度定制logging，那么就需要对它有更深入的了解。下面的内容才是基本的logging模块的使用方法。logging模块采用了模块化设计，主要包含四种组件：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">组件</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Loggers</td>
+<td style="text-align:center">日志器</td>
+<td style="text-align:center">提供应用程序代码能直接使用的接口</td>
+</tr>
+<tr>
+<td style="text-align:center">Handlers</td>
+<td style="text-align:center">处理器</td>
+<td style="text-align:center">将记录器产生的日志发送至目的地</td>
+</tr>
+<tr>
+<td style="text-align:center">Filters</td>
+<td style="text-align:center">过滤器</td>
+<td style="text-align:center">提供更好的粒度控制，决定哪些日志会被输出</td>
+</tr>
+<tr>
+<td style="text-align:center">Formatters</td>
+<td style="text-align:center">格式器</td>
+<td style="text-align:center">设置日志内容的组成结构和消息字段</td>
+</tr>
+</tbody>
+</table>
+<h5 id="日志流"><a href="#日志流" class="headerlink" title="日志流"></a>日志流</h5><ul>
+<li>日志事件信息在loggers和handlers中的逻辑流程如下图所示：</li>
+</ul>
+<p><img src="/2019/03/23/Python-Logging/logging-flow.png" alt="logging-flow"></p>
+<ul>
+<li>下面是同时向屏幕和文件进行日志输出的流程：</li>
+</ul>
+<p><img src="/2019/03/23/Python-Logging/logging-flow-.png" alt="logging-flow"></p>
+<h5 id="Loggers记录器"><a href="#Loggers记录器" class="headerlink" title="Loggers记录器"></a>Loggers记录器</h5><p>logging模块的日志功能是基于Logger类实现的。我们可以通过下面的方法获取一个Logger类的实例（建议以模块名命名logger实例）。</p>
+<p><code>logger = logging.getLogger(__name__)</code></p>
+<p>Logger是一个树形层级结构，在使用debug()，info()，warn()，error()，critical()等方法之前必须先创建一个Logger的实例，即创建一个记录器，如果没有显式的进行创建，则默认创建一个<code>root logger</code>，并应用默认的日志级别(WARN)，默认的处理器Handler(StreamHandler，即将日志信息打印在标准输出上)，和默认的格式化器Formatter，就像我们在前面举的那些例子一样。</p>
+<p>logger对象有三重功能。首先，提供应用程序调用的接口；其次，决定日志记录的级别；最后，将日志内容传递到相关联的handlers中。</p>
+<p>总结logger对象的用法，可以分成两类：配置和消息发送。</p>
+<p>下面是最常用的配置方法：</p>
+<p><code>Logger.setLevel()</code>：设置日志记录级别</p>
+<p><code>Logger.addHandler()</code>和<code>Logger.removeHandler()</code>：为logger对象添加或删除handler处理器对象。</p>
+<p><code>Logger.addFilter()</code>和<code>Logger.removeFilter()</code>：为为logger对象添加或删除filter过滤器对象。</p>
+<p>配置好logger对象后，就可以使用下面的方法创建日志消息了：</p>
+<p><code>Logger.debug()</code>, <code>Logger.info()</code>, <code>Logger.warning()</code>, <code>Logger.error()</code>, and <code>Logger.critical()</code>：创建对应级别的日志，但不一定会被记录。</p>
+<p><code>Logger.exception()</code>：创建一个类似<code>Logger.error()</code>的日志消息。不同的是<code>Logger.exception()</code>保存有一个追踪栈。该方法只能在异常handler中调用。</p>
+<p><code>Logger.log()</code>：显式的创建一条日志，是前面几种方法的通用方法。</p>
+<p>注意，<code>getLogger()</code>方法返回一个logger对象的引用，并以你提供的name参数命名，如果未提供名字，那么默认为‘root’。使用同样的name参数，多次调用<code>getLogger()</code>，将返回同样的logger对象。</p>
+<h5 id="Handlers处理器"><a href="#Handlers处理器" class="headerlink" title="Handlers处理器"></a>Handlers处理器</h5><p>Handlers对象是日志信息的处理器、分发器。它们将日志分发到不同的目的地。比如有时候我们希望将所有的日志都记录在本地文件内，将error及其以上级别的日志发送到标准输出stdout，将critical级别的日志以邮件的方法发送给管理员。这就需要同时有三个独立的handler，分别负责一个方向的日志处理。</p>
+<p>logging模块使用较多的handlers有两个，<code>StreamHandler</code>和<code>FileHandler</code>。</p>
+<ul>
+<li>StreamHandler</li>
+</ul>
+<p>标准输出stdout（如显示器）分发器。</p>
+<p>创建方法: <code>sh = logging.StreamHandler(stream=None)</code></p>
+<ul>
+<li>FileHandler</li>
+</ul>
+<p>将日志保存到磁盘文件的处理器。</p>
+<p>创建方法: <code>fh = logging.FileHandler(filename, mode=&#39;a&#39;, encoding=None, delay=False)</code></p>
+<p>handlers对象有下面的方法：</p>
+<p><code>setLevel()</code>：和logger对象的一样，设置日志记录级别。那为什么要设置两层日志级别呢？logger对象的日志级别是全局性的，对所有handler都有效，相当于默认等级。而handlers的日志级别只对自己接收到的logger传来的日志有效，进行了更深一层的过滤。</p>
+<p><code>setFormatter()</code>：设置当前handler对象使用的消息格式。</p>
+<p><code>addFilter()</code> 和 <code>removeFilter()</code>：配置或删除一个filter过滤对象</p>
+<p>logging模块内置了下面的handler处理器，从字面上你就能看出它们的大概用途：</p>
+<p>StreamHandler<br>FileHandler<br>BaseRotatingHandler<br>RotatingFileHandler<br>TimedRotatingFileHandler<br>SocketHandler<br>DatagramHandler<br>SMTPHandler<br>SysLogHandler<br>NTEventLogHandler<br>HTTPHandler<br>WatchedFileHandler<br>QueueHandler<br>NullHandler</p>
+<h5 id="Formatters"><a href="#Formatters" class="headerlink" title="Formatters"></a>Formatters</h5><p>Formatter对象用来最终设置日志信息的顺序、结构和内容。其构造方法为：</p>
+<p><code>ft = logging.Formatter.__init__(fmt=None, datefmt=None, style=’%’)</code><br>如果不指定datefmt，那么它默认是<code>%Y-%m-%d %H:%M:%S</code>样式的。</p>
+<p>style参数默认为百分符%，这表示前面的fmt参数应该是一个<code>%(&lt;dictionary key&gt;)s</code>格式的字符串，而可以使用的logging内置的keys，如下表所示：</p>
+<p><img src="/2019/03/23/Python-Logging/formatters.png" alt=""></p>
+<h5 id="Filter过滤器"><a href="#Filter过滤器" class="headerlink" title="Filter过滤器"></a>Filter过滤器</h5><p>Handlers和Loggers可以使用Filters来完成比日志级别更复杂的过滤。比如我们定义了<code>filter = logging.Filter(&#39;a.b.c&#39;)</code>，并将这个Filter添加到了一个Handler上，则使用该Handler的Logger中只有名字带<code>a.b.c</code>前缀的Logger才能输出其日志。</p>
+<p>创建方法: <code>filter = logging.Filter(name=&#39;&#39;)</code></p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filter = logging.Filter(<span class="string">'mylogger.child1.child2'</span>)  </span><br><span class="line">fh.addFilter(filter)</span><br></pre></td></tr></table></figure>
+<p>则只会输出下面格式的日志，注意其用户名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2017-09-27 16:27:46,227 - mylogger.child1.child2 - DEBUG - logger1 debug message</span><br><span class="line">2017-09-27 16:27:46,227 - mylogger.child1.child2 - DEBUG - logger1 debug message</span><br><span class="line">2017-09-27 16:27:46,227 - mylogger.child1.child2 - DEBUG - logger1 debug message</span><br><span class="line">2017-09-27 16:27:46,227 - mylogger.child1.child2 - DEBUG - logger1 debug message</span><br></pre></td></tr></table></figure>
+<h5 id="配置日志模块"><a href="#配置日志模块" class="headerlink" title="配置日志模块"></a>配置日志模块</h5><ul>
+<li><p>有三种配置logging的方法：</p>
+<ul>
+<li>创建loggers、handlers和formatters，然后使用Python的代码调用上面介绍过的配置函数。</li>
+<li>创建一个logging配置文件，然后使用fileConfig()方法读取它。</li>
+<li>创建一个配置信息字典然后将它传递给dictConfig()方法。</li>
+</ul>
+</li>
+<li><p>下面的例子采用了第一种方法：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#simple_logging_module.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建logger记录器</span></span><br><span class="line">logger = logging.getLogger(<span class="string">'simple_example'</span>)</span><br><span class="line">logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个控制台处理器，并将日志级别设置为debug。</span></span><br><span class="line">ch = logging.StreamHandler()</span><br><span class="line">ch.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建formatter格式化器</span></span><br><span class="line">formatter = logging.Formatter(<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将formatter添加到ch处理器</span></span><br><span class="line">ch.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将ch添加到logger</span></span><br><span class="line">logger.addHandler(ch)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后就可以开始使用了！</span></span><br><span class="line">logger.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logger.info(<span class="string">'info message'</span>)</span><br><span class="line">logger.warn(<span class="string">'warn message'</span>)</span><br><span class="line">logger.error(<span class="string">'error message'</span>)</span><br><span class="line">logger.critical(<span class="string">'critical message'</span>)</span><br></pre></td></tr></table></figure>
+<p>在命令行中运行上面的代码，输出结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ python simple_logging_module.py</span><br><span class="line">2005-03-19 15:10:26,618 - simple_example - DEBUG - debug message</span><br><span class="line">2005-03-19 15:10:26,620 - simple_example - INFO - info message</span><br><span class="line">2005-03-19 15:10:26,695 - simple_example - WARNING - warn message</span><br><span class="line">2005-03-19 15:10:26,697 - simple_example - ERROR - error message</span><br><span class="line">2005-03-19 15:10:26,773 - simple_example - CRITICAL - critical message</span><br></pre></td></tr></table></figure>
+<ul>
+<li>下面是使用第二种方法，logging配置文件的方式：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># simple_logging_config.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"></span><br><span class="line">logging.config.fileConfig(<span class="string">'logging.conf'</span>) <span class="comment"># 读取config文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建logger记录器</span></span><br><span class="line">logger = logging.getLogger(<span class="string">'simpleExample'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用日志功能</span></span><br><span class="line">logger.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logger.info(<span class="string">'info message'</span>)</span><br><span class="line">logger.warn(<span class="string">'warn message'</span>)</span><br><span class="line">logger.error(<span class="string">'error message'</span>)</span><br><span class="line">logger.critical(<span class="string">'critical message'</span>)</span><br></pre></td></tr></table></figure>
+<p>其中的logging.conf配置文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[loggers]</span><br><span class="line">keys=root,simpleExample</span><br><span class="line"></span><br><span class="line">[handlers]</span><br><span class="line">keys=consoleHandler</span><br><span class="line"></span><br><span class="line">[formatters]</span><br><span class="line">keys=simpleFormatter</span><br><span class="line"></span><br><span class="line">[logger_root]</span><br><span class="line">level=DEBUG</span><br><span class="line">handlers=consoleHandler</span><br><span class="line"></span><br><span class="line">[logger_simpleExample]</span><br><span class="line">level=DEBUG</span><br><span class="line">handlers=consoleHandler</span><br><span class="line">qualname=simpleExample</span><br><span class="line">propagate=0</span><br><span class="line"></span><br><span class="line">[handler_consoleHandler]</span><br><span class="line">class=StreamHandler</span><br><span class="line">level=DEBUG</span><br><span class="line">formatter=simpleFormatter</span><br><span class="line">args=(sys.stdout,)</span><br><span class="line"></span><br><span class="line">[formatter_simpleFormatter]</span><br><span class="line">format=%(asctime)s - %(name)s - %(levelname)s - %(message)s</span><br><span class="line">datefmt=</span><br></pre></td></tr></table></figure>
+<p>在命令行中执行代码，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ python simple_logging_config.py</span><br><span class="line">2005-03-19 15:38:55,977 - simpleExample - DEBUG - debug message</span><br><span class="line">2005-03-19 15:38:55,979 - simpleExample - INFO - info message</span><br><span class="line">2005-03-19 15:38:56,054 - simpleExample - WARNING - warn message</span><br><span class="line">2005-03-19 15:38:56,055 - simpleExample - ERROR - error message</span><br><span class="line">2005-03-19 15:38:56,130 - simpleExample - CRITICAL - critical message</span><br></pre></td></tr></table></figure>
+<p>Python官方更推荐第三种新的配置方法，类字典形式的配置信息，因为Python的字典运用形式多样，操作灵活。比如，你可以通过JSON格式保存字典，或者YAML格式保存信息，然后读取成字典。当然，你也可以直接在Python代码里编写传统的带有配置信息的字典。一切都是基于键值对形式的就OK。</p>
+<p>下面的例子就是基于YAML配置文件的日志。logging.conf.yaml配置文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">version: 1</span><br><span class="line">formatters:</span><br><span class="line">  simple:</span><br><span class="line">    format: &apos;%(asctime)s - %(name)s - %(levelname)s - %(message)s&apos;</span><br><span class="line">handlers:</span><br><span class="line">  console:</span><br><span class="line">    class: logging.StreamHandler</span><br><span class="line">    level: DEBUG</span><br><span class="line">    formatter: simple</span><br><span class="line">    stream: ext://sys.stdout</span><br><span class="line">loggers:</span><br><span class="line">  simpleExample:</span><br><span class="line">    level: DEBUG</span><br><span class="line">    handlers: [console]</span><br><span class="line">    propagate: no</span><br><span class="line">root:</span><br><span class="line">  level: DEBUG</span><br><span class="line">  handlers: [console]</span><br></pre></td></tr></table></figure>
+<p>这里要先通过pip安装yaml模块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyyaml</span><br></pre></td></tr></table></figure>
+<p>yaml模块的使用很简单，使用open()方法打开一个yaml文件对象，然后使用yaml的load()方法将文件内容读成一个Python的字典对象。最后我们根据这个字典对象，使用logging.conf的dictConfig()方法，获取配置信息。如下代码所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> logging.config</span><br><span class="line"><span class="keyword">import</span> yaml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过yaml文件配置logging</span></span><br><span class="line">f = open(<span class="string">"logging.conf.yaml"</span>)</span><br><span class="line">dic = yaml.load(f)</span><br><span class="line">f.close()</span><br><span class="line">logging.config.dictConfig(dic)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建logger</span></span><br><span class="line">logger = logging.getLogger(<span class="string">'simpleExample'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出日志</span></span><br><span class="line">logger.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logger.info(<span class="string">'info message'</span>)</span><br><span class="line">logger.warn(<span class="string">'warn message'</span>)</span><br><span class="line">logger.error(<span class="string">'error message'</span>)</span><br><span class="line">logger.critical(<span class="string">'critical message'</span>)</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2017-09-27 17:41:09,241 - simpleExample - DEBUG - debug message</span><br><span class="line">2017-09-27 17:41:09,242 - simpleExample - INFO - info message</span><br><span class="line">2017-09-27 17:41:09,242 - simpleExample - WARNING - warn message</span><br><span class="line">2017-09-27 17:41:09,242 - simpleExample - ERROR - error message</span><br><span class="line">2017-09-27 17:41:09,242 - simpleExample - CRITICAL - critical message</span><br></pre></td></tr></table></figure>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ul>
+<li><a href="https://docs.python.org/3/library/logging.html#module-level-functions" target="_blank" rel="noopener">The official documentation</a></li>
+<li><a href="http://www.liujiangblog.com/course/python/71" target="_blank" rel="noopener">刘江的博客及教程 | logging</a></li>
+<li><a href="https://cloud.tencent.com/developer/section/1369390" target="_blank" rel="noopener">logging | tencent</a></li>
+<li><a href="https://docs.python.org/3/howto/logging.html#logging-advanced-tutorial" target="_blank" rel="noopener">Logging HOWTO</a></li>
+<li><a href="https://docs.python.org/3/howto/logging-cookbook.html#logging-cookbook" target="_blank" rel="noopener">Logging Cookbook</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/02/12/单调栈/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/03/23/Python性能优化/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

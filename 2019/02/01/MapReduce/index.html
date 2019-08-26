@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>MapReduce:面向大型集群的简化数据处理 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="MapReduce,">
+  
+
+  <meta name="description" content="MapReduce: Simplified Data Processing on Large Clusters  MapReduce既是一种编程模型，也是一种与之关联的、用于处理和产生大数据集的实现。 用户要特化一个map程序去处理key/value对，并产生中间key/value对的集合，以及一个reduce程序去合并有着相同key的所有中间key/value对。  编程模型 MapReduce">
+<meta name="keywords" content="MapReduce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce:面向大型集群的简化数据处理">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/02/01/MapReduce/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="MapReduce: Simplified Data Processing on Large Clusters  MapReduce既是一种编程模型，也是一种与之关联的、用于处理和产生大数据集的实现。 用户要特化一个map程序去处理key/value对，并产生中间key/value对的集合，以及一个reduce程序去合并有着相同key的所有中间key/value对。  编程模型 MapReduce">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/02/01/MapReduce/google-paper.png">
+<meta property="og:updated_time" content="2019-05-25T14:36:58.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MapReduce:面向大型集群的简化数据处理">
+<meta name="twitter:description" content="MapReduce: Simplified Data Processing on Large Clusters  MapReduce既是一种编程模型，也是一种与之关联的、用于处理和产生大数据集的实现。 用户要特化一个map程序去处理key/value对，并产生中间key/value对的集合，以及一个reduce程序去合并有着相同key的所有中间key/value对。  编程模型 MapReduce">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2019/02/01/MapReduce/google-paper.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#编程模型"><span class="toc-text">编程模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技巧"><span class="toc-text">技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通俗来说"><span class="toc-text">通俗来说</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#link"><span class="toc-text">link</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-MapReduce" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">MapReduce:面向大型集群的简化数据处理</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.02.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/DataMining/">DataMining</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong>MapReduce: Simplified Data Processing on Large Clusters</strong></p>
+<ul>
+<li>MapReduce既是一种编程模型，也是一种与之关联的、用于处理和产生大数据集的实现。</li>
+<li>用户要特化一个map程序去处理key/value对，并产生中间key/value对的集合，以及一个reduce程序去合并有着相同key的所有中间key/value对。</li>
+</ul>
+<h3 id="编程模型"><a href="#编程模型" class="headerlink" title="编程模型"></a>编程模型</h3><ul>
+<li>MapReduce库的使用者用两个函数来表示这个过程：map和reduce。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 考虑一个问题：统计一个很大的文档集合中每个单词出现的次数。使用者能写出与下面的伪代码相似的代码：</span></span><br><span class="line"><span class="built_in">map</span>(String key,String value):</span><br><span class="line">    <span class="comment">// key: 文档名</span></span><br><span class="line">    <span class="comment">// value: 文档内容</span></span><br><span class="line">    <span class="keyword">for</span> each word w in value:</span><br><span class="line">        EmitIntermediate(w,<span class="string">"1"</span>);</span><br><span class="line"></span><br><span class="line">reduce(Stringkey, Iterator values):</span><br><span class="line">    <span class="comment">// key: 一个单词</span></span><br><span class="line">    <span class="comment">// value: 计数值列表</span></span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> each v in values:</span><br><span class="line">        result += ParseInt(v);</span><br><span class="line">    Emit(AsString(result));</span><br><span class="line"><span class="comment">// map函数将每个单词与出现次数一同输出（本例中简单的输出“1”）。reduce函数将针对某个特定词输出的次数都合并相加。</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>举例：<ul>
+<li>URL访问频次统计：map函数处理网页请求的日志，对每个URL输出〈URL, 1〉。reduce函数将相同URL的所有值相加并输出〈URL, 总次数〉对。</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p><img src="/2019/02/01/MapReduce/google-paper.png" alt=""></p>
+<p>上图展示了我们的实现中MapReduce操作的整体流程。当用户程序调用MapReduce函数时，会发生下面一系列动作（上图中的标号与下面列表顺序相同）：</p>
+<ol>
+<li>用户程序中的MapReduce库首先将输入文件切分为M块，每块的大小从16MB到64MB（用户可通过一个可选参数控制此大小）。然后MapReduce库会在一个集群的若干台机器上启动程序的多个副本。</li>
+<li>程序的各个副本中有一个是特殊的——主节点，其它的则是工作节点。主节点将M个map任务和R个reduce任务分配给空闲的工作节点，每个节点一项任务。</li>
+<li>被分配map任务的工作节点读取对应的输入区块内容。它从输入数据中解析出key/value对，然后将每个对传递给用户定义的map函数。由map函数产生的中间key/value对都缓存在内存中。</li>
+<li>缓存的数据对会被周期性的由划分函数分成R块，并写入本地磁盘中。这些缓存对在本地磁盘中的位置会被传回给主节点，主节点负责将这些位置再传给reduce工作节点。</li>
+<li>当一个reduce工作节点得到了主节点的这些位置通知后，它使用RPC调用去读map工作节点的本地磁盘中的缓存数据。当reduce工作节点读取完了所有的中间数据，它会将这些数据按中间key排序，这样相同key的数据就被排列在一起了。同一个reduce任务经常会分到有着不同key的数据，因此这个排序很有必要。如果中间数据数量过多，不能全部载入内存，则会使用外部排序。</li>
+<li>reduce工作节点遍历排序好的中间数据，并将遇到的每个中间key和与它关联的一组中间value传递给用户的reduce函数。reduce函数的输出会写到由reduce划分过程划分出来的最终输出文件的末尾。</li>
+<li>当所有的map和reduce任务都完成后，主节点唤醒用户程序。此时，用户程序中的MapReduce调用返回到用户代码中。</li>
+</ol>
+<h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><ul>
+<li>划分函数</li>
+<li>顺序保证</li>
+<li>合并函数</li>
+<li>输入和输出类型</li>
+<li>边界效应</li>
+<li>略过坏记录</li>
+<li>本地执行</li>
+<li>状态信息</li>
+<li>计数器</li>
+</ul>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><ul>
+<li>约束这个编程模型令并行和分布式计算，以及令这些计算可容错，变得简单了</li>
+<li>网络带宽是一种稀缺资源。我们系统中的很多优化都因此针对减少通过网络发送的数据总量：局部性优化允许我们从本地磁盘读，同时将中间文件写入本地磁盘也节省了网络带宽</li>
+<li>备用执行可以用于减小缓慢的机器的影响，及应对机器失败和数据丢失</li>
+</ul>
+<h3 id="通俗来说"><a href="#通俗来说" class="headerlink" title="通俗来说"></a>通俗来说</h3><ul>
+<li>MapReduce讲的就是分而治之的程序处理理念，把一个复杂的任务划分为若干个简单的任务分别来做。这里重点思想在于<strong>并行计算</strong>。</li>
+<li>举例：统计一篇文章中“的”字的频率，当这篇文章及其长，使用单线程从头到尾计算快还是使用多线程（先将文章分为n段，然后开n个进程，同时计算“的”在各段出现的次数，最后求和）快这里就很明显了吧！</li>
+</ul>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/MapReduce" target="_blank" rel="noopener">MapReduce | Wiki</a></li>
+<li>《机器学习实战》 | 第十五章、大数据与MapReduce</li>
+<li><strong>《MapReduce: Simplified Data Processing on Large Clusters》</strong></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/29/Python定时报警/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/02/02/Socket-Python3/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

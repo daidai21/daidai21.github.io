@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Backtrack | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Backtrack,">
+  
+
+  <meta name="description" content="是暴力搜索法中的一种 回溯法采用试错的思想，它尝试分步的去解决一个问题。在分步解决问题的过程中，当它通过尝试发现现有的分步答案不能得到有效的正确的解答的时候，它将取消上一步甚至是上几步的计算，再通过其它的可能的分步解答再次尝试寻找问题的答案。回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况： 找到一个可能存在的正确的答案 在尝试了所有可能的分步方法后宣告该问题没有答案">
+<meta name="keywords" content="Backtrack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backtrack">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/02/04/回溯算法/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="是暴力搜索法中的一种 回溯法采用试错的思想，它尝试分步的去解决一个问题。在分步解决问题的过程中，当它通过尝试发现现有的分步答案不能得到有效的正确的解答的时候，它将取消上一步甚至是上几步的计算，再通过其它的可能的分步解答再次尝试寻找问题的答案。回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况： 找到一个可能存在的正确的答案 在尝试了所有可能的分步方法后宣告该问题没有答案">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/02/04/回溯算法/Backtracking.png">
+<meta property="og:updated_time" content="2019-05-25T14:54:39.037Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backtrack">
+<meta name="twitter:description" content="是暴力搜索法中的一种 回溯法采用试错的思想，它尝试分步的去解决一个问题。在分步解决问题的过程中，当它通过尝试发现现有的分步答案不能得到有效的正确的解答的时候，它将取消上一步甚至是上几步的计算，再通过其它的可能的分步解答再次尝试寻找问题的答案。回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况： 找到一个可能存在的正确的答案 在尝试了所有可能的分步方法后宣告该问题没有答案">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2019/02/04/回溯算法/Backtracking.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#经典例题"><span class="toc-text">经典例题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#八皇后问题"><span class="toc-text">八皇后问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#46-Permutations"><span class="toc-text">46. Permutations</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#47-Permutations-II"><span class="toc-text">47. Permutations II</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#51-N-Queens"><span class="toc-text">51. N-Queens</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#link"><span class="toc-text">link</span></a></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-回溯算法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Backtrack</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.02.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <ul>
+<li>是暴力搜索法中的一种</li>
+<li>回溯法采用试错的思想，它尝试分步的去解决一个问题。在分步解决问题的过程中，当它通过尝试发现现有的分步答案不能得到有效的正确的解答的时候，它将取消上一步甚至是上几步的计算，再通过其它的可能的分步解答再次尝试寻找问题的答案。回溯法通常用最简单的递归方法来实现，在反复重复上述的步骤后可能出现两种情况：<ul>
+<li>找到一个可能存在的正确的答案</li>
+<li>在尝试了所有可能的分步方法后宣告该问题没有答案</li>
+</ul>
+</li>
+</ul>
+<h3 id="经典例题"><a href="#经典例题" class="headerlink" title="经典例题"></a>经典例题</h3><h5 id="八皇后问题"><a href="#八皇后问题" class="headerlink" title="八皇后问题"></a>八皇后问题</h5><ul>
+<li>很多人都知道 8皇后问题，即在8X8格的国际象棋上摆放八个皇后，使其不能互相攻击，即任意两个皇后都不能处于同一行、同一列或同一斜线上。一种可能的放置方法法如下：</li>
+</ul>
+<p><img src="/2019/02/04/回溯算法/Backtracking.png" alt=""></p>
+<ul>
+<li><p>解题步骤：</p>
+<ul>
+<li>在第n行寻找可以插入的位置，中间涉及到位置合法性的判断</li>
+<li>如果没有可以插入的位置，返回</li>
+<li>如果有可以插入的位置， 插入数据。此时再判断是否已经是最后一行，如果是，打印输出返回；反之继续对下一行数据进行试探处理。</li>
+</ul>
+</li>
+<li><p>Python代码：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">eight_queen_question</span><span class="params">(arr=[None] * <span class="number">8</span>, n=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n == len(arr):</span><br><span class="line">        print(arr)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">for</span> col <span class="keyword">in</span> range(len(arr)):</span><br><span class="line">        arr[n], flag = col, <span class="keyword">True</span>  <span class="comment"># 表示把第n行的皇后放在col列上</span></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> arr[row] == col <span class="keyword">or</span> abs(col - arr[row]) == n - row:  <span class="comment"># 判断是否跟前面的皇后冲突</span></span><br><span class="line">                flag = <span class="keyword">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> flag:</span><br><span class="line">            eight_queen_question(arr, n+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="46-Permutations"><a href="#46-Permutations" class="headerlink" title="46. Permutations"></a><a href="https://leetcode.com/problems/permutations/" target="_blank" rel="noopener">46. Permutations</a></h5><ul>
+<li>给定一个不同整数的集合，返回所有可能的排列。举例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,2,3]</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 回溯</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">permute</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        tmp = []</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">backtrack</span><span class="params">(nums, tmp, arr)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> len(arr) == len(nums): tmp.append(arr)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">                    <span class="keyword">if</span> nums[i] <span class="keyword">not</span> <span class="keyword">in</span> arr: backtrack(nums, tmp, arr + [nums[i]])</span><br><span class="line"></span><br><span class="line">        backtrack(nums, tmp, [])</span><br><span class="line">        <span class="keyword">return</span> tmp</span><br></pre></td></tr></table></figure>
+<h5 id="47-Permutations-II"><a href="#47-Permutations-II" class="headerlink" title="47. Permutations II"></a><a href="https://leetcode.com/problems/permutations-ii/" target="_blank" rel="noopener">47. Permutations II</a></h5><p>给定一组可能包含重复项的数字，返回所有可能的唯一排列。举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,1,2]</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,1,2],</span><br><span class="line">  [1,2,1],</span><br><span class="line">  [2,1,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 回溯</span></span><br><span class="line"><span class="comment"># time:276 ms  space:6.7 MB</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">permuteUnique</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type nums: List[int]</span></span><br><span class="line"><span class="string">        :rtype: List[List[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(nums, cur, res)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> nums: res.add(cur)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">                    dfs(nums[:i] + nums[i + <span class="number">1</span>:], cur + (nums[i], ), res)</span><br><span class="line"></span><br><span class="line">        res = set()</span><br><span class="line">        dfs(nums, (), res)</span><br><span class="line">        <span class="keyword">return</span> list(res)</span><br></pre></td></tr></table></figure>
+<h5 id="51-N-Queens"><a href="#51-N-Queens" class="headerlink" title="51. N-Queens"></a><a href="https://leetcode.com/problems/n-queens/submissions/" target="_blank" rel="noopener">51. N-Queens</a></h5><ul>
+<li>N皇后之谜是把N皇后放在一个N×N棋盘上，这样就不会有两个皇后互相攻击。给定一个整数n，将所有不同的解返回到n-queens难题。每一种解决办法都有一个单单的单子配置，而在哪里都有的。举例：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Input: 4</span><br><span class="line">Output: [</span><br><span class="line"> [&quot;.Q..&quot;,  // Solution 1</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;..Q.&quot;],</span><br><span class="line"></span><br><span class="line"> [&quot;..Q.&quot;,  // Solution 2</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;.Q..&quot;]</span><br><span class="line">]</span><br><span class="line">解释：有两个不同的解决方案，4皇后难题，如上图所示。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">solveNQueens</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type n: int</span></span><br><span class="line"><span class="string">        :rtype: List[List[str]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.result = []</span><br><span class="line">        self.col = set()</span><br><span class="line">        self.left = set()</span><br><span class="line">        self.right = set()</span><br><span class="line">        self.dfs(n, <span class="number">0</span>, [])</span><br><span class="line">        <span class="keyword">return</span> self.result</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(self, n, row, curstate)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> row &gt;= n: <span class="keyword">return</span> self.result.append(curstate)</span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> col <span class="keyword">in</span> self.col <span class="keyword">or</span> ((row + col) <span class="keyword">in</span> self.left) <span class="keyword">or</span> ((row - col) <span class="keyword">in</span> self.right):  <span class="comment"># 砍树枝</span></span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            self.col.add(col)</span><br><span class="line">            self.left.add(col + row)</span><br><span class="line">            self.right.add(row - col)</span><br><span class="line">            self.dfs(n, row + <span class="number">1</span>, curstate + [<span class="string">'.'</span>*col+<span class="string">'Q'</span>+<span class="string">'.'</span>*(n-col<span class="number">-1</span>)])  <span class="comment"># 逐行绘制</span></span><br><span class="line">            self.col.remove(col)</span><br><span class="line">            self.left.remove(col + row)</span><br><span class="line">            self.right.remove(row - col)</span><br></pre></td></tr></table></figure>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ul>
+<li><a href="https://github.com/xuelangZF/LeetCode/tree/master/Backtracking" target="_blank" rel="noopener">Backtracking</a></li>
+<li><a href="https://github.com/zhsj/nqueen/blob/master/N%E7%9A%87%E5%90%8E%E9%97%AE%E9%A2%98.md" target="_blank" rel="noopener">N皇后问题</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/02/02/Socket-Python3/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/02/06/Sort-Interview/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

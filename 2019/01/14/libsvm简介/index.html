@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>libsvm简介 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="SVM,">
+  
+
+  <meta name="description" content="介绍 LIBSVM 是支持向量分类的集成软件，（C-SVC，nu-SVC），回归（epsilon-SVR，nu-SVR）和分布估计（one-class SVM）。支持多级分类。  SVC nu-SVC SVR nu-SVR   Working Set Selection Using Second Order Informationfor Training Support Vector Machin">
+<meta name="keywords" content="SVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="libsvm简介">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/01/14/libsvm简介/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="介绍 LIBSVM 是支持向量分类的集成软件，（C-SVC，nu-SVC），回归（epsilon-SVR，nu-SVR）和分布估计（one-class SVM）。支持多级分类。  SVC nu-SVC SVR nu-SVR   Working Set Selection Using Second Order Informationfor Training Support Vector Machin">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/01/14/libsvm简介/1">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/01/14/libsvm简介/2.png">
+<meta property="og:image" content="https://www.fuweihu.xyz/2019/01/14/libsvm简介/3.png">
+<meta property="og:updated_time" content="2019-05-25T14:38:50.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="libsvm简介">
+<meta name="twitter:description" content="介绍 LIBSVM 是支持向量分类的集成软件，（C-SVC，nu-SVC），回归（epsilon-SVR，nu-SVR）和分布估计（one-class SVM）。支持多级分类。  SVC nu-SVC SVR nu-SVR   Working Set Selection Using Second Order Informationfor Training Support Vector Machin">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2019/01/14/libsvm简介/1">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支持向量机的实用指南"><span class="toc-text">支持向量机的实用指南</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-介绍"><span class="toc-text">1 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-数据预处理"><span class="toc-text">2 数据预处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-模型选择"><span class="toc-text">3 模型选择</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference-Link"><span class="toc-text">Reference Link</span></a></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-libsvm简介" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">libsvm简介</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/DataMining/">DataMining</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li><p>LIBSVM 是支持向量分类的集成软件，（C-SVC，nu-SVC），回归（epsilon-SVR，nu-SVR）和分布估计（one-class SVM）。支持多级分类。</p>
+<ul>
+<li>SVC</li>
+<li>nu-SVC</li>
+<li>SVR</li>
+<li>nu-SVR</li>
+</ul>
+</li>
+<li><p><a href="chrome-extension://ikhdkkncnoglghljlkmcimlnlhkeamad/pdf-viewer/web/viewer.html?file=https%3A%2F%2Fwww.csie.ntu.edu.tw%2F~cjlin%2Fpapers%2Fquadworkset.pdf" target="_blank" rel="noopener">Working Set Selection Using Second Order Informationfor Training Support Vector Machines</a></p>
+</li>
+<li><p>libsvm包括：</p>
+<ul>
+<li>不同的SVM公式化表述</li>
+<li>高效的多类分类</li>
+<li>模型选择的交叉验证</li>
+<li>概率估计</li>
+<li>各种内核（包括预计算的内核矩阵）</li>
+<li>不平衡数据的加权支持向量机</li>
+<li>C++和Java源</li>
+<li>GUI显示支持向量机分类和回归</li>
+<li>支持多种语言Python、R、Matlab等</li>
+<li>能够产生交叉验证精度轮廓的自动模型选择。</li>
+</ul>
+</li>
+</ul>
+<h3 id="支持向量机的实用指南"><a href="#支持向量机的实用指南" class="headerlink" title="支持向量机的实用指南"></a>支持向量机的实用指南</h3><h5 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h5><ul>
+<li>这里只适合新手快速学习得到较好的结果，但不是最优的结果。</li>
+<li>一个分类器通常把数据分为训练集合测试集。训练集中的每一个实例都包含一个<strong>目标值</strong>和<strong>属性</strong>。SVM的目标是生成一个模型（基于训练数据），该模型在给定测试数据属性的的情况下预测测试数据的目标值。</li>
+<li>给定实例标签对的训练集$(x_i, y_i), i = 1, …, l$，需要解决以下优化问题：</li>
+</ul>
+<p>$$\min_{w, b, \xi} \frac{1}{2} W^TW + C\sum^l_{i =1}\xi_i$$</p>
+<p>$$从属于 y_i(W^T \phi(X_i) + b) \geqslant 1 - \xi_i, \qquad (1)$$</p>
+<p>$$\xi_i \geqslant 0.$$</p>
+<ul>
+<li>这里训练向量$X_i$通过函数映射到一个更高的维度空间$\phi$。SVM在高维空间中找到具有最大边缘的线性分离超平面。$C &gt; 0$是错误项的惩罚参数。此外，$K(X_I, X_j) \equiv \phi (X_i)^T \phi(X_i)$是被叫做核函数。尽管研究人员正在提出新的内核，初学者可能会在SVM书籍中找到下面四个基本内核：<ul>
+<li>线性：$K(X_i, X_j) = X_i^TX^j$</li>
+<li>多项式：$K(X_i, X_j) = (\gamma X_i^TX_j + r)^d, \gamma &gt; 0$</li>
+<li>径向基函数 （RBF）：$K(X_i, X_j) = \exp(-\gamma \left | X_i - X_j \right |^2), \gamma &gt; 0$</li>
+<li>S型函数：$K(X_i, X_j) = \tanh(\gamma X_i^TX_j + r)$<br>这里$\gamma,r$和$d$是核参数。</li>
+</ul>
+</li>
+</ul>
+<p>1.2 拟议程序</p>
+<ul>
+<li><p>许多初学者现在使用以下步骤：</p>
+<ul>
+<li>将数据转换为SVM包的格式</li>
+<li>随机尝试一些内核和参数</li>
+<li>测试</li>
+</ul>
+</li>
+<li><p>我们建议初学者首先尝试以下步骤：</p>
+<ul>
+<li>将数据转换为SVM包的格式</li>
+<li>对数据进行简单的缩放</li>
+<li>考虑RBF内核 $K(X, Y) = e^{-\gamma \left | X - Y \right |^2}$</li>
+<li>使用交叉验证确定最佳参数$C$和$\gamma$</li>
+<li>使用最佳参数$C$和$\gamma$训练整个训练集</li>
+<li>测试</li>
+</ul>
+</li>
+</ul>
+<p>我们将在下面的章节中详细讨论这个过程。</p>
+<h5 id="2-数据预处理"><a href="#2-数据预处理" class="headerlink" title="2 数据预处理"></a>2 数据预处理</h5><p>2.1 分类特征</p>
+<ul>
+<li>SVM要求每个数据实例都表示为实数向量。因此，如果存在分类属性，我们首先必须将它们转换为n数值数据。我们建议使用$m$个数来代表$m$类属性。只有一个数字是一，其他的是零。例如，三类属性例如{red, green, blue}能用(1, 0, 0)、(0, 1, 0)和(1, 0, 0)来表示。我们的经验表明，如果一个属性中的值的数目不太大，这种编码可能比使用单个数字更稳定。</li>
+</ul>
+<p>2.2 缩放</p>
+<ul>
+<li><p>应用SVM前的缩放非常重要。 Part 2 of Sarle’s Neural NetworksFAQ Sarle (1997说明了这一点的重要性，以及大多数考虑事项也适用于SVM。缩放的主要优点是避免较大数值范围内的属性占较小数值范围内的属性。另一个优点是在计算过程中避免了数值计算。<br>因为核值通常依赖于特征向量的内积。例如：线性核和多项式核、大属性值可能会导致数值问题。我们建议将每个属性线性地调整为范围[-1, +1]和[0, 1]。</p>
+</li>
+<li><p>当然，我们必须使用相同的方法来衡量培训和测试数据。例如，假设我们从[-10, +10]到[-1, +1]。如果测试数据的属性在范围内[-11, +8]，我们必须将测试数据扩展到[-1.1, +0.8]。</p>
+</li>
+</ul>
+<h5 id="3-模型选择"><a href="#3-模型选择" class="headerlink" title="3 模型选择"></a>3 模型选择</h5><ul>
+<li>虽然第一节中只提到四种常见的核，但我们必须首先确定哪种谷粒。然后选择惩罚参数和内核参数。</li>
+</ul>
+<p>3.1 RBF 核</p>
+<ul>
+<li>在选择核函数时通常RBF核是作为第一选择，这个核函数将样本非线性的映射到了一个更高维的空间，所以，不同于线性核，RBF核可以处理类标签和属性非线性相关的情况。此外，Keerthi and Lin (2003)提出线性核其实是RBF核的一种特殊情况，因为具有惩罚系数$\tilde{C}$的线性核和具有参数$(C, \gamma)$的RBF核有相同的性能。另外，sigmois核在特定的参数下也会表现得与RBF核类似(Lin and Lin, 2003)。</li>
+<li>第二个原因就是超参数的个数会影响模型选择的复杂度，而多项式核具有比RBF核更多的超参数。</li>
+<li>最后，RBF核具有更少的数值计算困难。关键的一点就是RBF核的值域固定在$0 &lt; K_{ij} \leqslant 1$，相比之下多项式核的值在次数非常大的时候可能会取到无穷$(\gamma X_i^TX_j + r &gt; 1)$或者零$(\gamma X_i^TX_j + r &lt; 1)$。另外，我们必须要注意sigmoid核在一些参数下是无效的（即不是两个向量的内积）(Vapnik, 1995)。</li>
+<li>这里还有一些RBF核不合适使用的情况，特别是当特征的数量特别大时，这时可能更好使用线性核。我们将在附录C进行详细讨论。</li>
+</ul>
+<p>3.2 交叉验证和梯度搜索</p>
+<ul>
+<li>在RBF核和中主要有两个参数：$C$和$\gamma$，我们先前并不知道对于给定的问题$C$和$\gamma$最佳的取值是多少，所以我们有必要进行模型选择（参数搜索）。我们的目标是找到一对足够好的$(C, \gamma)$使得分类器可以准确的预测未知的数据（即测试集），请注意我们不必要去追求很高的训练准确率（即训练器可以准确预测那些标签已知的训练数据）。综上所述，一个常用的策略就是将数据集分成两部分，其中一个被认为是未知的（另一个被认为已知的用来训练模型），从这个“未知”的数据集中获得的预测精度可以准确的反应分类器在分类一个独立的数据集的性能，此过程的改进版本就被成为交叉验证。</li>
+<li>对于v-折交叉验证，我们首先将训练集分割成v个大小相同的子数据集，接下来用其中v-1个子数据集训练的分类器来测试剩下的那个子数据集。因此，训练集中的每个样本都被预测过一次，交叉验证的精度就等于正确分类的样本所占训练集样本总数的百分比。</li>
+<li>交叉验证还可以防止过拟合问题，如图1所示通过一个二分类问题来阐述这个问题，其中实心圆圈和三角形是训练数据，而空心圆和三角形是测试数据。在图1a和1b中由于过拟合，分类器测试的准确度并不理想，如果我们把在图1a和1b中的训练和测试数据看成是交叉验证中的训练集和验证集，结果还是不太好，另一方面，图1c和1d所示的分类器没有过拟合并且在获得更好的交叉验证结果的同时测试精度也提高了。</li>
+</ul>
+<p><img src="/2019/01/14/libsvm简介/1" alt=""></p>
+<ul>
+<li>我们推荐利用交叉验证的方法通过梯度搜索来确定$C$和$\gamma$，通过对$(C, \gamma)$不同的组合进行测试并选择其中具有最大交叉验证精度的组合，我们发现对$C$和$\gamma$使用指数增长是一个实用的方法来找到满意的参数（例如，$C = 2^{-5}, 2^{-3}, …, 2^{15}, \gamma = 2^{-15}, 2^{-13}, …, 2^3$）。</li>
+<li>梯度搜索是一种简单直接但是似乎稍显天真的方法，事实上，这里还有一些更加先进，可以节省更多计算开销的方法，例如，估计交叉验证率。然而，这里有两个原因来说明我们为什么还是更喜欢这个简单的梯度搜索方法。</li>
+<li>第一，从心理上，我们使用那些通过近似或启发式来避免进行全局搜索的方法可能会觉得不靠谱。另一个原因是通过梯度搜索来寻找满意参数所需的计算时间并不会比那些先进的方法更多，因为这里只有两个参数需要确定。另外，梯度搜索可以很容易实现并行化，因为每次交叉验证都是独立的，而很多先进的算法，比如，walking along a path是一个迭代的过程，很难实现并行化。</li>
+<li>不过完成一个完整梯度搜索仍然是十分耗时的，我们建议在开始的时候使用粗略的梯度，在找到一个最佳的梯度区间后，再在该区间进行精细的梯度搜索。为了说明这个过程，我们通过german问题来做一个实验，在进行缩放后，我们一开始使用一个粗略的梯度（如图2所示）找到最佳的$(C, \gamma)$取值是$(2^3, 2^{-5})$——拥有77.5%的交叉验证精度。接下来我们在$(2^3, 2^{-5})$附近进行精细的提度搜索（如图3所示）并且在$(2^{3.25}, 2^{-5.25})$获得了最佳的交叉验证精度77.6%。再找到了最佳的$(C, \gamma)$对后，重新训练整个训练集得到最终的分类器模型。</li>
+</ul>
+<p><img src="/2019/01/14/libsvm简介/2.png" alt=""></p>
+<p><img src="/2019/01/14/libsvm简介/3.png" alt=""></p>
+<ul>
+<li>以上的方法在上千或者更多的数据大小时工作效果良好，而对于超大型数据集来说，一个可行的方法是随机选择数据集的一个子集，在该子集上进行粗略的梯度搜索，再在整个数据集上进行精细的梯度搜索。</li>
+</ul>
+<p>4 讨论</p>
+<ul>
+<li>以上提到的方法可能在一些情况下表现不会足够好，所以其他一些技术，例如，特征选择还是需要的，不够这些内容已经超越本指导的范畴了。我们的实验证实了这些处理方法对于那些没有很多特征的数据效果显著。当需要处理成千上万的属性时，在将数据传递给SVM之前或许需要先对它们进行挑选。</li>
+</ul>
+<p>B 扩展训练和测试数据中的常见错误<br>C 何时使用线性而不是RBF内核<br>C.1 实例数远小于特征数<br>C.2 实例和特征数都很大<br>C.3 实例数远大于特征数</p>
+<h3 id="Reference-Link"><a href="#Reference-Link" class="headerlink" title="Reference Link"></a>Reference Link</h3><ul>
+<li><a href="https://www.csie.ntu.edu.tw/~cjlin/libsvm/" target="_blank" rel="noopener">LIBSVM – A Library for Support Vector Machines</a></li>
+<li><a href="https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/" target="_blank" rel="noopener">LIBSVM Tools</a></li>
+<li><a href="chrome-extension://ikhdkkncnoglghljlkmcimlnlhkeamad/pdf-viewer/web/viewer.html?file=https%3A%2F%2Fwww.csie.ntu.edu.tw%2F~cjlin%2Fpapers%2Fguide%2Fguide.pdf" target="_blank" rel="noopener">guide.pdf-(支持向量分类的实用指南)</a></li>
+<li><a href="https://blog.csdn.net/sinat_25857925/article/details/70052532" target="_blank" rel="noopener">LIBSVM新手指导——《A Practical Guide to Support Vector Classiﬁcation》翻译</a></li>
+<li><a href="https://blog.csdn.net/u012507022/article/details/50866851" target="_blank" rel="noopener">支持向量机分类入门实用指南</a></li>
+<li><a href="https://github.com/cjlin1/libsvm" target="_blank" rel="noopener">github libsvm</a></li>
+<li><a href="https://blog.csdn.net/pangpang1239/article/details/7483895" target="_blank" rel="noopener">libsvm中文使用文档</a></li>
+<li><a href="https://blog.csdn.net/jario9014/article/details/44494237" target="_blank" rel="noopener">实用libsvm入门笔记(A Practical Guide to Support Vector Classication)</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/14/kmp算法/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/14/Graph/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

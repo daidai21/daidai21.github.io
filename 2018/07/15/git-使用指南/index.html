@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>git 使用指南 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Git,">
+  
+
+  <meta name="description" content="创建账号创建一个Github或者Gitee账号 本地安装Git前往Git根据操作系统下载Git并安装到本地 ssh密钥本地生成秘钥右击桌面打开你的git bash,第一次使用Git时,需要先生成ssh 1ssh-keygen -t rsa -C &amp;quot;your_email@youremail.com&amp;quot; 生成的秘钥一般在你操作系统用户下的.ssh目录中 告诉本地系统将密钥告诉本地系统">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git 使用指南">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/07/15/git-使用指南/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="创建账号创建一个Github或者Gitee账号 本地安装Git前往Git根据操作系统下载Git并安装到本地 ssh密钥本地生成秘钥右击桌面打开你的git bash,第一次使用Git时,需要先生成ssh 1ssh-keygen -t rsa -C &amp;quot;your_email@youremail.com&amp;quot; 生成的秘钥一般在你操作系统用户下的.ssh目录中 告诉本地系统将密钥告诉本地系统">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.fuweihu.xyz/2018/07/15/git-使用指南/git.png">
+<meta property="og:updated_time" content="2019-05-25T14:35:57.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git 使用指南">
+<meta name="twitter:description" content="创建账号创建一个Github或者Gitee账号 本地安装Git前往Git根据操作系统下载Git并安装到本地 ssh密钥本地生成秘钥右击桌面打开你的git bash,第一次使用Git时,需要先生成ssh 1ssh-keygen -t rsa -C &amp;quot;your_email@youremail.com&amp;quot; 生成的秘钥一般在你操作系统用户下的.ssh目录中 告诉本地系统将密钥告诉本地系统">
+<meta name="twitter:image" content="https://www.fuweihu.xyz/2018/07/15/git-使用指南/git.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建账号"><span class="toc-text">创建账号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#本地安装Git"><span class="toc-text">本地安装Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh密钥"><span class="toc-text">ssh密钥</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#本地生成秘钥"><span class="toc-text">本地生成秘钥</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#告诉本地系统"><span class="toc-text">告诉本地系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#查看生成的公钥"><span class="toc-text">查看生成的公钥</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#上传公钥"><span class="toc-text">上传公钥</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置User"><span class="toc-text">配置User</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化本地Git仓库"><span class="toc-text">初始化本地Git仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加变更文件"><span class="toc-text">添加变更文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交文件"><span class="toc-text">提交文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加远程地址"><span class="toc-text">添加远程地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh测试"><span class="toc-text">ssh测试</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#可能出现的错误"><span class="toc-text">可能出现的错误</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#首次提交"><span class="toc-text">首次提交</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并两个版本库"><span class="toc-text">合并两个版本库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向Github或Gitee推送"><span class="toc-text">向Github或Gitee推送</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#git命令速查"><span class="toc-text">git命令速查</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-git-使用指南" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">git 使用指南</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="创建账号"><a href="#创建账号" class="headerlink" title="创建账号"></a>创建账号</h4><p>创建一个Github或者Gitee账号</p>
+<h4 id="本地安装Git"><a href="#本地安装Git" class="headerlink" title="本地安装Git"></a>本地安装Git</h4><p>前往<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a>根据操作系统下载Git并安装到本地</p>
+<h4 id="ssh密钥"><a href="#ssh密钥" class="headerlink" title="ssh密钥"></a>ssh密钥</h4><h5 id="本地生成秘钥"><a href="#本地生成秘钥" class="headerlink" title="本地生成秘钥"></a>本地生成秘钥</h5><p>右击桌面打开你的git bash,第一次使用Git时,需要先生成ssh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;</span><br></pre></td></tr></table></figure>
+<p>生成的秘钥一般在你操作系统用户下的.ssh目录中</p>
+<h5 id="告诉本地系统"><a href="#告诉本地系统" class="headerlink" title="告诉本地系统"></a>告诉本地系统</h5><p>将密钥告诉本地系统</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+<p>（此处如果出现Could not open a connection to your authentication agent. 则先执行 <code>ssh-agent bash</code>）</p>
+<h5 id="查看生成的公钥"><a href="#查看生成的公钥" class="headerlink" title="查看生成的公钥"></a>查看生成的公钥</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<h5 id="上传公钥"><a href="#上传公钥" class="headerlink" title="上传公钥"></a>上传公钥</h5><ul>
+<li>复制该公钥粘贴到你的Github或者Gitee的SSH公钥页面</li>
+<li>使用SSH公钥可以让你在你的电脑和码云通讯的时候使用安全连接（Git的Remote要使用SSH地址）</li>
+</ul>
+<h4 id="配置User"><a href="#配置User" class="headerlink" title="配置User"></a>配置User</h4><p>打开 git bash 需要配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;Your Name&quot;</span><br><span class="line">git config --global user.email &quot;email@example.com&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="初始化本地Git仓库"><a href="#初始化本地Git仓库" class="headerlink" title="初始化本地Git仓库"></a>初始化本地Git仓库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>这条命令执行完毕后会多出一个.git文件夹</p>
+<h4 id="添加变更文件"><a href="#添加变更文件" class="headerlink" title="添加变更文件"></a>添加变更文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+<h4 id="提交文件"><a href="#提交文件" class="headerlink" title="提交文件"></a>提交文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commmit -am &quot;message&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="添加远程地址"><a href="#添加远程地址" class="headerlink" title="添加远程地址"></a>添加远程地址</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com/你的github用户名/仓库名.git</span><br></pre></td></tr></table></figure>
+<h4 id="ssh测试"><a href="#ssh测试" class="headerlink" title="ssh测试"></a>ssh测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@gitee.com</span><br></pre></td></tr></table></figure>
+<p>显示Welcome to Gitee.com,你的用户名!说明ssh正确</p>
+<h5 id="可能出现的错误"><a href="#可能出现的错误" class="headerlink" title="可能出现的错误"></a>可能出现的错误</h5><p>如果出现 fatal: remote origin already exists. 则执行 <code>git remote rm origin</code></p>
+<h5 id="首次提交"><a href="#首次提交" class="headerlink" title="首次提交"></a>首次提交</h5><p>第一次提交可能会出现如下错误<code>error: failed to push some refs to &#39;https://gitee.com/tomFat/interview.git&#39;</code><br>所以需要在提交前执行<code>git pull</code></p>
+<h4 id="合并两个版本库"><a href="#合并两个版本库" class="headerlink" title="合并两个版本库"></a>合并两个版本库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master --allow-unrelated-histories</span><br></pre></td></tr></table></figure>
+<h4 id="向Github或Gitee推送"><a href="#向Github或Gitee推送" class="headerlink" title="向Github或Gitee推送"></a>向Github或Gitee推送</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<h4 id="git命令速查"><a href="#git命令速查" class="headerlink" title="git命令速查"></a>git命令速查</h4><p><img src="/2018/07/15/git-使用指南/git.png" alt="你想输入的替代文字"></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/07/09/图解算法/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/15/Git手册/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Socket-网络套接字 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Socket,">
+  
+
+  <meta name="description" content="Socket又称”套接字”，应用程序通常通过”套接字”向网络发出请求或者应答网络请求，使主机间或者一台计算机上的进程间可以通讯。 Python 提供了两个基本的 socket 模块：  Socket 它提供了标准的BSD Socket API。 SocketServer 它提供了服务器重心，可以简化网络服务器的开发。  Socket 类型   socket 类型 描述      socket.AF">
+<meta name="keywords" content="Socket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket-网络套接字">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/02/02/Socket-Python3/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="Socket又称”套接字”，应用程序通常通过”套接字”向网络发出请求或者应答网络请求，使主机间或者一台计算机上的进程间可以通讯。 Python 提供了两个基本的 socket 模块：  Socket 它提供了标准的BSD Socket API。 SocketServer 它提供了服务器重心，可以简化网络服务器的开发。  Socket 类型   socket 类型 描述      socket.AF">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-02-02T01:48:25.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Socket-网络套接字">
+<meta name="twitter:description" content="Socket又称”套接字”，应用程序通常通过”套接字”向网络发出请求或者应答网络请求，使主机间或者一台计算机上的进程间可以通讯。 Python 提供了两个基本的 socket 模块：  Socket 它提供了标准的BSD Socket API。 SocketServer 它提供了服务器重心，可以简化网络服务器的开发。  Socket 类型   socket 类型 描述      socket.AF">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket-类型"><span class="toc-text">Socket 类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket-函数"><span class="toc-text">Socket 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Socket-编程思想"><span class="toc-text">Socket 编程思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#范例"><span class="toc-text">范例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#服务端"><span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#客户端"><span class="toc-text">客户端</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#视频"><span class="toc-text">视频</span></a></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Socket-Python3" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Socket-网络套接字</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.02.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><strong>Socket</strong>又称”套接字”，应用程序通常通过”套接字”向网络发出请求或者应答网络请求，使主机间或者一台计算机上的进程间可以通讯。</p>
+<p>Python 提供了两个基本的 socket 模块：</p>
+<ul>
+<li><code>Socket</code> 它提供了标准的BSD Socket API。</li>
+<li><code>SocketServer</code> 它提供了服务器重心，可以简化网络服务器的开发。</li>
+</ul>
+<h3 id="Socket-类型"><a href="#Socket-类型" class="headerlink" title="Socket 类型"></a>Socket 类型</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">socket 类型</th>
+<th style="text-align:left">描述 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">socket.AF_UNIX</td>
+<td style="text-align:left">用于同一台机器上的进程通信（既本机通信）</td>
+</tr>
+<tr>
+<td style="text-align:left">socket.AF_INET</td>
+<td style="text-align:left">用于服务器与服务器之间的网络通信</td>
+</tr>
+<tr>
+<td style="text-align:left">socket.AF_INET6</td>
+<td style="text-align:left">基于IPV6方式的服务器与服务器之间的网络通信</td>
+</tr>
+<tr>
+<td style="text-align:left">socket.SOCK_STREAM</td>
+<td style="text-align:left">基于TCP的流式socket通信</td>
+</tr>
+<tr>
+<td style="text-align:left">socket.SOCK_DGRAM</td>
+<td style="text-align:left">基于UDP的数据报式socket通信</td>
+</tr>
+<tr>
+<td style="text-align:left">socket.SOCK_RAW</td>
+<td style="text-align:left">原始套接字，普通的套接字无法处理ICMP、IGMP等网络报文，而SOCK_RAW可以；其次SOCK_RAW也可以处理特殊的IPV4报文；此外，利用原始套接字，可以通过IP_HDRINCL套接字选项由用户构造IP头</td>
+</tr>
+<tr>
+<td style="text-align:left">socket.SOCK_SEQPACKET</td>
+<td style="text-align:left">可靠的连续数据包服务</td>
+</tr>
+</tbody>
+</table>
+<p>创建TCP Socket：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br></pre></td></tr></table></figure></p>
+<p>创建UDP Socket：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Socket-函数"><a href="#Socket-函数" class="headerlink" title="Socket 函数"></a>Socket 函数</h3><ul>
+<li>TCP发送数据时，已建立好TCP链接，所以不需要指定地址，而UDP是面向无连接的，每次发送都需要指定发送给谁。</li>
+<li>服务器与客户端不能直接发送列表，元素，字典等带有数据类型的格式，发送的内容必须是字符串数据。</li>
+</ul>
+<p><strong>服务器端 Socket 函数</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Socket 函数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">s.bind(address)</td>
+<td style="text-align:left">将套接字绑定到地址，在AF_INET下，以tuple(host, port)的方式传入，如s.bind((host, port))</td>
+</tr>
+<tr>
+<td style="text-align:left">s.listen(backlog)</td>
+<td style="text-align:left">开始监听TCP传入连接，backlog指定在拒绝链接前，操作系统可以挂起的最大连接数，该值最少为1，大部分应用程序设为5就够用了</td>
+</tr>
+<tr>
+<td style="text-align:left">s.accept()</td>
+<td style="text-align:left">接受TCP链接并返回（conn, address），其中conn是新的套接字对象，可以用来接收和发送数据，address是链接客户端的地址。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>客户端 Socket 函数</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Socket 函数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">s.connect(address)</td>
+<td style="text-align:left">链接到address处的套接字，一般address的格式为tuple(host, port)，如果链接出错，则返回socket.error错误</td>
+</tr>
+<tr>
+<td style="text-align:left">s.connect_ex(address)</td>
+<td style="text-align:left">功能与s.connect(address)相同，但成功返回0，失败返回errno的值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>公共 Socket 函数</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Socket 函数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">s.recv(bufsize[, flag])</td>
+<td style="text-align:left">接受TCP套接字的数据，数据以字符串形式返回，buffsize指定要接受的最大数据量，flag提供有关消息的其他信息，通常可以忽略</td>
+</tr>
+<tr>
+<td style="text-align:left">s.send(string[, flag])</td>
+<td style="text-align:left">发送TCP数据，将字符串中的数据发送到链接的套接字，返回值是要发送的字节数量，该数量可能小于string的字节大小</td>
+</tr>
+<tr>
+<td style="text-align:left">s.sendall(string[, flag])</td>
+<td style="text-align:left">完整发送TCP数据，将字符串中的数据发送到链接的套接字，但在返回之前尝试发送所有数据。成功返回None，失败则抛出异常</td>
+</tr>
+<tr>
+<td style="text-align:left">s.recvfrom(bufsize[, flag])</td>
+<td style="text-align:left">接受UDP套接字的数据u，与recv()类似，但返回值是tuple(data, address)。其中data是包含接受数据的字符串，address是发送数据的套接字地址</td>
+</tr>
+<tr>
+<td style="text-align:left">s.sendto(string[, flag], address)</td>
+<td style="text-align:left">发送UDP数据，将数据发送到套接字，address形式为tuple(ipaddr, port)，指定远程地址发送，返回值是发送的字节数</td>
+</tr>
+<tr>
+<td style="text-align:left">s.close()</td>
+<td style="text-align:left">关闭套接字</td>
+</tr>
+<tr>
+<td style="text-align:left">s.getpeername()</td>
+<td style="text-align:left">返回套接字的远程地址，返回值通常是一个tuple(ipaddr, port)</td>
+</tr>
+<tr>
+<td style="text-align:left">s.getsockname()</td>
+<td style="text-align:left">返回套接字自己的地址，返回值通常是一个tuple(ipaddr, port)</td>
+</tr>
+<tr>
+<td style="text-align:left">s.setsockopt(level, optname, value)</td>
+<td style="text-align:left">设置给定套接字选项的值</td>
+</tr>
+<tr>
+<td style="text-align:left">s.getsockopt(level, optname[, buflen])</td>
+<td style="text-align:left">返回套接字选项的值</td>
+</tr>
+<tr>
+<td style="text-align:left">s.settimeout(timeout)</td>
+<td style="text-align:left">设置套接字操作的超时时间，timeout是一个浮点数，单位是秒，值为None则表示永远不会超时。一般超时期应在刚创建套接字时设置，因为他们可能用于连接的操作，如s.connect()</td>
+</tr>
+<tr>
+<td style="text-align:left">s.gettimeout()</td>
+<td style="text-align:left">返回当前超时值，单位是秒，如果没有设置超时则返回None</td>
+</tr>
+<tr>
+<td style="text-align:left">s.fileno()</td>
+<td style="text-align:left">返回套接字的文件描述</td>
+</tr>
+<tr>
+<td style="text-align:left">s.setblocking(flag)</td>
+<td style="text-align:left">如果flag为0，则将套接字设置为非阻塞模式，否则将套接字设置为阻塞模式（默认值）。非阻塞模式下，如果调用recv()没有发现任何数据，或send()调用无法立即发送数据，那么将引起socket.error异常。</td>
+</tr>
+<tr>
+<td style="text-align:left">s.makefile()</td>
+<td style="text-align:left">创建一个与该套接字相关的文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Socket-编程思想"><a href="#Socket-编程思想" class="headerlink" title="Socket 编程思想"></a>Socket 编程思想</h3><p><strong>TCP 服务器</strong><br>1、创建套接字，绑定套接字到本地IP与端口<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">s.bind()</span><br></pre></td></tr></table></figure></p>
+<p>2、开始监听链接<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.listen()</span><br></pre></td></tr></table></figure></p>
+<p>3、进入循环，不断接受客户端的链接请求<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">While <span class="keyword">True</span>:</span><br><span class="line">    s.accept()</span><br></pre></td></tr></table></figure></p>
+<p>4、接收客户端传来的数据，并且发送给对方发送数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s.recv()</span><br><span class="line">s.sendall()</span><br></pre></td></tr></table></figure></p>
+<p>5、传输完毕后，关闭套接字<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.close()</span><br></pre></td></tr></table></figure></p>
+<p><strong>TCP 客户端</strong><br>1、创建套接字并链接至远端地址<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">s.connect()</span><br></pre></td></tr></table></figure></p>
+<p>2、链接后发送数据和接收数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s.sendall()</span><br><span class="line">s.recv()</span><br></pre></td></tr></table></figure></p>
+<p>3、传输完毕后，关闭套接字</p>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><h5 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">file-name:server.py</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载socket包</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="comment"># 创建 socket 对象</span></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"><span class="comment"># 获取本地主机名</span></span><br><span class="line">host = socket.gethostname()</span><br><span class="line"><span class="comment"># 设置端口号</span></span><br><span class="line">port = <span class="number">8000</span></span><br><span class="line"><span class="comment"># 绑定端口号</span></span><br><span class="line">s.bind((host, port))</span><br><span class="line"><span class="comment"># 设置最大连接数，超过后排队</span></span><br><span class="line">s.listen(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    <span class="comment"># 建立客户端连接</span></span><br><span class="line">    clientsocket, addr = s.accept()</span><br><span class="line">    print(<span class="string">"连接地址: %s"</span> % str(addr))</span><br><span class="line">    msg=<span class="string">'欢迎访问socket服务！'</span>+ <span class="string">"\r\n"</span></span><br><span class="line">    clientsocket.send(msg.encode(<span class="string">'utf-8'</span>))</span><br><span class="line">    clientsocket.close()</span><br></pre></td></tr></table></figure>
+<h5 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">file-name:client.py</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载socket包</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="comment"># 创建 socket 对象</span></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"><span class="comment"># 获取本地主机名</span></span><br><span class="line">host = socket.gethostname()</span><br><span class="line"><span class="comment"># 设置端口号</span></span><br><span class="line">port = <span class="number">8000</span></span><br><span class="line"><span class="comment"># 连接服务，指定主机和端口</span></span><br><span class="line">s.connect((host, port))</span><br><span class="line"><span class="comment"># 接收小于 1024 字节的数据</span></span><br><span class="line">msg = s.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="comment"># 关系socket连接</span></span><br><span class="line">s.close()</span><br><span class="line"><span class="comment"># 输出访问内容</span></span><br><span class="line">print(msg.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shell 1</span></span><br><span class="line">&gt; python server.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shell 2</span></span><br><span class="line">&gt; python client.py</span><br><span class="line">欢迎访问socket服务！</span><br></pre></td></tr></table></figure>
+<h3 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h3><iframe src="http://player.bilibili.com/player.html?aid=42382002&cid=74379188&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+<p><code>如果视频不能播放，请移步</code><a href="https://www.bilibili.com/video/av42382002/" target="_blank" rel="noopener">链接</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/02/01/MapReduce/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/02/04/回溯算法/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

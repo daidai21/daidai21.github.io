@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Shell输入输出重定向和管道命令 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Shell,">
+  
+
+  <meta name="description" content="输入/输出重定向command &amp;gt; file    将输出重定向到file123456789➜  command touch log.txt➜  command lslog.txt➜  command cat log.txt➜  command ps &amp;gt; log.txt➜  command cat log.txt  PID TTY          TIME CMD17928 pts/">
+<meta name="keywords" content="Shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell输入输出重定向和管道命令">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/01/12/Shell输入输出重定向和管道命令/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="输入/输出重定向command &amp;gt; file    将输出重定向到file123456789➜  command touch log.txt➜  command lslog.txt➜  command cat log.txt➜  command ps &amp;gt; log.txt➜  command cat log.txt  PID TTY          TIME CMD17928 pts/">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-14T07:04:59.635Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shell输入输出重定向和管道命令">
+<meta name="twitter:description" content="输入/输出重定向command &amp;gt; file    将输出重定向到file123456789➜  command touch log.txt➜  command lslog.txt➜  command cat log.txt➜  command ps &amp;gt; log.txt➜  command cat log.txt  PID TTY          TIME CMD17928 pts/">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#输入-输出重定向"><span class="toc-text">输入/输出重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#command-gt-file-将输出重定向到file"><span class="toc-text">command &gt; file    将输出重定向到file</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-lt-file-将输入重定向到file"><span class="toc-text">command &lt; file    将输入重定向到file</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-gt-gt-file-将输出以追加的方式重定向到file"><span class="toc-text">command &gt;&gt; file    将输出以追加的方式重定向到file</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-lt-tag-将输入重定向到一个交互式Shell脚本或程序"><span class="toc-text">&lt;&lt; tag    将输入重定向到一个交互式Shell脚本或程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#n-gt-amp-m-将输出文件-m-和-n-合并。"><span class="toc-text">n &gt;&amp; m    将输出文件 m 和 n 合并。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#n-lt-amp-m-将输入文件-m-和-n-合并。"><span class="toc-text">n &lt;&amp; m    将输入文件 m 和 n 合并。</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#管道命令"><span class="toc-text">管道命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#command-1-command-2-command-3-顺序执行多条命令"><span class="toc-text">command_1; command_2; command_3;    顺序执行多条命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-amp-表示任务在后台执行"><span class="toc-text">command &amp;    表示任务在后台执行</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-1-amp-amp-command-2-表示前一条命令执行成功后才会执行下一条命令"><span class="toc-text">command_1 &amp;&amp; command_2    表示前一条命令执行成功后才会执行下一条命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-1-command-2-表示管道，上一条命令的输出作为下一条命令的参数"><span class="toc-text">command_1 | command_2    表示管道，上一条命令的输出作为下一条命令的参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-1-command-2-表示上一条命令执行失败后，才会执行下一条命令"><span class="toc-text">command_1 || command_2    表示上一条命令执行失败后，才会执行下一条命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他运算符"><span class="toc-text">其他运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#command-1-command-2-command-3-执行圆括号内一组命令"><span class="toc-text">(command_1; command_2; command_3)    执行圆括号内一组命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#command-1-command-2-command-3-执行大括号内一组命令"><span class="toc-text">{command_1; command_2; command_3;}    执行大括号内一组命令</span></a></li></ol></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Shell输入输出重定向和管道命令" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Shell输入输出重定向和管道命令</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="输入-输出重定向"><a href="#输入-输出重定向" class="headerlink" title="输入/输出重定向"></a>输入/输出重定向</h3><h5 id="command-gt-file-将输出重定向到file"><a href="#command-gt-file-将输出重定向到file" class="headerlink" title="command &gt; file    将输出重定向到file"></a><code>command &gt; file</code>    将输出重定向到file</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  command touch log.txt</span><br><span class="line">➜  command ls</span><br><span class="line">log.txt</span><br><span class="line">➜  command cat log.txt</span><br><span class="line">➜  command ps &gt; log.txt</span><br><span class="line">➜  command cat log.txt</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:01 zsh</span><br><span class="line">21688 pts/0    00:00:00 ps</span><br></pre></td></tr></table></figure>
+<h5 id="command-lt-file-将输入重定向到file"><a href="#command-lt-file-将输入重定向到file" class="headerlink" title="command &lt; file    将输入重定向到file"></a><code>command &lt; file</code>    将输入重定向到file</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  command wc -l command.txt</span><br><span class="line">1 command.txt</span><br><span class="line">➜  command wc -l &lt; command.txt</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<h5 id="command-gt-gt-file-将输出以追加的方式重定向到file"><a href="#command-gt-gt-file-将输出以追加的方式重定向到file" class="headerlink" title="command &gt;&gt; file    将输出以追加的方式重定向到file"></a><code>command &gt;&gt; file</code>    将输出以追加的方式重定向到file</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">➜  command ls</span><br><span class="line">log.txt</span><br><span class="line">➜  command cat log.txt</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:01 zsh</span><br><span class="line">21688 pts/0    00:00:00 ps</span><br><span class="line">➜  command ps &gt;&gt; log.txt</span><br><span class="line">➜  command cat log.txt</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:01 zsh</span><br><span class="line">21688 pts/0    00:00:00 ps</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:01 zsh</span><br><span class="line">21821 pts/0    00:00:00 ps</span><br></pre></td></tr></table></figure>
+<h5 id="lt-lt-tag-将输入重定向到一个交互式Shell脚本或程序"><a href="#lt-lt-tag-将输入重定向到一个交互式Shell脚本或程序" class="headerlink" title="&lt;&lt; tag    将输入重定向到一个交互式Shell脚本或程序"></a><code>&lt;&lt; tag</code>    将输入重定向到一个交互式Shell脚本或程序</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">command &lt;&lt; delimiter</span><br><span class="line">    document</span><br><span class="line">delimiter</span><br><span class="line"><span class="meta">#</span><span class="bash"> 作用是将两个 delimiter 之间的内容(document) 作为输入传递给 <span class="built_in">command</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  command wc -l &lt;&lt; EOF</span><br><span class="line"><span class="meta">heredoc&gt;</span><span class="bash"> hello</span></span><br><span class="line"><span class="meta">heredoc&gt;</span><span class="bash"> world</span></span><br><span class="line"><span class="meta">heredoc&gt;</span><span class="bash"> !</span></span><br><span class="line"><span class="meta">heredoc&gt;</span><span class="bash"> EOF</span></span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<h5 id="n-gt-amp-m-将输出文件-m-和-n-合并。"><a href="#n-gt-amp-m-将输出文件-m-和-n-合并。" class="headerlink" title="n &gt;&amp; m    将输出文件 m 和 n 合并。"></a><code>n &gt;&amp; m</code>    将输出文件 m 和 n 合并。</h5><ul>
+<li><p>一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：</p>
+<ul>
+<li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。</li>
+<li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。</li>
+<li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息</li>
+</ul>
+</li>
+<li><p><code>command &gt; file</code> 将 stdout 重定向到 file</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  command &gt; file 2&gt;&amp;1</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 stdout 和 stderr 合并后重定向到 file</span></span><br></pre></td></tr></table></figure>
+<h5 id="n-lt-amp-m-将输入文件-m-和-n-合并。"><a href="#n-lt-amp-m-将输入文件-m-和-n-合并。" class="headerlink" title="n &lt;&amp; m    将输入文件 m 和 n 合并。"></a><code>n &lt;&amp; m</code>    将输入文件 m 和 n 合并。</h5><ul>
+<li><code>command &lt; file</code> 将stdin 重定向到 file</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  command &lt; file1 2&lt;&amp;0</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 stdin 和 stderr 合并后重定向到 file</span></span><br></pre></td></tr></table></figure>
+<h3 id="管道命令"><a href="#管道命令" class="headerlink" title="管道命令"></a>管道命令</h3><h5 id="command-1-command-2-command-3-顺序执行多条命令"><a href="#command-1-command-2-command-3-顺序执行多条命令" class="headerlink" title="command_1; command_2; command_3;    顺序执行多条命令"></a><code>command_1; command_2; command_3;</code>    顺序执行多条命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  command touch file.txt; ls;</span><br><span class="line">file.txt</span><br></pre></td></tr></table></figure>
+<h5 id="command-amp-表示任务在后台执行"><a href="#command-amp-表示任务在后台执行" class="headerlink" title="command &amp;    表示任务在后台执行"></a><code>command &amp;</code>    表示任务在后台执行</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  test_code cat csdn_spider.py</span><br><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env python</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> coding=utf-8</span></span><br><span class="line">。。。</span><br><span class="line">➜  test_code python csdn_spider.py &amp;</span><br><span class="line">[1] 19020</span><br><span class="line">➜  test_code ps -aux  | grep python</span><br><span class="line">root     15076  0.3  0.9  60224 17444 ?        SN    2018 155:29 python3 csdn_spider.py</span><br></pre></td></tr></table></figure>
+<h5 id="command-1-amp-amp-command-2-表示前一条命令执行成功后才会执行下一条命令"><a href="#command-1-amp-amp-command-2-表示前一条命令执行成功后才会执行下一条命令" class="headerlink" title="command_1 &amp;&amp; command_2    表示前一条命令执行成功后才会执行下一条命令"></a><code>command_1 &amp;&amp; command_2</code>    表示前一条命令执行成功后才会执行下一条命令</h5><ul>
+<li><p>前一条命令执行成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  test_code ls</span><br><span class="line">hello.py  tensorboard.py  test.py  test.py.tar.gz</span><br><span class="line">➜  test_code cat file &amp;&amp; rm file</span><br><span class="line">cat: file: No such file or directory</span><br><span class="line">➜  test_code ls</span><br><span class="line">hello.py  tensorboard.py  test.py  test.py.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>前一条命令执行失败</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  test_code ls</span><br><span class="line">hello.py  tensorboard.py  test.py  test.py.tar.gz</span><br><span class="line">➜  test_code cat hello.py &amp;&amp; rm hello.py</span><br><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env python</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> coding=utf-8</span></span><br><span class="line"></span><br><span class="line">print('hello')</span><br><span class="line">➜  test_code ls</span><br><span class="line">tensorboard.py  test.py  test.py.tar.gz</span><br></pre></td></tr></table></figure>
+<h5 id="command-1-command-2-表示管道，上一条命令的输出作为下一条命令的参数"><a href="#command-1-command-2-表示管道，上一条命令的输出作为下一条命令的参数" class="headerlink" title="command_1 | command_2    表示管道，上一条命令的输出作为下一条命令的参数"></a><code>command_1 | command_2</code>    表示管道，上一条命令的输出作为下一条命令的参数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  test_code ps</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:00 zsh</span><br><span class="line">19839 pts/0    00:00:00 ps</span><br><span class="line">➜  test_code ps | grep zsh</span><br><span class="line">17928 pts/0    00:00:00 zsh</span><br></pre></td></tr></table></figure>
+<h5 id="command-1-command-2-表示上一条命令执行失败后，才会执行下一条命令"><a href="#command-1-command-2-表示上一条命令执行失败后，才会执行下一条命令" class="headerlink" title="command_1 || command_2    表示上一条命令执行失败后，才会执行下一条命令"></a><code>command_1 || command_2</code>    表示上一条命令执行失败后，才会执行下一条命令</h5><ul>
+<li><p>上一条命令执行失败</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  command ls</span><br><span class="line">➜  command cat file.txt || touch file.txt</span><br><span class="line">cat: file.txt: No such file or directory</span><br><span class="line">➜  command ls</span><br><span class="line">file.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上一条命令执行成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  command ls</span><br><span class="line">file.txt</span><br><span class="line">➜  command cat file.txt || rm file.txt</span><br><span class="line">➜  command ls</span><br><span class="line">file.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="其他运算符"><a href="#其他运算符" class="headerlink" title="其他运算符"></a>其他运算符</h3><h5 id="command-1-command-2-command-3-执行圆括号内一组命令"><a href="#command-1-command-2-command-3-执行圆括号内一组命令" class="headerlink" title="(command_1; command_2; command_3)    执行圆括号内一组命令"></a><code>(command_1; command_2; command_3)</code>    执行圆括号内一组命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  command ls</span><br><span class="line">command.txt</span><br><span class="line">➜  command ls; (ls; ps)</span><br><span class="line">command.txt</span><br><span class="line">command.txt</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:02 zsh</span><br><span class="line">25249 pts/0    00:00:00 ps</span><br></pre></td></tr></table></figure>
+<h5 id="command-1-command-2-command-3-执行大括号内一组命令"><a href="#command-1-command-2-command-3-执行大括号内一组命令" class="headerlink" title="{command_1; command_2; command_3;}    执行大括号内一组命令"></a><code>{command_1; command_2; command_3;}</code>    执行大括号内一组命令</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  command ls</span><br><span class="line">command.txt</span><br><span class="line">➜  command ls; &#123;ls; ps&#125;</span><br><span class="line">command.txt</span><br><span class="line">command.txt</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line">17928 pts/0    00:00:02 zsh</span><br><span class="line">25283 pts/0    00:00:00 ps</span><br><span class="line">➜  command ls; &#123;ls; ps;&#125; | grep zsh</span><br><span class="line">command.txt</span><br><span class="line">17928 pts/0    00:00:02 zsh</span><br><span class="line">➜  command  &#123;ls; ps;&#125; | grep zsh</span><br><span class="line">17928 pts/0    00:00:02 zsh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里<code>()</code>和<code>{}</code>作用相近，但是又有区别。<ul>
+<li>区别：<ul>
+<li><code>()</code>  括号中的命令将会新开一个子shell顺序执行，所以括号中的变量不能够被脚本余下的部分使用</li>
+<li><code>{}</code>  在当前shell顺序执行命令，括号中的变量可以被脚本余下的部分使用</li>
+</ul>
+</li>
+<li>在Shell交互式命令行中区别不大，可以忽略；在bash脚本中区别较大。</li>
+</ul>
+</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/05/cpp_STL/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/12/利用最小二乘法拟合椭圆/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

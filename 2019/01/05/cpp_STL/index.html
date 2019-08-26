@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>C++_STL | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="STL,">
+  
+
+  <meta name="description" content="为了面试刷题，学习了下cpp，然后cpp的stl文档感觉不太好，自己总结了下！  通用库I/O库 &amp;lt;iostream&amp;gt;数学函数 &amp;lt;cstdlib&amp;gt; abs(n)  返回n的绝对值 pow(a, b)  返回a的b次方 sqrt(n)  返回n的平方根  字符串库 &amp;lt;string&amp;gt;1sting str; // 定义str  容量 str.empty()  若s">
+<meta name="keywords" content="STL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++_STL">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/01/05/cpp_STL/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="为了面试刷题，学习了下cpp，然后cpp的stl文档感觉不太好，自己总结了下！  通用库I/O库 &amp;lt;iostream&amp;gt;数学函数 &amp;lt;cstdlib&amp;gt; abs(n)  返回n的绝对值 pow(a, b)  返回a的b次方 sqrt(n)  返回n的平方根  字符串库 &amp;lt;string&amp;gt;1sting str; // 定义str  容量 str.empty()  若s">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-05T15:19:37.548Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++_STL">
+<meta name="twitter:description" content="为了面试刷题，学习了下cpp，然后cpp的stl文档感觉不太好，自己总结了下！  通用库I/O库 &amp;lt;iostream&amp;gt;数学函数 &amp;lt;cstdlib&amp;gt; abs(n)  返回n的绝对值 pow(a, b)  返回a的b次方 sqrt(n)  返回n的平方根  字符串库 &amp;lt;string&amp;gt;1sting str; // 定义str  容量 str.empty()  若s">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#通用库"><span class="toc-text">通用库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#I-O库-lt-iostream-gt"><span class="toc-text">I/O库 &lt;iostream&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数学函数-lt-cstdlib-gt"><span class="toc-text">数学函数 &lt;cstdlib&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#字符串库-lt-string-gt"><span class="toc-text">字符串库 &lt;string&gt;</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#容器库"><span class="toc-text">容器库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Vector库-lt-vector-gt"><span class="toc-text">Vector库 &lt;vector&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Set库-lt-set-gt"><span class="toc-text">Set库 &lt;set&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Map库-lt-map-gt"><span class="toc-text">Map库 &lt;map&gt;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法库-lt-algorithm-gt"><span class="toc-text">算法库 &lt;algorithm&gt;</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#排序操作"><span class="toc-text">排序操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#二分搜索操作"><span class="toc-text">二分搜索操作</span></a></li></ol></li>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-cpp_STL" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">C++_STL</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <ul>
+<li>为了面试刷题，学习了下cpp，然后cpp的stl文档感觉不太好，自己总结了下！</li>
+</ul>
+<h2 id="通用库"><a href="#通用库" class="headerlink" title="通用库"></a>通用库</h2><h5 id="I-O库-lt-iostream-gt"><a href="#I-O库-lt-iostream-gt" class="headerlink" title="I/O库 &lt;iostream&gt;"></a>I/O库 <code>&lt;iostream&gt;</code></h5><h5 id="数学函数-lt-cstdlib-gt"><a href="#数学函数-lt-cstdlib-gt" class="headerlink" title="数学函数 &lt;cstdlib&gt;"></a>数学函数 <code>&lt;cstdlib&gt;</code></h5><ul>
+<li><code>abs(n)</code>  返回n的绝对值</li>
+<li><code>pow(a, b)</code>  返回a的b次方</li>
+<li><code>sqrt(n)</code>  返回n的平方根</li>
+</ul>
+<h5 id="字符串库-lt-string-gt"><a href="#字符串库-lt-string-gt" class="headerlink" title="字符串库 &lt;string&gt;"></a>字符串库 <code>&lt;string&gt;</code></h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sting str; <span class="comment">// 定义str</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>容量<ul>
+<li><code>str.empty()</code>  若str为空则返回1，否则返回0</li>
+<li><code>str.size()</code>  返回str的长度</li>
+</ul>
+</li>
+<li>操作<ul>
+<li><code>str.clear()</code>  清除str</li>
+<li><code>str.insert(n, tmp)</code>  在字符串str的第n位插入tmp</li>
+<li><code>str.erase(begin, end, tmp)</code>  移除str的begin到end之间的tmp字符</li>
+<li><code>str.push_back(tmp)</code>  将tmp附加到str结尾</li>
+<li><code>str.pop_back()</code>  从字符串str移除末尾字符</li>
+<li><code>str.append(tmp)</code>  后附tmp到str末尾</li>
+<li><code>str.replace(n, num, tmp)</code>  str从第n字符开始num个字符替换为tmp</li>
+</ul>
+</li>
+<li>查找<ul>
+<li><code>str.find(tmp, n)</code>  在str的第n个字符开始搜索tmp，返回首次匹配的位置</li>
+<li><code>str.rfind(tmp, n)</code>  在str的第n个字符开始搜索tmp，返回最后匹配的位置</li>
+</ul>
+</li>
+</ul>
+<h2 id="容器库"><a href="#容器库" class="headerlink" title="容器库"></a>容器库</h2><h5 id="Vector库-lt-vector-gt"><a href="#Vector库-lt-vector-gt" class="headerlink" title="Vector库 &lt;vector&gt;"></a>Vector库 <code>&lt;vector&gt;</code></h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;type&gt; vec(n); <span class="comment">// 定义vec的类型是type，大小为n</span></span><br><span class="line"><span class="built_in">vector</span>&lt;type&gt; vec(n); <span class="comment">// 定义vec的类型是type，赋值为1， 2， 3</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; arr(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; arr&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>容量<ul>
+<li><code>vec.empty()</code>  如果vec非空则返回0，否则返回1</li>
+<li><code>vec.size()</code>  返回vec中的元素个数</li>
+</ul>
+</li>
+<li>修改器<ul>
+<li><code>vec.clear()</code>  清除vec</li>
+<li><code>vec.insert()</code></li>
+<li><code>vec.erase(begin, end)</code>  移除begin到end中的元素</li>
+<li><code>vec.erase(begin)</code>  移除begin以后的元素</li>
+<li><code>vec.push_back(tmp)</code>  将tmp后附到vec尾部</li>
+<li><code>vec.resize(n)</code>  重置vec可以容纳n和元素</li>
+</ul>
+</li>
+</ul>
+<h5 id="Set库-lt-set-gt"><a href="#Set库-lt-set-gt" class="headerlink" title="Set库 &lt;set&gt;"></a>Set库 <code>&lt;set&gt;</code></h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>&lt;type&gt; set_;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>容量<ul>
+<li><code>set.empty()</code>  如果set为空返回0，否则返回1</li>
+<li><code>set.size()</code>  返回集合中元素的个数</li>
+</ul>
+</li>
+<li>修改器<ul>
+<li><code>set.clear()</code>  清除set</li>
+<li><code>set.insert(tmp)</code>  set中插入tmp</li>
+<li><code>set.erase(tmp)</code>  set中删除tmp</li>
+</ul>
+</li>
+<li>查找</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;::iterator iter;</span><br><span class="line">iter = <span class="built_in">set</span>.find(tmp); <span class="comment">// 在set中查找tmp，找到返回tmp的值</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *iter &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 返回值</span></span><br></pre></td></tr></table></figure>
+<h5 id="Map库-lt-map-gt"><a href="#Map库-lt-map-gt" class="headerlink" title="Map库 &lt;map&gt;"></a>Map库 <code>&lt;map&gt;</code></h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;key-type, value-type&gt; dict; <span class="comment">// 定义dict及其键值类型</span></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">string</span>&gt; dict;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>容量<ul>
+<li><code>dict.empty()</code>  如果dict为空返回0，否则返回1</li>
+<li><code>dict.size()</code>  返回map中元素的个数</li>
+</ul>
+</li>
+<li>修改器<ul>
+<li><code>dict.clear()</code>  删除dict</li>
+<li><code>dict.insert(pair&lt;int, string&gt;(key, value))</code>  在dict中插入key-value</li>
+<li><code>dict.erase(key)</code>  删除key</li>
+</ul>
+</li>
+<li>查找</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> search = dict.find(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span> (search != dict.end()) &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="literal">true</span> &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 找到，打印1</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="literal">false</span> &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 未找到，打印0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法库-lt-algorithm-gt"><a href="#算法库-lt-algorithm-gt" class="headerlink" title="算法库 &lt;algorithm&gt;"></a>算法库 <code>&lt;algorithm&gt;</code></h2><h5 id="排序操作"><a href="#排序操作" class="headerlink" title="排序操作"></a>排序操作</h5><ul>
+<li><code>sort(arr.begin(), arr.end());</code>  对arr进行升序排序</li>
+</ul>
+<h5 id="二分搜索操作"><a href="#二分搜索操作" class="headerlink" title="二分搜索操作"></a>二分搜索操作</h5><ul>
+<li><code>binary_search(arr.begin(), arr.end(), tmp)</code>  对已排序序列arr，进行二分查找tmp，找到返回1，否则返回0</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/12/08/coder基础知识体系/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/12/Shell输入输出重定向和管道命令/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

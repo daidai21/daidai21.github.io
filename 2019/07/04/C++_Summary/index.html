@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>C++ Summary | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Grammar,">
+  
+
+  <meta name="description" content="Basic Grammar  annotation // /* note */    variable, constant  type bool, char, int, float, double, wchar_t, void decorate: signed, unsigned, long, short, const, volatile, restrict    define  global,">
+<meta name="keywords" content="Grammar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ Summary">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/07/04/C++_Summary/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="Basic Grammar  annotation // /* note */    variable, constant  type bool, char, int, float, double, wchar_t, void decorate: signed, unsigned, long, short, const, volatile, restrict    define  global,">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-03T16:19:55.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ Summary">
+<meta name="twitter:description" content="Basic Grammar  annotation // /* note */    variable, constant  type bool, char, int, float, double, wchar_t, void decorate: signed, unsigned, long, short, const, volatile, restrict    define  global,">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-Grammar"><span class="toc-text">Basic Grammar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Library"><span class="toc-text">Library</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other"><span class="toc-text">Other</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-C++_Summary" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">C++ Summary</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.07.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="Basic-Grammar"><a href="#Basic-Grammar" class="headerlink" title="Basic Grammar"></a>Basic Grammar</h3><ul>
+<li style="list-style: none"><input type="checkbox" checked> annotation<ul>
+<li><code>//</code></li>
+<li><code>/* note */</code></li>
+</ul>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> variable, constant<ul>
+<li style="list-style: none"><input type="checkbox" checked> type<ul>
+<li><code>bool</code>, <code>char</code>, <code>int</code>, <code>float</code>, <code>double</code>, <code>wchar_t</code>, <code>void</code></li>
+<li>decorate: <code>signed</code>, <code>unsigned</code>, <code>long</code>, <code>short</code>, <code>const</code>, <code>volatile</code>, <code>restrict</code></li>
+</ul>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> define</li>
+<li style="list-style: none"><input type="checkbox" checked> global, local</li>
+</ul>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> storage class: <code>auto</code>, <code>register</code>, <code>static</code>, <code>extern</code>, <code>mutable</code>, <code>thread_local (C++ 11)</code></li>
+<li style="list-style: none"><input type="checkbox" checked> operator<ul>
+<li>arithmetic: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>++</code>, <code>--</code></li>
+<li>relational: <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></li>
+<li>logical: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code></li>
+<li>bitwise: , <code>&amp;</code>, <code>|</code>, <code>^</code>, <code>~</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code></li>
+<li>assignment: , <code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>, <code>&lt;&lt;=</code>, <code>&gt;&gt;=</code>, <code>&amp;=</code>, <code>^=</code>, <code>|=</code></li>
+<li>miscellaneous: , <code>sizeof</code>, <code>Condition ? X : Y</code>, <code>,</code>, <code>.</code>, <code>-&gt;</code>, <code>Cast</code>: (<code>const_cast&lt;type&gt; (expr)</code>, <code>dynamic_cast&lt;type&gt; (expr)</code>, <code>reinterpret_cast&lt;type&gt; (expr)</code>, <code>static_cast&lt;type&gt; (expr)</code>), <code>&amp;</code>, <code>*</code></li>
+</ul>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> loop: <code>for</code>, <code>while</code>, <code>do while</code>; control sentence: <code>break</code>, <code>continue</code>, <code>goto</code></li>
+<li style="list-style: none"><input type="checkbox" checked> judge: <code>if</code>, <code>if else</code>, <code>switch</code>, <code>? :</code></li>
+<li style="list-style: none"><input type="checkbox" checked> function:<ul>
+<li>define, statement, call funciton by (value, pointer, quote)</li>
+<li>Lambda function: <code>[capture](parameters) -&gt; return_type {body}</code></li>
+</ul>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> number, array, string</li>
+<li style="list-style: none"><input type="checkbox" checked> pointer: (<code>Null pointer</code>, <code>pointer arithmetic operation</code>, <code>pointer array</code>, <code>a pointer to a pointer</code>, <code>pointer parameter to function</code>, <code>return pointer from function</code>), quote: (<code>quote parameter to function</code>, <code>return quote from function</code>)</li>
+<li style="list-style: none"><input type="checkbox" checked> date, time</li>
+<li style="list-style: none"><input type="checkbox" checked> data struct: <code>struct</code>, <code>typedef</code>, <code>enum</code></li>
+<li style="list-style: none"><input type="checkbox" checked> OOP</li>
+<li>class<ul>
+<li><code>member function</code>, <code>call decorate</code>: (<code>public</code>, <code>private</code>, <code>protected</code>), <code>constructor function</code>, <code>destructive function</code>, <code>copy constructor function</code>, <code>friend function</code>, <code>inline function</code>, <code>static function</code>, <code>pointer to class</code>, <code>this pointer</code></li>
+<li>inherit: <code>derived class</code>, <code>multiple inheritance</code></li>
+<li><code>function overloading</code>, <code>operation overloading</code></li>
+</ul>
+</li>
+<li>polymorphic: <code>virtual function</code>, <code>pure virtual function</code></li>
+<li style="list-style: none"><input type="checkbox" checked> error deal: <code>try catch</code>, <code>throw</code></li>
+<li style="list-style: none"><input type="checkbox" checked> dynamic memory: (<code>new</code>, <code>delete</code>), new: <code>1d array</code>, <code>2d array</code>, <code>3d array</code>,<code>object</code><ul>
+<li><code>stack</code>: all variables inside the function occupy stack memory</li>
+<li><code>heap</code>: this is program not used memory, it can be used to allocate memory dynamically when the program is running.</li>
+</ul>
+</li>
+<li style="list-style: none"><input type="checkbox" checked> namespace: <code>using</code>, <code>namespace</code>, <code>using namespace</code></li>
+<li style="list-style: none"><input type="checkbox" checked> template: <code>template function</code>, <code>template class</code></li>
+<li style="list-style: none"><input type="checkbox" checked> pretreatment: <code>#define</code>, parametric macros, conditional compliastion: <code>#ifdef</code> <code>#endif</code> <code>#if</code>, <code>#</code> and <code>##</code>, macros predefined: <code>__LINE__</code>, <code>__FILE__</code>, <code>__DATE__</code>, <code>__TIME__</code></li>
+<li style="list-style: none"><input type="checkbox" checked> thread: <code>#include &lt;thread&gt;</code></li>
+</ul>
+<h3 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h3><ul>
+<li>STL: <code>vector</code>, <code>set</code>, etc</li>
+<li>I/O: <code>#include &lt;filesystem&gt;</code></li>
+<li>network: .</li>
+<li>process: <code>fork()</code></li>
+</ul>
+<h3 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h3><ul>
+<li><a href="https://seisman.github.io/how-to-write-makefile/index.html" target="_blank" rel="noopener">Makefile</a></li>
+<li><a href="https://cmake.org/documentation/" target="_blank" rel="noopener">CMake</a></li>
+<li><a href="https://www.gnu.org/software/gdb/documentation/" target="_blank" rel="noopener">GDB</a></li>
+<li><a href="https://github.com/google/styleguide/blob/gh-pages/cpplint/cpplint.py" target="_blank" rel="noopener">cpplint.py</a></li>
+<li><a href="https://github.com/google/styleguide" target="_blank" rel="noopener">Google C++ code style</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/06/22/读源码——howdoi/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/07/13/C++_header_file/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

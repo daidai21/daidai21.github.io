@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>图解计算机和程序 | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Computer,">
+  
+
+  <meta name="description" content="计算机是怎样跑起来的 Hz（赫兹）是CPU频率单位，1秒发出1次时钟信号就是1Hz。100MHz=100*100万=1亿次/秒 IC是继承电路（Integrated Circuit）的简称 CPU的频率就是‘时钟信号’的电信号，可用来衡量CPU的速度 程序的流程：顺序执行、条件分支、循环 事件驱动：用户的操作等产生事件后，由事件决定程序的流程 OOP  继承、封装、多态 LAN 是Local Ar">
+<meta name="keywords" content="Computer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解计算机和程序">
+<meta property="og:url" content="https://www.fuweihu.xyz/2018/09/01/图解计算机和程序/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="计算机是怎样跑起来的 Hz（赫兹）是CPU频率单位，1秒发出1次时钟信号就是1Hz。100MHz=100*100万=1亿次/秒 IC是继承电路（Integrated Circuit）的简称 CPU的频率就是‘时钟信号’的电信号，可用来衡量CPU的速度 程序的流程：顺序执行、条件分支、循环 事件驱动：用户的操作等产生事件后，由事件决定程序的流程 OOP  继承、封装、多态 LAN 是Local Ar">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-01-14T07:09:09.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解计算机和程序">
+<meta name="twitter:description" content="计算机是怎样跑起来的 Hz（赫兹）是CPU频率单位，1秒发出1次时钟信号就是1Hz。100MHz=100*100万=1亿次/秒 IC是继承电路（Integrated Circuit）的简称 CPU的频率就是‘时钟信号’的电信号，可用来衡量CPU的速度 程序的流程：顺序执行、条件分支、循环 事件驱动：用户的操作等产生事件后，由事件决定程序的流程 OOP  继承、封装、多态 LAN 是Local Ar">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#计算机是怎样跑起来的"><span class="toc-text">计算机是怎样跑起来的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序是怎样跑起来的"><span class="toc-text">程序是怎样跑起来的</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-图解计算机和程序" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">图解计算机和程序</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.09.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Book/">Book</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="计算机是怎样跑起来的"><a href="#计算机是怎样跑起来的" class="headerlink" title="计算机是怎样跑起来的"></a>计算机是怎样跑起来的</h2><ul>
+<li>Hz（赫兹）是CPU频率单位，1秒发出1次时钟信号就是1Hz。100MHz=100*100万=1亿次/秒</li>
+<li>IC是继承电路（Integrated Circuit）的简称</li>
+<li>CPU的频率就是‘时钟信号’的电信号，可用来衡量CPU的速度</li>
+<li>程序的流程：顺序执行、条件分支、循环</li>
+<li>事件驱动：用户的操作等产生事件后，由事件决定程序的流程</li>
+<li>OOP  继承、封装、多态</li>
+<li>LAN 是Local Area Network 局域网</li>
+<li>MAC地址就是计算机网卡中在出厂时被分配的不可更改的MAC地址（硬件的自己懂的话还是可以改的）</li>
+<li>IP地址到MAC地址的转换就是ARP 地址解析协议</li>
+</ul>
+<h2 id="程序是怎样跑起来的"><a href="#程序是怎样跑起来的" class="headerlink" title="程序是怎样跑起来的"></a>程序是怎样跑起来的</h2><ul>
+<li>CPU是由寄存器、控制器、运算器和时钟组成的<ul>
+<li><code>寄存器</code>用来暂存指令、数据等处理对象、可看做内存的一部分</li>
+<li><code>控制器</code>负责把内存上的指令等读入寄存器，并根据指令的执行结果来控制整个计算机</li>
+<li><code>运算器</code>负责运算从内存读入寄存器的数据</li>
+<li><code>时钟</code>负责发出CPU开始计时的时钟信号</li>
+</ul>
+</li>
+<li>每个字节（1字节=8位）</li>
+<li>每个CPU大概有20-100个寄存器，主要分为：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>每个CPU中包含</th>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1个</td>
+<td>累加寄存器</td>
+<td>存储执行运算的数据和运算后的数据</td>
+</tr>
+<tr>
+<td>1个</td>
+<td>标志寄存器</td>
+<td>存储运算处理后的CPU状态</td>
+</tr>
+<tr>
+<td>1个</td>
+<td>程序计数器</td>
+<td>存储下一条指令所在内存的地址</td>
+</tr>
+<tr>
+<td>n个</td>
+<td>基址寄存器</td>
+<td>存储数据内存的起始地址</td>
+</tr>
+<tr>
+<td>n个</td>
+<td>变址寄存器</td>
+<td>存储基址寄存器的相对地址</td>
+</tr>
+<tr>
+<td>n个</td>
+<td>通用寄存器</td>
+<td>存储任意数据</td>
+</tr>
+<tr>
+<td>1个</td>
+<td>指令寄存器</td>
+<td>存储指令</td>
+</tr>
+<tr>
+<td>1个</td>
+<td>栈寄存器</td>
+<td>存储栈区域的起始地址</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>函数的调用机制<ul>
+<li>call指令会把调用函数后要执行的指令地址存储在名为栈的主存内</li>
+<li>return命令的功能是吧保存在栈内的地址设定到程序的计数器中</li>
+</ul>
+</li>
+<li>通过地址和索引实现数组<ul>
+<li>通过基址寄存器和变址寄存器对主存区域进行划分</li>
+<li>CPU会把基址寄存器+变址寄存器的值解释为实际查看的内存地址</li>
+<li>变址寄存器的值就相当于高级变成语言程序中数组的索引功能</li>
+</ul>
+</li>
+<li>机器语言指令的主要类型和功能：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据转送指令</td>
+<td>寄存器和内存、内存和内存、寄存器和外围设备之间的数据读取操作</td>
+</tr>
+<tr>
+<td>运算指令</td>
+<td>用累加寄存器执行算数运算、逻辑运算、比较运算和移位运算</td>
+</tr>
+<tr>
+<td>跳转指令</td>
+<td>实现条件分支、循环、强制跳转等</td>
+</tr>
+<tr>
+<td>call/return指令</td>
+<td>函数的调用/返回调用前的地址</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>8位二进制数称为一个字节</li>
+<li>移位运算和乘除运算的关系<ul>
+<li>左移一位就是对二进制数乘2</li>
+<li>右移一位就是对二进制数除2</li>
+</ul>
+</li>
+<li>二进制数中正负的表示：<ul>
+<li>把最高位作为符号来使用，最高位就是符号位。</li>
+<li>符号位是0表示正数，符号位是1表示负数</li>
+<li>补数就是用正数来表示负数</li>
+<li>原始二进制数转化其补数：所有位取反，然后加1<br><code>1的二进制数是00000001，取反后是11111110，加1后是11111111</code></li>
+</ul>
+</li>
+<li>逻辑右移和算数右移<ul>
+<li>逻辑右移是右移后前面空出来的高位用0补充</li>
+<li>算数右移是右移后前面空出来的高位用右移前符号位的值来补足</li>
+</ul>
+</li>
+<li>浮点数是用符号、尾数、基数和指数来表示的小数</li>
+<li>内存物理机制<ul>
+<li>DRAM</li>
+<li>SRAM</li>
+<li>ROM</li>
+</ul>
+</li>
+<li>磁盘缓存加快了磁盘的访问速度，指把从磁盘中读出的数据存储到内存空间中的方式</li>
+<li>虚拟内存是指把磁盘的一部分作为假象的内存来使用</li>
+<li>节约内存的编程方法<ul>
+<li>DLL文件是在程序运行时可以动态加载的文件</li>
+<li>通过调用_stdcall来减小文件的大小 <code>栈清理</code></li>
+</ul>
+</li>
+<li>磁盘的物理结构<ul>
+<li>扇区方式<ul>
+<li>把磁盘表面分成若干同心圆的空间就是磁道</li>
+<li>把磁道按固定大小划分成的空间就是扇区</li>
+</ul>
+</li>
+<li>可变长方式</li>
+</ul>
+</li>
+<li>BIOS和引导</li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/09/01/黑客与画家/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/09/04/配置Ubuntu以及Web部署/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

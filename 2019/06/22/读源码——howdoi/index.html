@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>ReadSourceCode——howdoi | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Read-Python-Code,">
+  
+
+  <meta name="description" content="实现思路用户执行.py文件 -&amp;gt; 获取命令行输入的参数 -&amp;gt; 获取搜索关键词 –&amp;gt; 通过爬虫找到 stackoverflow 上的答案(html 格式) –&amp;gt; 对 html 进行解析拿到答案  关键词 必须从终端获取，这一步可以通过 Python 自带的包 argparse 实现。   爬虫 而爬虫部分，则使用包 requests ，其中 url 采用的是 google 搜">
+<meta name="keywords" content="Read-Python-Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReadSourceCode——howdoi">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/06/22/读源码——howdoi/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="实现思路用户执行.py文件 -&amp;gt; 获取命令行输入的参数 -&amp;gt; 获取搜索关键词 –&amp;gt; 通过爬虫找到 stackoverflow 上的答案(html 格式) –&amp;gt; 对 html 进行解析拿到答案  关键词 必须从终端获取，这一步可以通过 Python 自带的包 argparse 实现。   爬虫 而爬虫部分，则使用包 requests ，其中 url 采用的是 google 搜">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-22T14:13:22.570Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReadSourceCode——howdoi">
+<meta name="twitter:description" content="实现思路用户执行.py文件 -&amp;gt; 获取命令行输入的参数 -&amp;gt; 获取搜索关键词 –&amp;gt; 通过爬虫找到 stackoverflow 上的答案(html 格式) –&amp;gt; 对 html 进行解析拿到答案  关键词 必须从终端获取，这一步可以通过 Python 自带的包 argparse 实现。   爬虫 而爬虫部分，则使用包 requests ，其中 url 采用的是 google 搜">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现思路"><span class="toc-text">实现思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码解析"><span class="toc-text">代码解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Link"><span class="toc-text">Link</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-读源码——howdoi" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ReadSourceCode——howdoi</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.06.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/ReadSourceCode/">ReadSourceCode</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>用户执行.py文件 -&gt; 获取命令行输入的参数 -&gt; 获取搜索关键词 –&gt; 通过爬虫找到 stackoverflow 上的答案(html 格式) –&gt; 对 html 进行解析拿到答案</p>
+<ul>
+<li>关键词<ul>
+<li>必须从终端获取，这一步可以通过 Python 自带的包 argparse 实现。</li>
+</ul>
+</li>
+<li>爬虫<ul>
+<li>而爬虫部分，则使用包 requests ，其中 url 采用的是 google 搜索的 url</li>
+</ul>
+</li>
+<li>解析 html<ul>
+<li>采用的工具是 pyquery，它可以让使用者像使用 jquery 一样解析 html 代码。</li>
+</ul>
+</li>
+<li>代理</li>
+<li>缓存<ul>
+<li>直接将内容存在本地的文件夹</li>
+</ul>
+</li>
+<li>颜色输出</li>
+</ul>
+<h3 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="comment">######################################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># howdoi - instant coding answers via the command line</span></span><br><span class="line"><span class="comment"># written by Benjamin Gleitzman (gleitz@mit.edu)</span></span><br><span class="line"><span class="comment"># inspired by Rich Jones (rich@anomos.info)</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">######################################################</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function  <span class="comment"># python2.x和python3.x中print括号的兼容</span></span><br><span class="line"><span class="keyword">import</span> gc</span><br><span class="line">gc.disable()  <span class="comment"># noqa: E402  # 关闭gc</span></span><br><span class="line"><span class="keyword">import</span> argparse  <span class="comment"># 获取命令行参数</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> appdirs  <span class="comment"># 用户数据目录</span></span><br><span class="line"><span class="keyword">import</span> re  <span class="comment"># 正则</span></span><br><span class="line"><span class="keyword">from</span> cachelib <span class="keyword">import</span> FileSystemCache, NullCache  <span class="comment"># 缓存</span></span><br><span class="line"><span class="keyword">import</span> requests  <span class="comment"># 用于http请求</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> __version__</span><br><span class="line"><span class="comment"># 用于控制台彩色高亮格式化输出</span></span><br><span class="line"><span class="keyword">from</span> pygments <span class="keyword">import</span> highlight</span><br><span class="line"><span class="keyword">from</span> pygments.lexers <span class="keyword">import</span> guess_lexer, get_lexer_by_name</span><br><span class="line"><span class="keyword">from</span> pygments.formatters.terminal <span class="keyword">import</span> TerminalFormatter</span><br><span class="line"><span class="keyword">from</span> pygments.util <span class="keyword">import</span> ClassNotFound</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyquery <span class="keyword">import</span> PyQuery <span class="keyword">as</span> pq  <span class="comment"># 用于网页解析</span></span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> ConnectionError</span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> SSLError</span><br><span class="line"><span class="comment"># 兼容Python2.x和Python3.x的库</span></span><br><span class="line"><span class="comment"># Handle imports for Python 2 and 3</span></span><br><span class="line"><span class="keyword">if</span> sys.version &lt; <span class="string">'3'</span>:</span><br><span class="line">    <span class="keyword">import</span> codecs</span><br><span class="line">    <span class="keyword">from</span> urllib <span class="keyword">import</span> quote <span class="keyword">as</span> url_quote</span><br><span class="line">    <span class="keyword">from</span> urllib <span class="keyword">import</span> getproxies</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Handling Unicode: http://stackoverflow.com/a/6633040/305414</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">u</span><span class="params">(x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> codecs.unicode_escape_decode(x)[<span class="number">0</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">from</span> urllib.request <span class="keyword">import</span> getproxies</span><br><span class="line">    <span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote <span class="keyword">as</span> url_quote</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">u</span><span class="params">(x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># rudimentary standardized 3-level log output</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_print_err</span><span class="params">(x)</span>:</span> print(<span class="string">"[ERROR] "</span> + x)</span><br><span class="line">_print_ok = <span class="keyword">print</span>  <span class="comment"># noqa: E305</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_print_dbg</span><span class="params">(x)</span>:</span> print(<span class="string">"[DEBUG] "</span> + x)  <span class="comment"># noqa: E302</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> os.getenv(<span class="string">'HOWDOI_DISABLE_SSL'</span>):  <span class="comment"># Set http instead of https</span></span><br><span class="line">    SCHEME = <span class="string">'http://'</span></span><br><span class="line">    VERIFY_SSL_CERTIFICATE = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    SCHEME = <span class="string">'https://'</span></span><br><span class="line">    VERIFY_SSL_CERTIFICATE = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SUPPORTED_SEARCH_ENGINES = (<span class="string">'google'</span>, <span class="string">'bing'</span>)</span><br><span class="line"></span><br><span class="line">URL = os.getenv(<span class="string">'HOWDOI_URL'</span>) <span class="keyword">or</span> <span class="string">'stackoverflow.com'</span>  <span class="comment"># 设置目标问答网站</span></span><br><span class="line"><span class="comment"># 浏览器UA，用于伪造浏览器请求，防止网站对脚本请求进行屏蔽</span></span><br><span class="line">USER_AGENTS = (<span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0'</span>,</span><br><span class="line">               <span class="string">'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100 101 Firefox/22.0'</span>,</span><br><span class="line">               <span class="string">'Mozilla/5.0 (Windows NT 6.1; rv:11.0) Gecko/20100101 Firefox/11.0'</span>,</span><br><span class="line">               (<span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/536.5 (KHTML, like Gecko) '</span></span><br><span class="line">                <span class="string">'Chrome/19.0.1084.46 Safari/536.5'</span>),</span><br><span class="line">               (<span class="string">'Mozilla/5.0 (Windows; Windows NT 6.1) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.46'</span></span><br><span class="line">                <span class="string">'Safari/536.5'</span>), )</span><br><span class="line">SEARCH_URLS = &#123;</span><br><span class="line">    <span class="string">'bing'</span>: SCHEME + <span class="string">'www.bing.com/search?q=site:&#123;0&#125;%20&#123;1&#125;'</span>,</span><br><span class="line">    <span class="string">'google'</span>: SCHEME + <span class="string">'www.google.com/search?q=site:&#123;0&#125;%20&#123;1&#125;'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BLOCK_INDICATORS = (</span><br><span class="line">    <span class="string">'form id="captcha-form"'</span>,</span><br><span class="line">    <span class="string">'This page appears when Google automatically detects requests coming from your computer '</span></span><br><span class="line">    <span class="string">'network which appear to be in violation of the &lt;a href="//www.google.com/policies/terms/"&gt;Terms of Service'</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">BLOCKED_QUESTION_FRAGMENTS = (</span><br><span class="line">    <span class="string">'webcache.googleusercontent.com'</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">STAR_HEADER = u(<span class="string">'\u2605'</span>)</span><br><span class="line">ANSWER_HEADER = u(<span class="string">'&#123;2&#125;  Answer from &#123;0&#125; &#123;2&#125;\n&#123;1&#125;'</span>)  <span class="comment"># 格式化答案输出</span></span><br><span class="line">NO_ANSWER_MSG = <span class="string">'&lt; no answer given &gt;'</span></span><br><span class="line"></span><br><span class="line">CACHE_EMPTY_VAL = <span class="string">"NULL"</span></span><br><span class="line">CACHE_DIR = appdirs.user_cache_dir(<span class="string">'howdoi'</span>)</span><br><span class="line">CACHE_ENTRY_MAX = <span class="number">128</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> os.getenv(<span class="string">'HOWDOI_DISABLE_CACHE'</span>):  <span class="comment"># 设置缓存文件路径</span></span><br><span class="line">    cache = NullCache()  <span class="comment"># works like an always empty cache</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    cache = FileSystemCache(CACHE_DIR, CACHE_ENTRY_MAX, default_timeout=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">howdoi_session = requests.session()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BlockError</span><span class="params">(RuntimeError)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_random_int</span><span class="params">(width)</span>:</span></span><br><span class="line">    bres = os.urandom(width)</span><br><span class="line">    <span class="keyword">if</span> sys.version &lt; <span class="string">'3'</span>:</span><br><span class="line">        ires = int(bres.encode(<span class="string">'hex'</span>), <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ires = int.from_bytes(bres, <span class="string">'little'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ires</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_random_choice</span><span class="params">(seq)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> seq[_random_int(<span class="number">1</span>) % len(seq)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_proxies</span><span class="params">()</span>:</span>  <span class="comment"># 获取代理</span></span><br><span class="line">    proxies = getproxies()</span><br><span class="line">    filtered_proxies = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> proxies.items():</span><br><span class="line">        <span class="keyword">if</span> key.startswith(<span class="string">'http'</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> value.startswith(<span class="string">'http'</span>):</span><br><span class="line">                filtered_proxies[key] = <span class="string">'http://%s'</span> % value</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                filtered_proxies[key] = value</span><br><span class="line">    <span class="keyword">return</span> filtered_proxies</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_result</span><span class="params">(url)</span>:</span>  <span class="comment"># 获取结果</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> howdoi_session.get(url, headers=&#123;<span class="string">'User-Agent'</span>: _random_choice(USER_AGENTS)&#125;,</span><br><span class="line">                                  proxies=get_proxies(),</span><br><span class="line">                                  verify=VERIFY_SSL_CERTIFICATE).text</span><br><span class="line">    <span class="keyword">except</span> requests.exceptions.SSLError <span class="keyword">as</span> e:</span><br><span class="line">        _print_err(<span class="string">'Encountered an SSL Error. Try using HTTP instead of '</span></span><br><span class="line">                   <span class="string">'HTTPS by setting the environment variable "HOWDOI_DISABLE_SSL".\n'</span>)</span><br><span class="line">        <span class="keyword">raise</span> e</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_add_links_to_text</span><span class="params">(element)</span>:</span></span><br><span class="line">    hyperlinks = element.find(<span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> hyperlink <span class="keyword">in</span> hyperlinks:</span><br><span class="line">        pquery_object = pq(hyperlink)</span><br><span class="line">        href = hyperlink.attrib[<span class="string">'href'</span>]</span><br><span class="line">        copy = pquery_object.text()</span><br><span class="line">        <span class="keyword">if</span> (copy == href):</span><br><span class="line">            replacement = copy</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            replacement = <span class="string">"[&#123;0&#125;](&#123;1&#125;)"</span>.format(copy, href)</span><br><span class="line">        pquery_object.replace_with(replacement)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_text</span><span class="params">(element)</span>:</span></span><br><span class="line">    <span class="string">''' return inner text in pyquery element '''</span></span><br><span class="line">    _add_links_to_text(element)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> element.text(squash_space=<span class="keyword">False</span>)</span><br><span class="line">    <span class="keyword">except</span> TypeError:</span><br><span class="line">        <span class="keyword">return</span> element.text()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_extract_links_from_bing</span><span class="params">(html)</span>:</span></span><br><span class="line">    html.remove_namespaces()</span><br><span class="line">    <span class="keyword">return</span> [a.attrib[<span class="string">'href'</span>] <span class="keyword">for</span> a <span class="keyword">in</span> html(<span class="string">'.b_algo'</span>)(<span class="string">'h2'</span>)(<span class="string">'a'</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_extract_links_from_google</span><span class="params">(html)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [a.attrib[<span class="string">'href'</span>] <span class="keyword">for</span> a <span class="keyword">in</span> html(<span class="string">'.l'</span>)] <span class="keyword">or</span> \</span><br><span class="line">        [a.attrib[<span class="string">'href'</span>] <span class="keyword">for</span> a <span class="keyword">in</span> html(<span class="string">'.r'</span>)(<span class="string">'a'</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_extract_links</span><span class="params">(html, search_engine)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> search_engine == <span class="string">'bing'</span>:</span><br><span class="line">        <span class="keyword">return</span> _extract_links_from_bing(html)</span><br><span class="line">    <span class="keyword">return</span> _extract_links_from_google(html)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_search_url</span><span class="params">(search_engine)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> SEARCH_URLS.get(search_engine, SEARCH_URLS[<span class="string">'google'</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_is_blocked</span><span class="params">(page)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> indicator <span class="keyword">in</span> BLOCK_INDICATORS:</span><br><span class="line">        <span class="keyword">if</span> page.find(indicator) != <span class="number">-1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_links</span><span class="params">(query)</span>:</span>  <span class="comment"># 获取google搜索结果中的连接</span></span><br><span class="line">    search_engine = os.getenv(<span class="string">'HOWDOI_SEARCH_ENGINE'</span>, <span class="string">'google'</span>)</span><br><span class="line">    search_url = _get_search_url(search_engine)</span><br><span class="line"></span><br><span class="line">    result = _get_result(search_url.format(URL, url_quote(query)))</span><br><span class="line">    <span class="keyword">if</span> _is_blocked(result):</span><br><span class="line">        _print_err(<span class="string">'Unable to find an answer because the search engine temporarily blocked the request. '</span></span><br><span class="line">                   <span class="string">'Please wait a few minutes or select a different search engine.'</span>)</span><br><span class="line">        <span class="keyword">raise</span> BlockError(<span class="string">"Temporary block by search engine"</span>)</span><br><span class="line"></span><br><span class="line">    html = pq(result)</span><br><span class="line">    <span class="keyword">return</span> _extract_links(html, search_engine)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_link_at_pos</span><span class="params">(links, position)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> links:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> len(links) &gt;= position:</span><br><span class="line">        link = links[position - <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        link = links[<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">return</span> link</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_format_output</span><span class="params">(code, args)</span>:</span>  <span class="comment"># 代码格式化输出函数 渲染</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> args[<span class="string">'color'</span>]:</span><br><span class="line">        <span class="keyword">return</span> code</span><br><span class="line">    lexer = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># try to find a lexer using the StackOverflow tags</span></span><br><span class="line">    <span class="comment"># or the query arguments</span></span><br><span class="line">    <span class="keyword">for</span> keyword <span class="keyword">in</span> args[<span class="string">'query'</span>].split() + args[<span class="string">'tags'</span>]:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            lexer = get_lexer_by_name(keyword)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">except</span> ClassNotFound:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># no lexer found above, use the guesser</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> lexer:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            lexer = guess_lexer(code)</span><br><span class="line">        <span class="keyword">except</span> ClassNotFound:</span><br><span class="line">            <span class="keyword">return</span> code</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> highlight(code,</span><br><span class="line">                     lexer,</span><br><span class="line">                     TerminalFormatter(bg=<span class="string">'dark'</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_is_question</span><span class="params">(link)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> fragment <span class="keyword">in</span> BLOCKED_QUESTION_FRAGMENTS:</span><br><span class="line">        <span class="keyword">if</span> fragment <span class="keyword">in</span> link:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">return</span> re.search(<span class="string">r'questions/\d+/'</span>, link)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_questions</span><span class="params">(links)</span>:</span>  <span class="comment"># 获取问题连接</span></span><br><span class="line">    <span class="keyword">return</span> [link <span class="keyword">for</span> link <span class="keyword">in</span> links <span class="keyword">if</span> _is_question(link)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_answer</span><span class="params">(args, links)</span>:</span>  <span class="comment"># 获取答案</span></span><br><span class="line">    link = get_link_at_pos(links, args[<span class="string">'pos'</span>])</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> link:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">if</span> args.get(<span class="string">'link'</span>):</span><br><span class="line">        <span class="keyword">return</span> link</span><br><span class="line"></span><br><span class="line">    cache_key = link</span><br><span class="line">    page = cache.get(link)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> page:</span><br><span class="line">        page = _get_result(link + <span class="string">'?answertab=votes'</span>)</span><br><span class="line">        cache.set(cache_key, page)</span><br><span class="line"></span><br><span class="line">    html = pq(page)</span><br><span class="line"></span><br><span class="line">    first_answer = html(<span class="string">'.answer'</span>).eq(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    instructions = first_answer.find(<span class="string">'pre'</span>) <span class="keyword">or</span> first_answer.find(<span class="string">'code'</span>)</span><br><span class="line">    args[<span class="string">'tags'</span>] = [t.text <span class="keyword">for</span> t <span class="keyword">in</span> html(<span class="string">'.post-tag'</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> instructions <span class="keyword">and</span> <span class="keyword">not</span> args[<span class="string">'all'</span>]:</span><br><span class="line">        text = get_text(first_answer.find(<span class="string">'.post-text'</span>).eq(<span class="number">0</span>))</span><br><span class="line">    <span class="keyword">elif</span> args[<span class="string">'all'</span>]:</span><br><span class="line">        texts = []</span><br><span class="line">        <span class="keyword">for</span> html_tag <span class="keyword">in</span> first_answer.items(<span class="string">'.post-text &gt; *'</span>):</span><br><span class="line">            current_text = get_text(html_tag)</span><br><span class="line">            <span class="keyword">if</span> current_text:</span><br><span class="line">                <span class="keyword">if</span> html_tag[<span class="number">0</span>].tag <span class="keyword">in</span> [<span class="string">'pre'</span>, <span class="string">'code'</span>]:</span><br><span class="line">                    texts.append(_format_output(current_text, args))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    texts.append(current_text)</span><br><span class="line">        text = <span class="string">'\n'</span>.join(texts)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        text = _format_output(get_text(instructions.eq(<span class="number">0</span>)), args)</span><br><span class="line">    <span class="keyword">if</span> text <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        text = NO_ANSWER_MSG</span><br><span class="line">    text = text.strip()</span><br><span class="line">    <span class="keyword">return</span> text</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_links_with_cache</span><span class="params">(query)</span>:</span></span><br><span class="line">    cache_key = query + <span class="string">"-links"</span></span><br><span class="line">    res = cache.get(cache_key)</span><br><span class="line">    <span class="keyword">if</span> res:</span><br><span class="line">        <span class="keyword">if</span> res == CACHE_EMPTY_VAL:</span><br><span class="line">            res = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    links = _get_links(query)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> links:</span><br><span class="line">        cache.set(cache_key, CACHE_EMPTY_VAL)</span><br><span class="line"></span><br><span class="line">    question_links = _get_questions(links)</span><br><span class="line">    cache.set(cache_key, question_links <span class="keyword">or</span> CACHE_EMPTY_VAL)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> question_links</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_instructions</span><span class="params">(args)</span>:</span>  <span class="comment"># 解析</span></span><br><span class="line">    question_links = _get_links_with_cache(args[<span class="string">'query'</span>])</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> question_links:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    only_hyperlinks = args.get(<span class="string">'link'</span>)</span><br><span class="line">    star_headers = (args[<span class="string">'num_answers'</span>] &gt; <span class="number">1</span> <span class="keyword">or</span> args[<span class="string">'all'</span>])</span><br><span class="line"></span><br><span class="line">    answers = []</span><br><span class="line">    initial_position = args[<span class="string">'pos'</span>]</span><br><span class="line">    spliter_length = <span class="number">80</span></span><br><span class="line">    answer_spliter = <span class="string">'\n'</span> + <span class="string">'='</span> * spliter_length + <span class="string">'\n\n'</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> answer_number <span class="keyword">in</span> range(args[<span class="string">'num_answers'</span>]):</span><br><span class="line">        current_position = answer_number + initial_position</span><br><span class="line">        args[<span class="string">'pos'</span>] = current_position</span><br><span class="line">        link = get_link_at_pos(question_links, current_position)</span><br><span class="line">        answer = _get_answer(args, question_links)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> answer:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> only_hyperlinks:</span><br><span class="line">            answer = format_answer(link, answer, star_headers)</span><br><span class="line">        answer += <span class="string">'\n'</span></span><br><span class="line">        answers.append(answer)</span><br><span class="line">    <span class="keyword">return</span> answer_spliter.join(answers)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">format_answer</span><span class="params">(link, answer, star_headers)</span>:</span>  <span class="comment"># 格式化回答</span></span><br><span class="line">    <span class="keyword">if</span> star_headers:</span><br><span class="line">        <span class="keyword">return</span> ANSWER_HEADER.format(link, answer, STAR_HEADER)</span><br><span class="line">    <span class="keyword">return</span> answer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_clear_cache</span><span class="params">()</span>:</span>  <span class="comment"># 清除缓存</span></span><br><span class="line">    <span class="keyword">global</span> cache  <span class="comment"># 使用全部变量</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> cache:</span><br><span class="line">        cache = FileSystemCache(CACHE_DIR, CACHE_ENTRY_MAX, <span class="number">0</span>)  <span class="comment"># 创建缓存</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cache.clear()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">howdoi</span><span class="params">(args)</span>:</span>  <span class="comment"># 脚本主函数</span></span><br><span class="line">    args[<span class="string">'query'</span>] = <span class="string">' '</span>.join(args[<span class="string">'query'</span>]).replace(<span class="string">'?'</span>, <span class="string">''</span>)</span><br><span class="line">    cache_key = str(args)</span><br><span class="line"></span><br><span class="line">    res = cache.get(cache_key)</span><br><span class="line">    <span class="keyword">if</span> res:  <span class="comment"># 缓存命中</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        res = _get_instructions(args)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> res:</span><br><span class="line">            res = <span class="string">'Sorry, couldn\'t find any help with that topic\n'</span></span><br><span class="line">        cache.set(cache_key, res)  <span class="comment"># 高速缓存</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">    <span class="keyword">except</span> (ConnectionError, SSLError):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Failed to establish network connection\n'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_parser</span><span class="params">()</span>:</span>  <span class="comment"># 获取用户输入的命令行参数</span></span><br><span class="line">    parser = argparse.ArgumentParser(description=<span class="string">'instant coding answers via the command line'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'query'</span>, metavar=<span class="string">'QUERY'</span>, type=str, nargs=<span class="string">'*'</span>,</span><br><span class="line">                        help=<span class="string">'the question to answer'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-p'</span>, <span class="string">'--pos'</span>, help=<span class="string">'select answer in specified position (default: 1)'</span>, default=<span class="number">1</span>, type=int)</span><br><span class="line">    parser.add_argument(<span class="string">'-a'</span>, <span class="string">'--all'</span>, help=<span class="string">'display the full text of the answer'</span>,</span><br><span class="line">                        action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-l'</span>, <span class="string">'--link'</span>, help=<span class="string">'display only the answer link'</span>,</span><br><span class="line">                        action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-c'</span>, <span class="string">'--color'</span>, help=<span class="string">'enable colorized output'</span>,</span><br><span class="line">                        action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-n'</span>, <span class="string">'--num-answers'</span>, help=<span class="string">'number of answers to return'</span>, default=<span class="number">1</span>, type=int)</span><br><span class="line">    parser.add_argument(<span class="string">'-C'</span>, <span class="string">'--clear-cache'</span>, help=<span class="string">'clear the cache'</span>,</span><br><span class="line">                        action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-v'</span>, <span class="string">'--version'</span>, help=<span class="string">'displays the current version of howdoi'</span>,</span><br><span class="line">                        action=<span class="string">'store_true'</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'-e'</span>, <span class="string">'--engine'</span>, help=<span class="string">'change search engine for this query only'</span>, dest=<span class="string">'search_engine'</span>,</span><br><span class="line">                        nargs=<span class="string">"?"</span>, default=<span class="string">'google'</span>, const=<span class="string">'bing'</span>) <span class="comment">#google if -e not specified, bing if -e specified without positional arg.</span></span><br><span class="line">    <span class="keyword">return</span> parser</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">command_line_runner</span><span class="params">()</span>:</span>  <span class="comment"># 启动函数</span></span><br><span class="line">    parser = get_parser()  <span class="comment"># 获取参数</span></span><br><span class="line">    args = vars(parser.parse_args())  <span class="comment"># 获取参数的属性和属性值的字典对象</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> args[<span class="string">'version'</span>]:</span><br><span class="line">        _print_ok(__version__)  <span class="comment"># 打印版本</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> args[<span class="string">'clear_cache'</span>]:</span><br><span class="line">        <span class="keyword">if</span> _clear_cache():  <span class="comment"># 清除缓存</span></span><br><span class="line">            _print_ok(<span class="string">'Cache cleared successfully'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            _print_err(<span class="string">'Clearing cache failed'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> args[<span class="string">'query'</span>]:  <span class="comment"># 用户没用输入选项的处理</span></span><br><span class="line">        parser.print_help()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> os.getenv(<span class="string">'HOWDOI_COLORIZE'</span>):</span><br><span class="line">        args[<span class="string">'color'</span>] = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> args[<span class="string">'search_engine'</span>] != <span class="string">'google'</span>:  <span class="comment"># 搜索引擎设置</span></span><br><span class="line">        <span class="keyword">assert</span> args[<span class="string">'search_engine'</span>] <span class="keyword">in</span> SUPPORTED_SEARCH_ENGINES</span><br><span class="line">        os.environ[<span class="string">'HOWDOI_SEARCH_ENGINE'</span>] = args[<span class="string">'search_engine'</span>]</span><br><span class="line"></span><br><span class="line">    utf8_result = howdoi(args).encode(<span class="string">'utf-8'</span>, <span class="string">'ignore'</span>)</span><br><span class="line">    <span class="keyword">if</span> sys.version &lt; <span class="string">'3'</span>:  <span class="comment"># Python版本为2时转换编码</span></span><br><span class="line">        print(utf8_result)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Write UTF-8 to stdout: https://stackoverflow.com/a/3603160</span></span><br><span class="line">        sys.stdout.buffer.write(utf8_result)  <span class="comment"># 输出结果</span></span><br><span class="line">    <span class="comment"># close the session to release connection</span></span><br><span class="line">    howdoi_session.close()  <span class="comment"># 关闭http连接</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    command_line_runner()</span><br></pre></td></tr></table></figure>
+<h3 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h3><ul>
+<li><a href="https://github.com/gleitz/howdoi" target="_blank" rel="noopener">howdoi</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/05/25/Ubuntu搭梯子/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/07/04/C++_Summary/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
