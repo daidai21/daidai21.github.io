@@ -364,17 +364,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[计算机是怎样跑起来的]]></title>
-    <url>%2F2018%2F09%2F11%2F%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%20%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E6%A0%B7%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%2F</url>
-    <content type="text"><![CDATA[计算机是怎样跑起来的 Hz（赫兹）是CPU频率单位，1秒发出1次时钟信号就是1Hz。100MHz=100*100万=1亿次/秒 IC是继承电路（Integrated Circuit）的简称 CPU的频率就是‘时钟信号’的电信号，可用来衡量CPU的速度 程序的流程：顺序执行、条件分支、循环 事件驱动：用户的操作等产生事件后，由事件决定程序的流程 OOP 继承、封装、多态 LAN 是Local Area Network 局域网 MAC地址就是计算机网卡中在出厂时被分配的不可更改的MAC地址（硬件的自己懂的话还是可以改的） IP地址到MAC地址的转换就是ARP 地址解析协议 程序是怎样跑起来的 CPU是由寄存器、控制器、运算器和时钟组成的 寄存器用来暂存指令、数据等处理对象、可看做内存的一部分 控制器负责把内存上的指令等读入寄存器，并根据指令的执行结果来控制整个计算机 运算器负责运算从内存读入寄存器的数据 时钟负责发出CPU开始计时的时钟信号 每个字节（1字节=8位） 每个CPU大概有20-100个寄存器，主要分为： 每个CPU中包含 名称 作用 1个 累加寄存器 存储执行运算的数据和运算后的数据 1个 标志寄存器 存储运算处理后的CPU状态 1个 程序计数器 存储下一条指令所在内存的地址 n个 基址寄存器 存储数据内存的起始地址 n个 变址寄存器 存储基址寄存器的相对地址 n个 通用寄存器 存储任意数据 1个 指令寄存器 存储指令 1个 栈寄存器 存储栈区域的起始地址 函数的调用机制 call指令会把调用函数后要执行的指令地址存储在名为栈的主存内 return命令的功能是吧保存在栈内的地址设定到程序的计数器中 通过地址和索引实现数组 通过基址寄存器和变址寄存器对主存区域进行划分 CPU会把基址寄存器+变址寄存器的值解释为实际查看的内存地址 变址寄存器的值就相当于高级变成语言程序中数组的索引功能 机器语言指令的主要类型和功能： 类型 功能 数据转送指令 寄存器和内存、内存和内存、寄存器和外围设备之间的数据读取操作 运算指令 用累加寄存器执行算数运算、逻辑运算、比较运算和移位运算 跳转指令 实现条件分支、循环、强制跳转等 call/return指令 函数的调用/返回调用前的地址 8位二进制数称为一个字节 移位运算和乘除运算的关系 左移一位就是对二进制数乘2 右移一位就是对二进制数除2 二进制数中正负的表示： 把最高位作为符号来使用，最高位就是符号位。 符号位是0表示正数，符号位是1表示负数 补数就是用正数来表示负数 原始二进制数转化其补数：所有位取反，然后加11的二进制数是00000001，取反后是11111110，加1后是11111111 逻辑右移和算数右移 逻辑右移是右移后前面空出来的高位用0补充 算数右移是右移后前面空出来的高位用右移前符号位的值来补足 浮点数是用符号、尾数、基数和指数来表示的小数 内存物理机制 DRAM SRAM ROM 磁盘缓存加快了磁盘的访问速度，指把从磁盘中读出的数据存储到内存空间中的方式 虚拟内存是指把磁盘的一部分作为假象的内存来使用 节约内存的编程方法 DLL文件是在程序运行时可以动态加载的文件 通过调用_stdcall来减小文件的大小 栈清理 磁盘的物理结构 扇区方式 把磁盘表面分成若干同心圆的空间就是磁道 把磁道按固定大小划分成的空间就是扇区 可变长方式 BIOS和引导]]></content>
-      <categories>
-        <category>Book</category>
-      </categories>
-      <tags>
-        <tag>Computer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[设计模式 python]]></title>
     <url>%2F2018%2F09%2F11%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-python%2F</url>
     <content type="text"><![CDATA[Mastering Python Design Patterns 工厂模式 工厂方法： 调用一个类或者一个函数时，只需要明白输入和输出，而不必关心内部的实现过程。 抽象工厂： 单个类内包括多个函数；单个类内包括多种方法。 使用场景： 对象之间的解耦 优化性能和资源占用 单步类对象的创建 示例：123456789101112131415161718192021class Compute: def add(a, b): return a + b def reduce(a, b): return a - bif __name__ == &apos;__main__&apos;: a = 2 b = 1 sum_ab = Compute.add(a, b) print(sum_ab) reduce_ab = Compute.reduce(a, b) print(reduce_ab)# result:# 3# 1 建造者模式 一个对象的创建需要多个步骤，并且不同步骤产生不同的表现。 使用场景： 创建复杂对象 要求一个对象有不同的表现，且对象的构造与表现解耦 原型模式 创建一个对象的克隆，输入一个对象，返回一个对象的副本（改变副本不会对原型造成影响） 使用场景： 当创建一个浅副本时，副本依赖引用的原型（提升应用性能和优化内存，但需要小心修改数据） 当创建一个深副本时，副本不依赖引用的原型，并复制所有原型 示例：12345678910111213141516171819import copydict1 = &#123;&apos;num&apos;: [1, 2, 3]&#125;dict2 = copy.copy(dict1)dict3 = copy.deepcopy(dict1)dict1[&apos;num&apos;].remove(1)print(dict1)print(dict2)print(dict3)# result:# &#123;&apos;num&apos;: [2, 3]&#125;# &#123;&apos;num&apos;: [2, 3]&#125;# &#123;&apos;num&apos;: [1, 2, 3]&#125; 适配器模式 是一种结构型设计模式，实现两个不兼容接口之间的兼容 使用场景： 让新的插件用在旧的代码上或者让旧的插件用在新的代码上。 示例：12345678910111213141516171819202122def main(a, b): return a + bdef adapter(list_): return main(list_[0], list_[1])if __name__ == &apos;__main__&apos;: a = 1 b = 2 c = main(a, b) print(c) list_ = [1, 2] c = adapter(list_) print(c)# result:# 3# 3 修饰器模式 动态（运行时）扩展一个对象的功能（继承关系是静态的）。 使用场景： 扩展一个对象的行为，无需继承，一个父类可以修饰成为多个不同的子类。 示例：12345678910111213141516def fun_1(fun): fun() print(&apos;fun 1&apos;)@fun_1def fun_2(): print(&apos;fun 2&apos;)# result:# fun 2# fun 1# 执行顺序fun_1(fun_2()) 12345678910111213141516171819202122232425262728293031323334353637def fun_1(func): def main(): print(&quot;fun_1 main&quot;) func() return main # 调用main函数# 老方法def fun_2(): print(&quot;fun_2&quot;)fun_old = fun_1(fun_2) # 装饰# 新方法@fun_1def fun_3(): print(&apos;fun_3&apos;)if __name__ == &apos;__main__&apos;: fun_old() # 执行顺序fun_2(fun_1()) print(&apos;-----&apos;) fun_3() # 执行顺序fun_3(fun_1())# result:# fun_1 main# fun_2# -----# fun_1 main# fun_3 外观模式 调用一个复杂系统时，不必考虑内部的复杂实现，只需要了解使用方法和API（像是工厂模式的进阶吧） 使用场景： 隐藏系统复杂性的方式 享元模式 通过为相似对象引入数据共享来最小化内存，提升性能 使用场景： 在应用需要创建大量的计算代价大但共享许多属性的对象时 模型-视图-控制器模式 每个部分有明确的职责，模型负责数据访问，控制器负责控制过程，视图时模型的表现 使用场景： Web框架（MVC） 代理模式 使用代理对象在访问实际对象之前执行重要操作 使用场景： 远程代理 虚拟代理 防护代理 智能代理 责任链模式 发送方可直接访问链中的首个节点。若首个节点不能处理请求，则转发给下一个节点，如此直到请求被某个节点处理或者整个链遍历结束 命令模式 将一个操作（撤销、重做、复制、粘贴等）封装成一个对象 解释器模式 用于为高级用户和领域专家提供一个类编 程的框架，但没有暴露出编程语言那样的复杂性 观察者模式 描述单个对象（发布者，又称为主持者或可观察者）和一个或多个对象（订阅者， 又称为观察者）之间的发布-订阅关系 状态模式 状态机是一个抽象机器，具有两个主要部分：状态和转换。状态是指一个系统的当前状况。 一个状态机在任意时间点只会有一个激活状态；转换是指从当前状态到一个新状态的切换。 策略模式 使用多种算法来解决问题，最终采用最优的 模板模式 在实现结构相近的算法时，可以使用模板模式来消除冗 余代码。]]></content>
@@ -383,6 +372,17 @@
       </categories>
       <tags>
         <tag>Code-Skills</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[计算机是怎样跑起来的]]></title>
+    <url>%2F2018%2F09%2F11%2F%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%98%AF%E6%80%8E%E6%A0%B7%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%20%E7%A8%8B%E5%BA%8F%E6%98%AF%E6%80%8E%E6%A0%B7%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%2F</url>
+    <content type="text"><![CDATA[计算机是怎样跑起来的 Hz（赫兹）是CPU频率单位，1秒发出1次时钟信号就是1Hz。100MHz=100*100万=1亿次/秒 IC是继承电路（Integrated Circuit）的简称 CPU的频率就是‘时钟信号’的电信号，可用来衡量CPU的速度 程序的流程：顺序执行、条件分支、循环 事件驱动：用户的操作等产生事件后，由事件决定程序的流程 OOP 继承、封装、多态 LAN 是Local Area Network 局域网 MAC地址就是计算机网卡中在出厂时被分配的不可更改的MAC地址（硬件的自己懂的话还是可以改的） IP地址到MAC地址的转换就是ARP 地址解析协议 程序是怎样跑起来的 CPU是由寄存器、控制器、运算器和时钟组成的 寄存器用来暂存指令、数据等处理对象、可看做内存的一部分 控制器负责把内存上的指令等读入寄存器，并根据指令的执行结果来控制整个计算机 运算器负责运算从内存读入寄存器的数据 时钟负责发出CPU开始计时的时钟信号 每个字节（1字节=8位） 每个CPU大概有20-100个寄存器，主要分为： 每个CPU中包含 名称 作用 1个 累加寄存器 存储执行运算的数据和运算后的数据 1个 标志寄存器 存储运算处理后的CPU状态 1个 程序计数器 存储下一条指令所在内存的地址 n个 基址寄存器 存储数据内存的起始地址 n个 变址寄存器 存储基址寄存器的相对地址 n个 通用寄存器 存储任意数据 1个 指令寄存器 存储指令 1个 栈寄存器 存储栈区域的起始地址 函数的调用机制 call指令会把调用函数后要执行的指令地址存储在名为栈的主存内 return命令的功能是吧保存在栈内的地址设定到程序的计数器中 通过地址和索引实现数组 通过基址寄存器和变址寄存器对主存区域进行划分 CPU会把基址寄存器+变址寄存器的值解释为实际查看的内存地址 变址寄存器的值就相当于高级变成语言程序中数组的索引功能 机器语言指令的主要类型和功能： 类型 功能 数据转送指令 寄存器和内存、内存和内存、寄存器和外围设备之间的数据读取操作 运算指令 用累加寄存器执行算数运算、逻辑运算、比较运算和移位运算 跳转指令 实现条件分支、循环、强制跳转等 call/return指令 函数的调用/返回调用前的地址 8位二进制数称为一个字节 移位运算和乘除运算的关系 左移一位就是对二进制数乘2 右移一位就是对二进制数除2 二进制数中正负的表示： 把最高位作为符号来使用，最高位就是符号位。 符号位是0表示正数，符号位是1表示负数 补数就是用正数来表示负数 原始二进制数转化其补数：所有位取反，然后加11的二进制数是00000001，取反后是11111110，加1后是11111111 逻辑右移和算数右移 逻辑右移是右移后前面空出来的高位用0补充 算数右移是右移后前面空出来的高位用右移前符号位的值来补足 浮点数是用符号、尾数、基数和指数来表示的小数 内存物理机制 DRAM SRAM ROM 磁盘缓存加快了磁盘的访问速度，指把从磁盘中读出的数据存储到内存空间中的方式 虚拟内存是指把磁盘的一部分作为假象的内存来使用 节约内存的编程方法 DLL文件是在程序运行时可以动态加载的文件 通过调用_stdcall来减小文件的大小 栈清理 磁盘的物理结构 扇区方式 把磁盘表面分成若干同心圆的空间就是磁道 把磁道按固定大小划分成的空间就是扇区 可变长方式 BIOS和引导]]></content>
+      <categories>
+        <category>Book</category>
+      </categories>
+      <tags>
+        <tag>Computer</tag>
       </tags>
   </entry>
   <entry>
@@ -430,9 +430,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Git手册]]></title>
-    <url>%2F2018%2F07%2F15%2FGit%E6%89%8B%E5%86%8C%2F</url>
-    <content type="text"><![CDATA[图形化 gitk 内建的图形化 git git config color.ui true 彩色的 git 输出 git config format.pretty oneline 显示历史记录时，只显示一行注释信息 git add -i 交互地添加文件至缓存区 远程 git remote add origin &lt;url&gt; 添加远程地址 git remote remove &lt;name&gt; 删除关联的远程版本库 git push -u origin master 将master分支推送到origin远程仓库 git push -u origin master -f 强制将master分支推送到远程仓库origin 慎用图解 git结构 工作区：就是你在电脑里能看到的目录 暂存区：英文叫stage, 或index。一般存放在 “.git目录下” 下的index文件（.git/index）中，所以我们把暂存区有时也叫作索引（index） 版本库：工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库 分支 error error: src refspec master does not match any. 空目录不能提交；至少有一次commit]]></content>
+    <title><![CDATA[git 使用指南]]></title>
+    <url>%2F2018%2F07%2F15%2Fgit-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%2F</url>
+    <content type="text"><![CDATA[创建账号创建一个Github或者Gitee账号 本地安装Git前往Git根据操作系统下载Git并安装到本地 ssh密钥本地生成秘钥右击桌面打开你的git bash,第一次使用Git时,需要先生成ssh 1ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot; 生成的秘钥一般在你操作系统用户下的.ssh目录中 告诉本地系统将密钥告诉本地系统 1ssh-add ~/.ssh/id_rsa （此处如果出现Could not open a connection to your authentication agent. 则先执行 ssh-agent bash） 查看生成的公钥1cat ~/.ssh/id_rsa.pub 上传公钥 复制该公钥粘贴到你的Github或者Gitee的SSH公钥页面 使用SSH公钥可以让你在你的电脑和码云通讯的时候使用安全连接（Git的Remote要使用SSH地址） 配置User打开 git bash 需要配置: 12git config --global user.name &quot;Your Name&quot;git config --global user.email &quot;email@example.com&quot; 初始化本地Git仓库1git init 这条命令执行完毕后会多出一个.git文件夹 添加变更文件1git add . 提交文件1git commmit -am &quot;message&quot; 添加远程地址1git remote add origin git@github.com/你的github用户名/仓库名.git ssh测试1ssh -T git@gitee.com 显示Welcome to Gitee.com,你的用户名!说明ssh正确 可能出现的错误如果出现 fatal: remote origin already exists. 则执行 git remote rm origin 首次提交第一次提交可能会出现如下错误error: failed to push some refs to &#39;https://gitee.com/tomFat/interview.git&#39;所以需要在提交前执行git pull 合并两个版本库1git pull origin master --allow-unrelated-histories 向Github或Gitee推送1git push -u origin master git命令速查]]></content>
       <categories>
         <category>Tools</category>
       </categories>
@@ -441,9 +441,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[git 使用指南]]></title>
-    <url>%2F2018%2F07%2F15%2Fgit-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97%2F</url>
-    <content type="text"><![CDATA[创建账号创建一个Github或者Gitee账号 本地安装Git前往Git根据操作系统下载Git并安装到本地 ssh密钥本地生成秘钥右击桌面打开你的git bash,第一次使用Git时,需要先生成ssh 1ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot; 生成的秘钥一般在你操作系统用户下的.ssh目录中 告诉本地系统将密钥告诉本地系统 1ssh-add ~/.ssh/id_rsa （此处如果出现Could not open a connection to your authentication agent. 则先执行 ssh-agent bash） 查看生成的公钥1cat ~/.ssh/id_rsa.pub 上传公钥 复制该公钥粘贴到你的Github或者Gitee的SSH公钥页面 使用SSH公钥可以让你在你的电脑和码云通讯的时候使用安全连接（Git的Remote要使用SSH地址） 配置User打开 git bash 需要配置: 12git config --global user.name &quot;Your Name&quot;git config --global user.email &quot;email@example.com&quot; 初始化本地Git仓库1git init 这条命令执行完毕后会多出一个.git文件夹 添加变更文件1git add . 提交文件1git commmit -am &quot;message&quot; 添加远程地址1git remote add origin git@github.com/你的github用户名/仓库名.git ssh测试1ssh -T git@gitee.com 显示Welcome to Gitee.com,你的用户名!说明ssh正确 可能出现的错误如果出现 fatal: remote origin already exists. 则执行 git remote rm origin 首次提交第一次提交可能会出现如下错误error: failed to push some refs to &#39;https://gitee.com/tomFat/interview.git&#39;所以需要在提交前执行git pull 合并两个版本库1git pull origin master --allow-unrelated-histories 向Github或Gitee推送1git push -u origin master git命令速查]]></content>
+    <title><![CDATA[Git手册]]></title>
+    <url>%2F2018%2F07%2F15%2FGit%E6%89%8B%E5%86%8C%2F</url>
+    <content type="text"><![CDATA[图形化 gitk 内建的图形化 git git config color.ui true 彩色的 git 输出 git config format.pretty oneline 显示历史记录时，只显示一行注释信息 git add -i 交互地添加文件至缓存区 远程 git remote add origin &lt;url&gt; 添加远程地址 git remote remove &lt;name&gt; 删除关联的远程版本库 git push -u origin master 将master分支推送到origin远程仓库 git push -u origin master -f 强制将master分支推送到远程仓库origin 慎用图解 git结构 工作区：就是你在电脑里能看到的目录 暂存区：英文叫stage, 或index。一般存放在 “.git目录下” 下的index文件（.git/index）中，所以我们把暂存区有时也叫作索引（index） 版本库：工作区有一个隐藏目录.git，这个不算工作区，而是Git的版本库 分支 error error: src refspec master does not match any. 空目录不能提交；至少有一次commit]]></content>
       <categories>
         <category>Tools</category>
       </categories>
