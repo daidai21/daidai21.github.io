@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Atomicity | DaiDai_Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="IO,">
+  
+
+  <meta name="description" content="Atomicity of read and write a file lib  pip install atomicwrites 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172">
+<meta name="keywords" content="IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Atomicity">
+<meta property="og:url" content="https://www.fuweihu.xyz/2019/08/31/Atomicity/index.html">
+<meta property="og:site_name" content="DaiDai_Blog">
+<meta property="og:description" content="Atomicity of read and write a file lib  pip install atomicwrites 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-31T14:20:34.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Atomicity">
+<meta name="twitter:description" content="Atomicity of read and write a file lib  pip install atomicwrites 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Box</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Box</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            Blog
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            Category
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            Tag
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+            About
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Atomicity-of-read-and-write-a-file"><span class="toc-text">Atomicity of read and write a file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multi-thread-lock-free-simultaneous-reading-and-writing-of-an-object"><span class="toc-text">Multi-thread lock-free simultaneous reading and writing of an object</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Atomicity" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Atomicity</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.08.31</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Dai Dai</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/C/">C++</a> / <a class="article-category-link" href="/categories/Python/">Python</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="Atomicity-of-read-and-write-a-file"><a href="#Atomicity-of-read-and-write-a-file" class="headerlink" title="Atomicity of read and write a file"></a>Atomicity of read and write a file</h3><ul>
+<li><p><strong>lib</strong></p>
+<ul>
+<li><p><a href="https://github.com/untitaker/python-atomicwrites" target="_blank" rel="noopener"><code>pip install atomicwrites</code></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> contextlib  <span class="comment"># 上下文管理器</span></span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> tempfile</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">import</span> fcntl  <span class="comment"># 与linux下的文件锁头文件&lt;fcntl.h&gt;一个作用</span></span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    fcntl = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">__version__ = <span class="string">'1.3.0'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PY2 = sys.version_info[<span class="number">0</span>] == <span class="number">2</span>  <span class="comment"># 获取python版本</span></span><br><span class="line"></span><br><span class="line">text_type = unicode <span class="keyword">if</span> PY2 <span class="keyword">else</span> str  <span class="comment"># noqa  # 忽略代码质量警告</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_path_to_unicode</span><span class="params">(x)</span>:</span>  <span class="comment"># 文件路径的编码转换</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(x, text_type):</span><br><span class="line">        <span class="keyword">return</span> x.decode(sys.getfilesystemencoding())</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">DEFAULT_MODE = <span class="string">"wb"</span> <span class="keyword">if</span> PY2 <span class="keyword">else</span> <span class="string">"w"</span>  <span class="comment"># 默认操作模式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">_proper_fsync = os.fsync  <span class="comment"># 强制将文件描述符为fd的文件写入硬盘</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主要定义_replace_atomic和_move_atomic函数</span></span><br><span class="line"><span class="keyword">if</span> sys.platform != <span class="string">'win32'</span>:  <span class="comment"># Unix平台</span></span><br><span class="line">    <span class="keyword">if</span> hasattr(fcntl, <span class="string">'F_FULLFSYNC'</span>):</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_proper_fsync</span><span class="params">(fd)</span>:</span></span><br><span class="line">            <span class="comment"># https://lists.apple.com/archives/darwin-dev/2005/Feb/msg00072.html</span></span><br><span class="line">            <span class="comment"># https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man2/fsync.2.html</span></span><br><span class="line">            <span class="comment"># https://github.com/untitaker/python-atomicwrites/issues/6</span></span><br><span class="line">            fcntl.fcntl(fd, fcntl.F_FULLFSYNC)  <span class="comment"># 完全同步</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_sync_directory</span><span class="params">(directory)</span>:</span>  <span class="comment"># 同步文件夹</span></span><br><span class="line">        <span class="comment"># Ensure that filenames are written to disk</span></span><br><span class="line">        fd = os.open(directory, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            _proper_fsync(fd)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            os.close(fd)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_replace_atomic</span><span class="params">(src, dst)</span>:</span></span><br><span class="line">        os.rename(src, dst)</span><br><span class="line">        _sync_directory(os.path.normpath(os.path.dirname(dst)))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_move_atomic</span><span class="params">(src, dst)</span>:</span></span><br><span class="line">        os.link(src, dst)</span><br><span class="line">        os.unlink(src)</span><br><span class="line"></span><br><span class="line">        src_dir = os.path.normpath(os.path.dirname(src))</span><br><span class="line">        dst_dir = os.path.normpath(os.path.dirname(dst))</span><br><span class="line">        _sync_directory(dst_dir)</span><br><span class="line">        <span class="keyword">if</span> src_dir != dst_dir:</span><br><span class="line">            _sync_directory(src_dir)</span><br><span class="line"><span class="keyword">else</span>:  <span class="comment"># Win32平台</span></span><br><span class="line">    <span class="keyword">from</span> ctypes <span class="keyword">import</span> windll, WinError</span><br><span class="line"></span><br><span class="line">    _MOVEFILE_REPLACE_EXISTING = <span class="number">0x1</span></span><br><span class="line">    _MOVEFILE_WRITE_THROUGH = <span class="number">0x8</span></span><br><span class="line">    _windows_default_flags = _MOVEFILE_WRITE_THROUGH</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_handle_errors</span><span class="params">(rv)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> rv:</span><br><span class="line">            <span class="keyword">raise</span> WinError()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_replace_atomic</span><span class="params">(src, dst)</span>:</span></span><br><span class="line">        _handle_errors(windll.kernel32.MoveFileExW(</span><br><span class="line">            _path_to_unicode(src), _path_to_unicode(dst),</span><br><span class="line">            _windows_default_flags | _MOVEFILE_REPLACE_EXISTING</span><br><span class="line">        ))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_move_atomic</span><span class="params">(src, dst)</span>:</span></span><br><span class="line">        _handle_errors(windll.kernel32.MoveFileExW(</span><br><span class="line">            _path_to_unicode(src), _path_to_unicode(dst),</span><br><span class="line">            _windows_default_flags</span><br><span class="line">        ))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再裹了一层</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">replace_atomic</span><span class="params">(src, dst)</span>:</span>  <span class="comment"># 重写文件</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Move ``src`` to ``dst``. If ``dst`` exists, it will be silently</span></span><br><span class="line"><span class="string">    overwritten.</span></span><br><span class="line"><span class="string">    Both paths must reside on the same filesystem for the operation to be</span></span><br><span class="line"><span class="string">    atomic.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">return</span> _replace_atomic(src, dst)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">move_atomic</span><span class="params">(src, dst)</span>:</span>  <span class="comment"># 更改文件</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Move ``src`` to ``dst``. There might a timewindow where both filesystem</span></span><br><span class="line"><span class="string">    entries exist. If ``dst`` already exists, :py:exc:`FileExistsError` will be</span></span><br><span class="line"><span class="string">    raised.</span></span><br><span class="line"><span class="string">    Both paths must reside on the same filesystem for the operation to be</span></span><br><span class="line"><span class="string">    atomic.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">return</span> _move_atomic(src, dst)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AtomicWriter</span><span class="params">(object)</span>:</span>  <span class="comment"># 主要功能class</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    A helper class for performing atomic writes. Usage::</span></span><br><span class="line"><span class="string">        with AtomicWriter(path).open() as f:</span></span><br><span class="line"><span class="string">            f.write(...)</span></span><br><span class="line"><span class="string">    :param path: The destination filepath. May or may not exist.</span></span><br><span class="line"><span class="string">    :param mode: The filemode for the temporary file. This defaults to `wb` in</span></span><br><span class="line"><span class="string">        Python 2 and `w` in Python 3.</span></span><br><span class="line"><span class="string">    :param overwrite: If set to false, an error is raised if ``path`` exists.</span></span><br><span class="line"><span class="string">        Errors are only raised after the file has been written to.  Either way,</span></span><br><span class="line"><span class="string">        the operation is atomic.</span></span><br><span class="line"><span class="string">    If you need further control over the exact behavior, you are encouraged to</span></span><br><span class="line"><span class="string">    subclass.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, path, mode=DEFAULT_MODE, overwrite=False,</span></span></span><br><span class="line"><span class="function"><span class="params">                **open_kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">'a'</span> <span class="keyword">in</span> mode:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(</span><br><span class="line">                <span class="string">'Appending to an existing file is not supported, because that '</span></span><br><span class="line">                <span class="string">'would involve an expensive `copy`-operation to a temporary '</span></span><br><span class="line">                <span class="string">'file. Open the file in normal `w`-mode and copy explicitly '</span></span><br><span class="line">                <span class="string">'if that\'s what you\'re after.'</span></span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'x'</span> <span class="keyword">in</span> mode:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'Use the `overwrite`-parameter instead.'</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'w'</span> <span class="keyword">not</span> <span class="keyword">in</span> mode:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'AtomicWriters can only be written to.'</span>)</span><br><span class="line"></span><br><span class="line">        self._path = path</span><br><span class="line">        self._mode = mode</span><br><span class="line">        self._overwrite = overwrite</span><br><span class="line">        self._open_kwargs = open_kwargs</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        Open the temporary file.</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">return</span> self._open(self.get_fileobject)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @contextlib.contextmanager  # 上下文管理 with</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_open</span><span class="params">(self, get_fileobject)</span>:</span></span><br><span class="line">        f = <span class="keyword">None</span>  <span class="comment"># make sure f exists even if get_fileobject() fails</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            success = <span class="keyword">False</span></span><br><span class="line">            <span class="keyword">with</span> get_fileobject(**self._open_kwargs) <span class="keyword">as</span> f:</span><br><span class="line">                <span class="keyword">yield</span> f</span><br><span class="line">                self.sync(f)</span><br><span class="line">            self.commit(f)</span><br><span class="line">            success = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> success:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    self.rollback(f)</span><br><span class="line">                <span class="keyword">except</span> Exception:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_fileobject</span><span class="params">(self, suffix=<span class="string">""</span>, prefix=tempfile.template, dir=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                    **kwargs)</span>:</span></span><br><span class="line">        <span class="string">'''Return the temporary file to use.'''</span></span><br><span class="line">        <span class="keyword">if</span> dir <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            dir = os.path.normpath(os.path.dirname(self._path))</span><br><span class="line">        descriptor, name = tempfile.mkstemp(suffix=suffix, prefix=prefix,</span><br><span class="line">                                            dir=dir)</span><br><span class="line">        <span class="comment"># io.open() will take either the descriptor or the name, but we need</span></span><br><span class="line">        <span class="comment"># the name later for commit()/replace_atomic() and couldn't find a way</span></span><br><span class="line">        <span class="comment"># to get the filename from the descriptor.</span></span><br><span class="line">        os.close(descriptor)</span><br><span class="line">        kwargs[<span class="string">'mode'</span>] = self._mode</span><br><span class="line">        kwargs[<span class="string">'file'</span>] = name</span><br><span class="line">        <span class="keyword">return</span> io.open(**kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sync</span><span class="params">(self, f)</span>:</span>  <span class="comment"># 负责在提交之前清除尽可能多的文件缓存</span></span><br><span class="line">        <span class="string">'''responsible for clearing as many file caches as possible before</span></span><br><span class="line"><span class="string">        commit'''</span></span><br><span class="line">        f.flush()</span><br><span class="line">        _proper_fsync(f.fileno())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">commit</span><span class="params">(self, f)</span>:</span>  <span class="comment"># 将临时文件移动到目标位置</span></span><br><span class="line">        <span class="string">'''Move the temporary file to the target location.'''</span></span><br><span class="line">        <span class="keyword">if</span> self._overwrite:</span><br><span class="line">            replace_atomic(f.name, self._path)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            move_atomic(f.name, self._path)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rollback</span><span class="params">(self, f)</span>:</span>  <span class="comment"># 清除临时资源</span></span><br><span class="line">        <span class="string">'''Clean up all temporary resources.'''</span></span><br><span class="line">        os.unlink(f.name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">atomic_write</span><span class="params">(path, writer_cls=AtomicWriter, **cls_kwargs)</span>:</span>  <span class="comment"># 回调函数</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Simple atomic writes. This wraps :py:class:`AtomicWriter`::</span></span><br><span class="line"><span class="string">        with atomic_write(path) as f:</span></span><br><span class="line"><span class="string">            f.write(...)</span></span><br><span class="line"><span class="string">    :param path: The target path to write to.</span></span><br><span class="line"><span class="string">    :param writer_cls: The writer class to use. This parameter is useful if you</span></span><br><span class="line"><span class="string">        subclassed :py:class:`AtomicWriter` to change some behavior and want to</span></span><br><span class="line"><span class="string">        use that new subclass.</span></span><br><span class="line"><span class="string">    Additional keyword arguments are passed to the writer class. See</span></span><br><span class="line"><span class="string">    :py:class:`AtomicWriter`.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="keyword">return</span> writer_cls(path, **cls_kwargs).open()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://docs.python.org/3/library/tempfile.html" target="_blank" rel="noopener"><code>temfile</code></a></p>
+</li>
+</ul>
+</li>
+<li><strong>code</strong><ul>
+<li><strong>using temp file</strong><ul>
+<li>find have temp file<ul>
+<li>if have, so pre step err and del pre temp file, else continue next step</li>
+</ul>
+</li>
+<li>create a new temp file and write to temp file</li>
+<li>change file name when write over<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_to_file</span><span class="params">(path, file_name, content)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    path:      the path to the folder where the file is located</span></span><br><span class="line"><span class="string">    file_name: will be created file name</span></span><br><span class="line"><span class="string">    content:   type is str, will be write content</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">import</span> os</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> os.path.exists(os.path.join(path, <span class="string">"temp.txt"</span>)):</span><br><span class="line">            print(<span class="string">"have temp file in path, because program interrupted in pre \</span></span><br><span class="line"><span class="string">                step on running."</span>)</span><br><span class="line">            os.remove(os.path.join(path, <span class="string">"temp.txt"</span>))</span><br><span class="line">        <span class="keyword">with</span> open(os.path.join(path, <span class="string">"temp.txt"</span>)) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(content)</span><br><span class="line">            <span class="comment"># make sure that all data is on disk</span></span><br><span class="line">            <span class="comment"># see https://stackoverflow.com/questions/7433057/is-rename-without-fsync-safe</span></span><br><span class="line">            f.flush()</span><br><span class="line">            os.fsync(f.fileno())</span><br><span class="line">        os.rename(os.path.join(path, <span class="string">"temp.txt"</span>), os.path.join(path, file_name))</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">        print(<span class="string">"Error: "</span>, err)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multi-thread-lock-free-simultaneous-reading-and-writing-of-an-object"><a href="#Multi-thread-lock-free-simultaneous-reading-and-writing-of-an-object" class="headerlink" title="Multi-thread lock-free simultaneous reading and writing of an object"></a>Multi-thread lock-free simultaneous reading and writing of an object</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Many Buffer</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> DataType&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Var</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Var</span> <span class="params">(DataType data)</span> </span>&#123;</span><br><span class="line">    p = <span class="keyword">new</span> DataType();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> ~Var() &#123;</span><br><span class="line">    <span class="keyword">delete</span> *p;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(DataType data)</span> </span>&#123;</span><br><span class="line">    DataType* temp = <span class="keyword">new</span> DataType();</span><br><span class="line">    *temp = data; <span class="comment">// write time is long</span></span><br><span class="line">    swap(temp, p);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">DataType* <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  DataType* p; <span class="comment">// read</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">Supporting</span>
+      <div class="donation-body">
+        <div class="tip text-center">Scan, Support Daidai</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>WeChat scan</span>
+            
+            <img src="/images/wechatpay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>Alipay scan</span>
+            
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/08/05/Python直接根据URL直接调用远程代码/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              Blog
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              Category
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              Tag
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/" rel="noopener noreferrer" target="_self">
+              About
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml" rel="noopener noreferrer" target="_blank">
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/search/" rel="noopener noreferrer" target="_self">
+              Search
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
